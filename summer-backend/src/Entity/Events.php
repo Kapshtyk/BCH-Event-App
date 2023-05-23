@@ -33,6 +33,9 @@ class Events
     #[ORM\OneToMany(mappedBy: 'event_id', targetEntity: Comments::class, orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\Column]
+    private ?bool $isPublished = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -117,6 +120,18 @@ class Events
                 $comment->setEventId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsPublished(): ?bool
+    {
+        return $this->isPublished;
+    }
+
+    public function setIsPublished(bool $isPublished): self
+    {
+        $this->isPublished = $isPublished;
 
         return $this;
     }
