@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\EventsRepository;
+use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -11,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EventsRepository::class)]
 #[ApiResource]
+#[ApiFilter(BooleanFilter::class, properties: ['isPublished'])]
 class Events
 {
     #[ORM\Id]
@@ -34,11 +38,15 @@ class Events
     private Collection $comments;
 
     #[ORM\Column]
-    private ?bool $isPublished = null;
+    private bool $isPublished = true;
+
+    #[ORM\Column]
+    private \DateTimeImmutable $createdAt;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        //$this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -134,5 +142,23 @@ class Events
         $this->isPublished = $isPublished;
 
         return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+
+    public function getCreatedAtAgo(): string
+    {
+        return Carbon::instance($this->createdAt)->diffForHumans();
     }
 }
