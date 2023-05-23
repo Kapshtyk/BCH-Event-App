@@ -32,6 +32,10 @@ class Users
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comments::class, orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Roles $role = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -116,6 +120,18 @@ class Users
                 $comment->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRole(): ?Roles
+    {
+        return $this->role;
+    }
+
+    public function setRole(?Roles $role): self
+    {
+        $this->role = $role;
 
         return $this;
     }
