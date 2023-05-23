@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CommentsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommentsRepository::class)]
+#[ApiResource()]
 class Comments
 {
     #[ORM\Id]
@@ -27,6 +29,9 @@ class Comments
 
     #[ORM\Column]
     private ?\DateTimeImmutable $publishDate = null;
+
+    #[ORM\Column]
+    private ?bool $isPublished = null;
 
     public function getId(): ?int
     {
@@ -77,6 +82,18 @@ class Comments
     public function setPublishDate(\DateTimeImmutable $publishDate): self
     {
         $this->publishDate = $publishDate;
+
+        return $this;
+    }
+
+    public function getIsPublished(): ?bool
+    {
+        return $this->isPublished;
+    }
+
+    public function setIsPublished(bool $isPublished): self
+    {
+        $this->isPublished = $isPublished;
 
         return $this;
     }
