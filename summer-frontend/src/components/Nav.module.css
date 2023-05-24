@@ -1,0 +1,19 @@
+.nav ul li {
+  display: inline-block;
+}
+
+.nav ul li a {
+  color: white;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.nav ul li a.active {
+  color: red;
+  text-decoration: none;
+}
+
+.nav ul li a:hover {
+  color: red;
+  text-decoration: none;
+}
