@@ -9,6 +9,7 @@ echo -e "\033[0;32m[2/2] Create database"
 symfony console doctrine:database:drop --force
 symfony console doctrine:database:create
 symfony console doctrine:migrations:migrate
+symfony console doctrine:fixtures:load --no-interaction
 
 echo -e "\033[1;37m___________________________________________________"
 echo -e ""
