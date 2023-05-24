@@ -2,13 +2,17 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CommentsRepository;
+use Carbon\Carbon;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommentsRepository::class)]
-#[ApiResource()]
+#[ApiResource]
+#[ApiFilter(BooleanFilter::class, properties: ['isPublished'])]
 class Comments
 {
     #[ORM\Id]
@@ -28,10 +32,11 @@ class Comments
     private ?string $text = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $publishDate = null;
+    private ?\DateTimeImmutable $publishDate;
 
     #[ORM\Column]
-    private ?bool $isPublished = null;
+    private bool $isPublished = true;
+
 
     public function getId(): ?int
     {
@@ -77,6 +82,11 @@ class Comments
     public function getPublishDate(): ?\DateTimeImmutable
     {
         return $this->publishDate;
+    }
+
+    public function getPublishDateAgo(): string
+    {
+        return Carbon::instance($this->publishDate)->diffForHumans();
     }
 
     public function setPublishDate(\DateTimeImmutable $publishDate): self
