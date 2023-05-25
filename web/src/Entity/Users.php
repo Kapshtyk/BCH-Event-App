@@ -7,9 +7,14 @@ use App\Repository\UsersRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['users:read']],
+    denormalizationContext: ['groups' => ['users:write']]
+)]
 class Users
 {
     #[ORM\Id]
@@ -18,28 +23,39 @@ class Users
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['users:read', 'users:write'])]
+    #[Assert\NotBlank]
     private ?string $firstname = null;
-
+    
     #[ORM\Column(length: 255)]
+    #[Groups(['users:read', 'users:write'])]
+    #[Assert\NotBlank]
     private ?string $lastname = null;
-
+    
     #[ORM\Column(length: 255)]
+    #[Groups(['users:read', 'users:write'])]
+    #[Assert\NotBlank]
+    #[Assert\Email]
     private ?string $email = null;
-
+    
     #[ORM\Column(length: 255)]
+    #[Groups(['users:write'])]
+    #[Assert\NotBlank]
     private ?string $password = null;
-
+    
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comments::class, orphanRemoval: true)]
+    #[Groups(['users:read'])]
     private Collection $comments;
-
+    
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['users:read', 'users:write'])]
     private ?Roles $role = null;
 
     public function __construct()
-    {
-        $this->comments = new ArrayCollection();
-    }
+{
+    $this->comments = new ArrayCollection();
+}
 
     public function getId(): ?int
     {

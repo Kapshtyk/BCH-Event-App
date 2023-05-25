@@ -9,6 +9,7 @@ use App\Repository\CommentsRepository;
 use Carbon\Carbon;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CommentsRepository::class)]
 #[ApiResource]
@@ -22,19 +23,23 @@ class Comments
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['users:read'])]
     private ?Events $event_id = null;
-
+    
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Users $author = null;
-
+    
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['users:read'])]
     private ?string $text = null;
-
+    
     #[ORM\Column]
+    #[Groups(['users:read'])]
     private ?\DateTimeImmutable $publishDate;
-
+    
     #[ORM\Column]
+    #[Groups(['users:read'])]
     private bool $isPublished = true;
 
 
