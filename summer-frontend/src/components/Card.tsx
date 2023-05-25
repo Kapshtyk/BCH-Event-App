@@ -3,7 +3,13 @@ import { Link } from 'react-router-dom';
 import imagine from "../media/images/rock.jpg"
 import classes from './Card.module.css';
 
-const Card = () => {
+interface CardProps {
+   title?: string
+
+  }
+const Card:React.FC<CardProps> = ({title}) => {
+   
+    
     return (
         <div className={classes.card}>
             <div className={classes.image}>
@@ -11,12 +17,13 @@ const Card = () => {
             </div>
             <div className={classes.texte}>
                 <p>Date/Time</p>
-                <h4>Title</h4>
+                <h4>{title}</h4>
                 <p>Location</p>
             </div>
 
         </div>
     );
+
 };
 
 export default Card;
