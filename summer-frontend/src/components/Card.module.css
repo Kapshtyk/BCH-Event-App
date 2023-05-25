@@ -7,24 +7,24 @@
   margin-top: 1em;
 }
 
-.image {
+.imagearea {
   display: flex;
   padding: 0.5em;
 }
 
-.image img {
+.imagearea img {
   height: 100px;
   width: 100px;
 }
 
 
-.texte {
+.textarea {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.texte p,
+.textarea p,
 h4 {
   margin: 0.5em;
 }

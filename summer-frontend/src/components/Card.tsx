@@ -6,10 +6,10 @@ import classes from './Card.module.css';
 const Card = () => {
     return (
         <div className={classes.card}>
-            <div className={classes.image}>
+            <div className={classes.imagearea}>
                 <Link to={`/event`}><img src={imagine} alt="#" /></Link>
             </div>
-            <div className={classes.texte}>
+            <div className={classes.textarea}>
                 <p>Date/Time</p>
                 <h4>Title</h4>
                 <p>Location</p>

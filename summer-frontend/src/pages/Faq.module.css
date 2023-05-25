@@ -1,3 +1,51 @@
 .faq {
+    width: 85%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.faq h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
     text-align: center;
+}
+
+.faq .question {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.faq .answer {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Styles for desktop version */
+@media (min-width: 800px) {
+    .faq {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 30px;
+    }
+
+    .faq h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .faq .question {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .faq .answer {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
 }

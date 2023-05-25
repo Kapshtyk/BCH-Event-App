@@ -10,6 +10,7 @@ const Event = () => {
             <p>Description</p>
             <p>Date/Time</p>
             <p>Location</p>
+            <p>Comments</p>
         </div>
     );
 };
