@@ -6,6 +6,7 @@ import Faq from './pages/Faq';
 import Event from './pages/Event';
 import Profile from './pages/Profile';
 import Layout from './pages/Layout'
+import LoginForm from './components/LoginForm';
 
 const App = () => {
   return (
@@ -17,6 +18,8 @@ const App = () => {
           <Route path="faq" element={<Faq />} />
           <Route path="event" element={<Event />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="login" element={<LoginForm />} />
+
         </Route>
       </Routes>
     </BrowserRouter >

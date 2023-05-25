@@ -9,24 +9,24 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 
-use App\Entity\Users;
+use App\Entity\User;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
   class ApiLoginController extends AbstractController
   {
       #[Route('/api/login', name: 'api_login')]
-     public function index(#[CurrentUser] ?Users $user): Response
+     public function index(#[CurrentUser] ?User $user): Response
       {
         if (null === $user) {
             return $this->json([
-                'message' => 'missing credentials',
+                'message' => 'missing credentials 2',
             ], Response::HTTP_UNAUTHORIZED);
         }
 
         $token = '445...';
 
           return $this->json([
-            'user'  => $user->getEmail(),
+            'user'  => $user->getId(),
             'token' => $token,
           ]);
       }
