@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
-import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
+import { faSchool } from '@fortawesome/free-solid-svg-icons'
+import { faMap } from '@fortawesome/free-solid-svg-icons'
 
 const Nav = () => {
     const [isMobile, setIsMobile] = useState(false);
@@ -36,10 +37,19 @@ const Nav = () => {
                 </li>
                 <li>
                     {isMobile ? (
-                        <NavLink to="/about">About</NavLink>
+                        <NavLink to="/college">College</NavLink>
                     ) : (
-                        <NavLink to="/about">
-                            <FontAwesomeIcon icon={faCircleInfo} />
+                        <NavLink to="/college">
+                            <FontAwesomeIcon icon={faSchool} />
+                        </NavLink>
+                    )}
+                </li>
+                <li>
+                    {isMobile ? (
+                        <NavLink to="/helsinki">Helsinki</NavLink>
+                    ) : (
+                        <NavLink to="/helsinki">
+                            <FontAwesomeIcon icon={faMap} />
                         </NavLink>
                     )}
                 </li>
@@ -60,9 +70,6 @@ const Nav = () => {
                             <FontAwesomeIcon icon={faUser} />
                         </NavLink>
                     )}
-                </li>
-                <li>
-                    <NavLink to="/login">Log In</NavLink>
                 </li>
             </ul>
         </nav>

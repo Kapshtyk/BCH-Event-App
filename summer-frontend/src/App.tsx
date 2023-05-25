@@ -7,6 +7,8 @@ import Event from './pages/Event';
 import Profile from './pages/Profile';
 import Layout from './pages/Layout'
 import LoginForm from './components/LoginForm';
+import Helsinki from './components/Helsinki';
+import College from './components/College';
 
 const App = () => {
   return (
@@ -19,6 +21,8 @@ const App = () => {
           <Route path="event" element={<Event />} />
           <Route path="profile" element={<Profile />} />
           <Route path="login" element={<LoginForm />} />
+          <Route path="helsinki" element={<Helsinki />} />
+          <Route path="college" element={<College />} />
 
         </Route>
       </Routes>

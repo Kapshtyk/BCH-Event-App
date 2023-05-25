@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import classes from './Profile.module.css';
+import LoginForm from '../components/LoginForm';
 
 const Profile = () => {
     const [showLoginOverlay, setShowLoginOverlay] = useState(true);
@@ -35,10 +36,8 @@ const Profile = () => {
             {showLoginOverlay && (
                 <div className={classes.overlay}>
                     <div className={classes.modal}>
-                        <h3>Login</h3>
-                        {/* Login form here */}
+                        <LoginForm />
                         <button onClick={handleOverlayClose}>Close</button>
-                        <button onClick={handleRegisterButtonClick}>Register</button>
                     </div>
                 </div>
             )}
