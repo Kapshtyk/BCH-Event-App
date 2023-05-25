@@ -14,6 +14,17 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         RolesFactory::createMany(3);
-        CommentsFactory::createMany(40);
+        UsersFactory::createMany(15, function() {
+            return [
+                'role' => RolesFactory::random()
+            ];
+        });
+        EventsFactory::createMany(20);
+        CommentsFactory::createMany(40, function() {
+            return [
+                'author' => UsersFactory::random(),
+                'event_id' => EventsFactory::random()
+            ];
+        });
     }
 }
