@@ -12,9 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CommentsRepository::class)]
-#[ApiResource( 
-    normalizationContext: ['comment' => ['comment:read']],
-    denormalizationContext: ['comment' => ['comment:write']],
+#[ApiResource(
+    normalizationContext: ['groups' => ['comments:read']],
+    denormalizationContext: ['groups' => ['comments:write']]
 )]
 #[ApiFilter(BooleanFilter::class, properties: ['isPublished'])]
 class Comments
@@ -22,44 +22,49 @@ class Comments
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['comments:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['users:read', 'comment:read', 'comment:write'])]
-    private ?Events $event_id = null;
+    #[Groups(['comments:read', 'comments:write'])]
+    private ?Events $event = null;
     
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['users:write', 'comment:read', 'comment:write', 'events:read'])]
+    #[Groups(['users:write', 'comments:write', 'comments:read', 'events:read'])]
     private ?Users $author = null;
     
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['users:read', 'events:read'])]
+    #[Groups(['users:read', 'events:read', 'comments:write', 'comments:read'])]
     private ?string $text = null;
     
     #[ORM\Column]
-    #[Groups(['users:read', 'events:read'])]
-    private ?\DateTimeImmutable $publishDate;
+    #[Groups(['users:read', 'events:read', 'comments:read',])]
+    private ?\DateTimeImmutable $createdAt = null;
     
     #[ORM\Column]
-    #[Groups(['users:read', 'events:read'])]
+    #[Groups(['users:read', 'events:read', 'comments:read',])]
     private bool $isPublished = true;
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEventId(): ?Events
+    public function getEvent(): ?Events
     {
-        return $this->event_id;
+        return $this->event;
     }
 
-    public function setEventId(?Events $event_id): self
+    public function setEvent(?Events $event): self
     {
-        $this->event_id = $event_id;
+        $this->event = $event;
 
         return $this;
     }
@@ -88,19 +93,26 @@ class Comments
         return $this;
     }
 
-    public function getPublishDate(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->publishDate;
+        return $this->createdAt;
     }
 
-    public function getPublishDateAgo(): string
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
-        return Carbon::instance($this->publishDate)->diffForHumans();
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 
-    public function setPublishDate(\DateTimeImmutable $publishDate): self
+    public function getCreatedAtAgo(): string
     {
-        $this->publishDate = $publishDate;
+        return Carbon::instance($this->createdAt)->diffForHumans();
+    }
+
+    public function setPublishDate(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

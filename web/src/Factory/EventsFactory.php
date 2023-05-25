@@ -4,7 +4,6 @@ namespace App\Factory;
 
 use App\Entity\Events;
 use App\Repository\EventsRepository;
-use DateTimeImmutable;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
@@ -48,11 +47,11 @@ final class EventsFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
+            'created_at' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'description' => self::faker()->text(),
-            'createdAt' => DateTimeImmutable::createFromMutable(self::faker()->dateTimeThisYear()),
-            'eventDate' => self::faker()->dateTime('2024-05-01'),
+            'eventDate' => self::faker()->dateTimeThisYear(),
             'isPublished' => self::faker()->boolean(),
-            'location' => self::faker()->text(100),
+            'location' => self::faker()->text(50),
             'title' => self::faker()->text(255),
         ];
     }

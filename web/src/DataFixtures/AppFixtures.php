@@ -23,7 +23,7 @@ class AppFixtures extends Fixture
         CommentsFactory::createMany(40, function() {
             return [
                 'author' => UsersFactory::random(),
-                'event_id' => EventsFactory::random()
+                'event' => EventsFactory::random()
             ];
         });
     }

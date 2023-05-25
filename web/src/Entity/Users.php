@@ -20,15 +20,16 @@ class Users
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['users:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['users:read', 'users:write', 'comment:read', 'events:read'])]
+    #[Groups(['users:read', 'users:write', 'comments:read', 'events:read'])]
     #[Assert\NotBlank]
     private ?string $firstname = null;
     
     #[ORM\Column(length: 255)]
-    #[Groups(['users:read', 'users:write', 'events:read'])]
+    #[Groups(['users:read', 'users:write', 'events:read', 'comments:read'])]
     #[Assert\NotBlank]
     private ?string $lastname = null;
     
