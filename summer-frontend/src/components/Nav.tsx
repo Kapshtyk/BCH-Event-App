@@ -61,6 +61,9 @@ const Nav = () => {
                         </NavLink>
                     )}
                 </li>
+                <li>
+                    <NavLink to="/login">Log In</NavLink>
+                </li>
             </ul>
         </nav>
     );
