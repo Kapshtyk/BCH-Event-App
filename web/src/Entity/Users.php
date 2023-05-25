@@ -23,12 +23,12 @@ class Users
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['users:read', 'users:write'])]
+    #[Groups(['users:read', 'users:write', 'comment:read', 'events:read'])]
     #[Assert\NotBlank]
     private ?string $firstname = null;
     
     #[ORM\Column(length: 255)]
-    #[Groups(['users:read', 'users:write'])]
+    #[Groups(['users:read', 'users:write', 'events:read'])]
     #[Assert\NotBlank]
     private ?string $lastname = null;
     
