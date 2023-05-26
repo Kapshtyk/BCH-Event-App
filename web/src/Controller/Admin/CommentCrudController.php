@@ -3,11 +3,12 @@
 namespace App\Controller\Admin;
 
 
-use App\Entity\Comment;
+use App\Entity\Comments;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -18,7 +19,7 @@ class CommentCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
         {
-            return Comment::class;
+            return Comments::class;
         }
 
 
@@ -41,14 +42,13 @@ class CommentCrudController extends AbstractCrudController
     {
 
         yield AssociationField::new('event');
-        yield TextField::new('author');
-        yield EmailField::new('email');
-        yield TextareaField::new('text')
-            ->hideOnIndex();
+        yield AssociationField::new('author');
+        yield TextareaField::new('text');
+        yield BooleanField::new('isPublished');
         // yield TextField::new('photoFilename')
         //     ->onlyOnIndex();
 
-        $createdAt = DateTimeField::new('createdAt')->setFormTypeOptions([
+        /* $createdAt = DateTimeField::new('createdAt')->setFormTypeOptions([
             'years' => range(date('Y'), date('Y') + 5),
             'widget' => 'single_text',
         ]);
@@ -56,7 +56,7 @@ class CommentCrudController extends AbstractCrudController
             yield $createdAt->setFormTypeOption('disabled', true);
         } else {
             yield $createdAt;
-        }
+        } */
     }
 }
     

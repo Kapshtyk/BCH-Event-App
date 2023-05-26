@@ -64,11 +64,15 @@ class Events
     private bool $isPublished = true;
 
     #[ORM\Column]
+    private bool $isInternational = false;
+
+    #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -176,5 +180,22 @@ class Events
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    public function isIsInternational(): ?bool
+    {
+        return $this->isInternational;
+    }
+
+    public function setIsInternational(bool $isInternational): self
+    {
+        $this->isInternational = $isInternational;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 };

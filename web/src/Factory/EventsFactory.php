@@ -52,7 +52,7 @@ final class EventsFactory extends ModelFactory
             'eventDate' => self::faker()->dateTimeThisYear(),
             'isPublished' => self::faker()->boolean(),
             'location' => self::faker()->text(50),
-            'title' => self::faker()->text(255),
+            'title' => self::faker()->text(20),
         ];
     }
 
