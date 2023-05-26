@@ -2,10 +2,9 @@
 
 namespace App\DataFixtures;
 
-use App\Factory\CommentsFactory;
-use App\Factory\EventsFactory;
-use App\Factory\RolesFactory;
-use App\Factory\UsersFactory;
+use App\Factory\CommentFactory;
+use App\Factory\EventFactory;
+use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -13,7 +12,9 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        RolesFactory::createMany(3);
-        CommentsFactory::createMany(40);
+        EventFactory::createOne();
+        CommentFactory::createMany(15);
+        UserFactory::createOne();
+
     }
 }

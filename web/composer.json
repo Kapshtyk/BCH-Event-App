@@ -12,7 +12,7 @@
         "doctrine/doctrine-bundle": "^2.9",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.15",
-        "easycorp/easyadmin-bundle": "^4.6",
+        "easycorp/easyadmin-bundle": "^4",
         "nelmio/cors-bundle": "^2.3",
         "nesbot/carbon": "^2.66",
         "phpdocumentor/reflection-docblock": "^5.3",
@@ -24,6 +24,7 @@
         "symfony/flex": "^2",
         "symfony/framework-bundle": "6.2.*",
         "symfony/monolog-bundle": "^3.0",
+        "symfony/password-hasher": "6.2.*",
         "symfony/property-access": "6.2.*",
         "symfony/property-info": "6.2.*",
         "symfony/runtime": "6.2.*",
@@ -31,7 +32,8 @@
         "symfony/serializer": "6.2.*",
         "symfony/twig-bundle": "6.2.*",
         "symfony/validator": "6.2.*",
-        "symfony/yaml": "6.2.*"
+        "symfony/yaml": "6.2.*",
+        "symfonycasts/verify-email-bundle": "^1.13"
     },
     "config": {
         "allow-plugins": {
