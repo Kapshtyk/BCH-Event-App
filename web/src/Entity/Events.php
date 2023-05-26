@@ -5,16 +5,26 @@ namespace App\Entity;
 use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\EventsRepository;
 use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EventsRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection()
+    ],
+    normalizationContext: ['groups' => ['events:read']],
+    denormalizationContext: ['groups' => ['events:write']]
+)]
 #[ApiFilter(BooleanFilter::class, properties: ['isPublished'])]
 class Events
 {
@@ -25,31 +35,41 @@ class Events
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
+    #[Groups(['events:read', 'events:write'])]
     private ?string $title = null;
     
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank]
+    #[Groups(['events:read', 'events:write'])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['events:read', 'events:write'])]
+    #[Assert\NotBlank]
+    #[Assert\DateTimeValidator]
     private ?\DateTimeInterface $eventDate = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Groups(['events:read', 'events:write'])]
     private ?string $location = null;
 
     #[ORM\OneToMany(mappedBy: 'event_id', targetEntity: Comments::class, orphanRemoval: true)]
+    #[Groups(['events:read'])]
     private Collection $comments;
 
     #[ORM\Column]
+    #[Groups(['events:read', 'events:write'])]
     private bool $isPublished = true;
 
     #[ORM\Column]
+    #[Groups(['events:read'])]
     private \DateTimeImmutable $createdAt;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        //$this->createdAt = new \DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
