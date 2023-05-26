@@ -19,6 +19,9 @@ const Nav = () => {
                 <li>
                     <NavLink to="/profile">Profile</NavLink>
                 </li>
+                <li>
+                    <NavLink to="/login">Log In</NavLink>
+                </li>
             </ul>
         </nav>
     );

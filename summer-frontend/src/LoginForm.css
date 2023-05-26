@@ -1,0 +1,27 @@
+.login-form fieldset{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 1rem;
+    padding: 1rem;
+    width: fit-content;
+    margin: auto;
+    border-radius: 5px;
+
+}
+.login-form legend{
+    margin: auto;
+}
+
+
+.login-form label{
+    margin-top: 1rem;
+}
+.login-form input{
+    border-radius: 5px;
+    padding: 0.3rem;
+}
+.submit-button{
+    margin: 1rem;
+}
