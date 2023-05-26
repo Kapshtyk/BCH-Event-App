@@ -33,7 +33,7 @@ class Comments
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['users:write', 'comments:write', 'comments:read', 'events:read'])]
-    private ?Users $author = null;
+    private ?User $author = null;
     
     #[ORM\Column(type: Types::TEXT)]
     #[Groups(['users:read', 'events:read', 'comments:write', 'comments:read'])]
@@ -69,12 +69,12 @@ class Comments
         return $this;
     }
 
-    public function getAuthor(): ?Users
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(?Users $author): self
+    public function setAuthor(?User $author): self
     {
         $this->author = $author;
 

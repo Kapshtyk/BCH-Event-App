@@ -24,7 +24,7 @@ class Questions
     private ?string $answer = null;
 
     #[ORM\ManyToOne(inversedBy: 'questions')]
-    private ?Users $author = null;
+    private ?User $author = null;
 
     #[ORM\Column]
     private ?bool $isPublished = null;
@@ -58,12 +58,12 @@ class Questions
         return $this;
     }
 
-    public function getAuthor(): ?Users
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(?Users $author): self
+    public function setAuthor(?User $author): self
     {
         $this->author = $author;
 

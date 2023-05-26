@@ -47,7 +47,7 @@ final class CommentsFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'author' => UsersFactory::new(),
+            'author' => UserFactory::new(),
             'event' => EventsFactory::new(),
             'isPublished' => self::faker()->boolean(),
             'created_at' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
