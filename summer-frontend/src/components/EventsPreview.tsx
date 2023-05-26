@@ -1,39 +1,48 @@
 import React,{useState,useEffect} from 'react';
 import axios from 'axios';
-import Card from './Card'
+import { EventType } from '../types/events';
+import Card from './Card';
 
-interface Event {
-    id: number;
-    title : string;
-    description: string;
-    eventData: string;
-    location: string
-
-}
 
 const EventsPreview:React.FC = () => {
-    const [events, setEvents] = useState<Event[]>([]);
+    const [events, setEvents] = useState<EventType[]>([]);
+    const [isLoading, setIsLoading] = useState(false)
 
 useEffect(() => {
+    setIsLoading(true);
     const fetchData = async () => {
     try {
-        const response = await axios.get('http://localhost:8007/api/v1/events');
-        const data:Event[] = response.data;
-        setEvents(data)
+        const response = await axios.get('http://localhost:8007/api/v1/events',{
+            headers:{
+                Accept:'application/json'
+            }
+        });
+        const data:EventType[] = response.data;
+        setEvents(data);
+        setIsLoading(false)
         console.log(data)
     } catch (error){
         console.log(error);
+        setEvents([])
     };
 };
 fetchData();
 },[]);
+
+if(isLoading) {
+    return <p>Loading...</p>
+}
+if(events.length === 0){
+    return <p>Events not found</p>
+}
     
     return (
         <div>
-            {events.map((event) => (<Card
-            key = {event.id}
-            title = {event.title}
-            />))}
+           <ul>
+           {events.map((event)=> 
+            <li key={event.id}>Title: {event.title}</li>
+           )}
+           </ul>
         </div>
     );
 };
