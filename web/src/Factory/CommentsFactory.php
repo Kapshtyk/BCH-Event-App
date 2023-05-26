@@ -4,7 +4,6 @@ namespace App\Factory;
 
 use App\Entity\Comments;
 use App\Repository\CommentsRepository;
-use DateTimeImmutable;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
@@ -48,10 +47,10 @@ final class CommentsFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'author' => UsersFactory::new(),
-            'event_id' => EventsFactory::new(),
-            'publishDate' => DateTimeImmutable::createFromMutable(self::faker()->dateTimeThisYear()),
+            'author' => UserFactory::new(),
+            'event' => EventsFactory::new(),
             'isPublished' => self::faker()->boolean(),
+            'created_at' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'text' => self::faker()->text(),
         ];
     }

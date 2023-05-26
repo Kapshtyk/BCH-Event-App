@@ -31,6 +31,7 @@ class Events
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['events:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -54,7 +55,7 @@ class Events
     #[Groups(['events:read', 'events:write'])]
     private ?string $location = null;
 
-    #[ORM\OneToMany(mappedBy: 'event_id', targetEntity: Comments::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'event', targetEntity: Comments::class, orphanRemoval: true)]
     #[Groups(['events:read'])]
     private Collection $comments;
 
@@ -63,8 +64,10 @@ class Events
     private bool $isPublished = true;
 
     #[ORM\Column]
-    #[Groups(['events:read'])]
-    private \DateTimeImmutable $createdAt;
+    private bool $isInternational = false;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()
     {
@@ -137,7 +140,7 @@ class Events
     {
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
-            $comment->setEventId($this);
+            $comment->setEvent($this);
         }
 
         return $this;
@@ -147,8 +150,8 @@ class Events
     {
         if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getEventId() === $this) {
-                $comment->setEventId(null);
+            if ($comment->getEvent() === $this) {
+                $comment->setEvent(null);
             }
         }
 
@@ -179,9 +182,20 @@ class Events
         return $this;
     }
 
-
-    public function getCreatedAtAgo(): string
+    public function isIsInternational(): ?bool
     {
-        return Carbon::instance($this->createdAt)->diffForHumans();
+        return $this->isInternational;
     }
-}
+
+    public function setIsInternational(bool $isInternational): self
+    {
+        $this->isInternational = $isInternational;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
+};
