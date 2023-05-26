@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Factory\AdminFactory;
 use App\Factory\CommentsFactory;
 use App\Factory\EventsFactory;
 use App\Factory\QuestionsFactory;
@@ -14,6 +15,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+        AdminFactory::createOne();
         RolesFactory::createMany(3);
         UserFactory::createMany(15, function() {
             return [
