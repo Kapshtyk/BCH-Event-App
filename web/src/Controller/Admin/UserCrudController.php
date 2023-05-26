@@ -3,20 +3,15 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-// use App\Entity\Users;
-
-
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-// class UsersCrudController extends AbstractCrudController
+#[IsGranted('ROLE_ADMIN', message: 'You are not allowed to manage users.')]
 class UserCrudController extends AbstractCrudController
-
 {
     public static function getEntityFqcn(): string
     {
-        // return Users::class;
         return User::class;
-
     }
 
     /*

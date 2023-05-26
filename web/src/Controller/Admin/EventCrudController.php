@@ -2,14 +2,14 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Events;
+use App\Entity\Event;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-class EventsCrudController extends AbstractCrudController
+class EventCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Events::class;
+        return Event::class;
     }
 
     /*

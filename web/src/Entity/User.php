@@ -3,12 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Metadata\ApiResource;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -31,6 +31,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Email]
     private ?string $email = null;
 
+    //@todo getter and setter
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['users:read', 'users:write', 'comments:read', 'events:read'])]
+    #[Assert\NotBlank]
+    private ?string $firstName = null;
+
     #[ORM\Column]
     private array $roles = [];
 
@@ -42,10 +48,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\OneToMany(mappedBy: 'ownedBy', targetEntity: ApiToken::class)]
     #[Groups(['users:read', 'users:write', 'comments:read', 'events:read'])]
     #[Assert\NotBlank]
-    private ?string $firstName = null;
+    private Collection $apiTokens;
+
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
@@ -63,6 +70,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     $this->comments = new ArrayCollection();
     $this->questions = new ArrayCollection();
+    $this->apiTokens = new ArrayCollection();
 }
 
     public function getId(): ?int
@@ -135,14 +143,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getFirstName(): ?string
+    /**
+     * @return Collection<int, ApiToken>
+     */
+    public function getApiTokens(): Collection
     {
-        return $this->firstName;
+        return $this->apiTokens;
     }
 
-    public function setFirstName(?string $firstName): self
+    public function addApiToken(ApiToken $apiToken): self
     {
-        $this->firstName = $firstName;
+        if (!$this->apiTokens->contains($apiToken)) {
+            $this->apiTokens->add($apiToken);
+            $apiToken->setOwnedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApiToken(ApiToken $apiToken): self
+    {
+        if ($this->apiTokens->removeElement($apiToken)) {
+            // set the owning side to null (unless already changed)
+            if ($apiToken->getOwnedBy() === $this) {
+                $apiToken->setOwnedBy(null);
+            }
+        }
 
         return $this;
     }
@@ -158,8 +184,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-
+  
     /**
      * @return Collection<int, Comments>
      */
