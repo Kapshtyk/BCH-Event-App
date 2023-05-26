@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Factory\CommentsFactory;
 use App\Factory\EventsFactory;
+use App\Factory\QuestionsFactory;
 use App\Factory\RolesFactory;
 use App\Factory\UsersFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -24,6 +25,11 @@ class AppFixtures extends Fixture
             return [
                 'author' => UsersFactory::random(),
                 'event' => EventsFactory::random()
+            ];
+        });
+        QuestionsFactory::createMany(15,function() {
+            return [
+                'author' => UsersFactory::random()
             ];
         });
     }

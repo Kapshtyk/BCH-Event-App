@@ -53,9 +53,13 @@ class Users
     #[Groups(['users:read', 'users:write'])]
     private ?Roles $role = null;
 
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Questions::class)]
+    private Collection $questions;
+
     public function __construct()
 {
     $this->comments = new ArrayCollection();
+    $this->questions = new ArrayCollection();
 }
 
     public function getId(): ?int
@@ -149,6 +153,36 @@ class Users
     public function setRole(?Roles $role): self
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Questions>
+     */
+    public function getQuestions(): Collection
+    {
+        return $this->questions;
+    }
+
+    public function addQuestion(Questions $question): self
+    {
+        if (!$this->questions->contains($question)) {
+            $this->questions->add($question);
+            $question->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Questions $question): self
+    {
+        if ($this->questions->removeElement($question)) {
+            // set the owning side to null (unless already changed)
+            if ($question->getAuthor() === $this) {
+                $question->setAuthor(null);
+            }
+        }
 
         return $this;
     }
