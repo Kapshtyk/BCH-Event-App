@@ -1,5 +1,5 @@
 import * as React from 'react';
-import '../LoginForm.css';
+import classes from './LoginForm.module.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -37,7 +37,7 @@ function LoginForm(props: any) {
 
 
     return (
-        <form className='login-form' onSubmit={handleSubmit}>
+        <form className={classes.loginForm} onSubmit={handleSubmit}>
             <fieldset>
                 <legend>Sign in to get extra features</legend>
 

@@ -9,11 +9,11 @@ import { faSchool } from '@fortawesome/free-solid-svg-icons'
 import { faMap } from '@fortawesome/free-solid-svg-icons'
 
 const Nav = () => {
-    const [isMobile, setIsMobile] = useState(false);
+    const [isMobile, setIsMobile] = useState(true);
 
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth > 500);
+            setIsMobile(window.innerWidth > 650);
         };
 
         // Add event listener to handle window resize

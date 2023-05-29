@@ -1,4 +1,4 @@
-.login-form fieldset{
+.loginForm fieldset {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,18 +10,21 @@
     border-radius: 5px;
 
 }
-.login-form legend{
+
+.loginForm legend {
     margin: auto;
 }
 
 
-.login-form label{
+.loginForm label {
     margin-top: 1rem;
 }
-.login-form input{
+
+.loginForm input {
     border-radius: 5px;
     padding: 0.3rem;
 }
-.submit-button{
+
+.submit-button {
     margin: 1rem;
 }
