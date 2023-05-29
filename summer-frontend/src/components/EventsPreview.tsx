@@ -1,5 +1,4 @@
 import React,{useState,useEffect} from 'react';
-import axios from 'axios';
 import {Events} from '../types/events';
 import Card from './Card';
 import { getEvents } from '../api/EventsAPI';
@@ -10,12 +9,14 @@ const EventsPreview:React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
 
 useEffect(() => {
+    setIsLoading(true);
     Promise.all([getEvents()]).then(
         ([events]) => {
           setEvents(events)
+          setIsLoading(false)
         }
       )
-    setIsLoading(true);
+    
    
 },[]);
 if(isLoading) {
@@ -29,9 +30,11 @@ if(events.length === 0){
         <div>
            {events.map((event)=> (<Card 
            key={event.id}
+           id={event.id}
            title={event.title}
            date={event.eventDate}
-           location={event.location}/>)
+           location={event.location}
+           description={event.description}/>)
            )}
         </div>
     );

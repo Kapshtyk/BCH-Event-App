@@ -2,9 +2,9 @@ export type Events = EventType[]
 
 export type EventType = 
 {
-    id?:number;
+    id:number;
     title: string;
-    description?: string;
+    description: string;
     eventDate: string;
     location: string;
     comments?: CommentType[];

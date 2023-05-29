@@ -4,19 +4,21 @@ import imagine from "../media/images/rock.jpg"
 import classes from './Card.module.css';
 
 interface CardsProps {
+    id: number
     title: string
     date: string
     location:string
+    description:string
 
 }
 
-const Card: React.FC<CardsProps> = ({title,date,location}) => {
+const Card: React.FC<CardsProps> = ({id,title,date,location}) => {
    
     
     return (
         <div className={classes.card}>
             <div className={classes.image}>
-                <Link to={`/event`}><img src={imagine} alt="#" /></Link>
+                <Link to={`${id}`}><img src={imagine} alt="#" /></Link>
             </div>
             <div className={classes.texte}>
                 <p>Date/Time: {date}</p>
