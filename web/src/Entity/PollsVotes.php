@@ -4,11 +4,17 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\PollsVotesRepository;
-use Doctrine\ORM\Event\PostPersistEventArgs;
+use App\State\PollsVotesStateProcessor;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: PollsVotesRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    processor: PollsVotesStateProcessor::class,
+)]
+#[UniqueEntity(
+    fields: ["author", "choice"],
+    message: "The combination of answer and user must be unique.")]
 class PollsVotes
 {
     #[ORM\Id]
@@ -27,14 +33,6 @@ class PollsVotes
     #[ORM\ManyToOne(inversedBy: 'pollsVotes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
-
-    #[ORM\PostPersist]
-    public function updateQuestionVotes(PollsChoices $choice, PostPersistEventArgs $event): void
-    {
-        if ($choice) {
-            $choice->setVotes($choice->getVotes() + 1);
-    }
-}
 
     public function getId(): ?int
     {

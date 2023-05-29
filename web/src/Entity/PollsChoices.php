@@ -7,6 +7,7 @@ use App\Repository\PollsChoicesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PollsChoicesRepository::class)]
 #[ApiResource]
@@ -18,9 +19,11 @@ class PollsChoices
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['pollquestion:read'])]
     private ?string $choice = null;
 
     #[ORM\Column]
+    #[Groups(['pollquestion:read'])]
     private ?int $votes = null;
 
     #[ORM\ManyToOne(inversedBy: 'pollsChoices')]

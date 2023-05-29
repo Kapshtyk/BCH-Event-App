@@ -8,32 +8,43 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PollsQuestionsRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['pollquestion:read']],
+    denormalizationContext: ['groups' => ['pollquestion:write']]
+)] 
 class PollsQuestions
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['pollquestion:read', 'pollquestion:write'])]
     private ?string $question = null;
-
+    
     #[ORM\Column]
+    #[Groups(['pollquestion:read', 'pollquestion:write'])]
     private ?\DateTimeImmutable $createdAt = null;
-
+    
     #[ORM\OneToMany(mappedBy: 'question', targetEntity: PollsChoices::class, orphanRemoval: true)]
+    #[Groups(['pollquestion:read', 'pollquestion:write'])]
     private Collection $pollsChoices;
-
+    
     #[ORM\OneToMany(mappedBy: 'question', targetEntity: PollsVotes::class, orphanRemoval: true)]
     private Collection $pollsVotes;
+
+    #[ORM\Column]
+    private bool $isPublished = true;
 
     public function __construct()
     {
         $this->pollsChoices = new ArrayCollection();
         $this->pollsVotes = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -121,6 +132,18 @@ class PollsQuestions
                 $pollsVote->setQuestion(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIsPublished(): ?bool
+    {
+        return $this->isPublished;
+    }
+
+    public function setIsPublished(bool $isPublished): self
+    {
+        $this->isPublished = $isPublished;
 
         return $this;
     }
