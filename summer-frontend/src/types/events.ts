@@ -1,12 +1,12 @@
 export type Events = EventType[]
 
 export type EventType = 
-| {
+{
     id?:number;
     title: string;
     description?: string;
-    eventDate?: string;
-    location?: string;
+    eventDate: string;
+    location: string;
     comments?: CommentType[];
     isPublished?: boolean;
     createdAt?: string

@@ -1,11 +1,11 @@
 import React,{useState,useEffect} from 'react';
 import axios from 'axios';
-import { EventType } from '../types/events';
+import {Events} from '../types/events';
 import Card from './Card';
 
 
 const EventsPreview:React.FC = () => {
-    const [events, setEvents] = useState<EventType[]>([]);
+    const [events, setEvents] = useState<Events>([]);
     const [isLoading, setIsLoading] = useState(false)
 
 useEffect(() => {
@@ -17,7 +17,7 @@ useEffect(() => {
                 Accept:'application/json'
             }
         });
-        const data:EventType[] = response.data;
+        const data:Events = response.data;
         setEvents(data);
         setIsLoading(false)
         console.log(data)
@@ -38,11 +38,12 @@ if(events.length === 0){
     
     return (
         <div>
-           <ul>
-           {events.map((event)=> 
-            <li key={event.id}>Title: {event.title}</li>
+           {events.map((event)=> (<Card 
+           key={event.id}
+           title={event.title}
+           date={event.eventDate}
+           location={event.location}/>)
            )}
-           </ul>
         </div>
     );
 };
