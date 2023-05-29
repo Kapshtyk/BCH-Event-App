@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './Home.module.css';
-import Card from '../components/Card';
+import EventsPreview from '../components/EventsPreview';
 
 const Home = () => {
     return (
@@ -11,9 +11,10 @@ const Home = () => {
                 <input placeholder='EVENT SEARCH' />
             </div>
             <div className='CardSection'>
-                <Card />
-                <Card />
-                <Card />
+            <EventsPreview/>
+            </div>
+            <div>
+                
             </div>
         </div>
     );
