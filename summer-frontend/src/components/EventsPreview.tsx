@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react';
 import axios from 'axios';
 import {Events} from '../types/events';
 import Card from './Card';
+import { getEvents } from '../api/EventsAPI';
 
 
 const EventsPreview:React.FC = () => {
@@ -12,7 +13,7 @@ useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
     try {
-        const response = await axios.get('http://localhost:8007/api/v1/events',{
+        const response = {
             headers:{
                 Accept:'application/json'
             }
