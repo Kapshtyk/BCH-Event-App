@@ -8,7 +8,11 @@ import { Events } from '../types/events';
         data?: unknown
       ): Promise<T> {
         try {
-          const response: AxiosResponse<T> = await axios({ method, url, data })
+          const response: AxiosResponse<T> = await axios({ method, url, data,
+            headers: {
+                Accept:'application/json'
+            }
+         })
           if (response.status === 200 || response.status === 201) {
             return response.data
           } else if (response.status === 400) {
@@ -24,16 +28,24 @@ import { Events } from '../types/events';
           )
         }
       }
+
+      const checkArray = (data: unknown) => {
+        if (Array.isArray(data)) {
+          return data
+        } else {
+          return []
+        }
+      }
       
-    export const getEvents = async () => {
+    export const getEvents = async (): Promise<Events> => {
         const url = BASE_URL + 'api/v1/events'
         try {
             const response = await processRequest<Events>('GET',url)
-            return response
+            return checkArray(response)
                 
             } catch (error){
             console.log(error);
-           
+            return []
         };
     }
 

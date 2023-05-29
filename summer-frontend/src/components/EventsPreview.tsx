@@ -7,29 +7,17 @@ import { getEvents } from '../api/EventsAPI';
 
 const EventsPreview:React.FC = () => {
     const [events, setEvents] = useState<Events>([]);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
 
 useEffect(() => {
+    Promise.all([getEvents()]).then(
+        ([events]) => {
+          setEvents(events)
+        }
+      )
     setIsLoading(true);
-    const fetchData = async () => {
-    try {
-        const response = {
-            headers:{
-                Accept:'application/json'
-            }
-        });
-        const data:Events = response.data;
-        setEvents(data);
-        setIsLoading(false)
-        console.log(data)
-    } catch (error){
-        console.log(error);
-        setEvents([])
-    };
-};
-fetchData();
+   
 },[]);
-
 if(isLoading) {
     return <p>Loading...</p>
 }
