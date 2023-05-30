@@ -15,9 +15,7 @@ useEffect(() => {
           setEvents(events)
           setIsLoading(false)
         }
-      )
-    
-   
+      )  
 },[]);
 if(isLoading) {
     return <p>Loading...</p>

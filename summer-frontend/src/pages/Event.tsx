@@ -4,6 +4,7 @@ import axios from 'axios';
 import classes from './Event.module.css';
 import imagine from "../media/images/rock.jpg";
 import { EventType } from '../types/events';
+import { getEvents } from '../api/EventsAPI';
 
 
 
@@ -14,7 +15,7 @@ const Event:React.FC = () => {
 
 useEffect(() => {
     setIsLoading(true);
-    const fetchData = async () => {
+    const fetchSingleEvent = async () => {
     try {
         const response = await axios.get(`http://localhost:8007/api/v1/events/${event}`,{
             headers:{
@@ -30,7 +31,7 @@ useEffect(() => {
         setEvent(null)
     };
 };
-fetchData();
+fetchSingleEvent();
 },[event]);
 
 if(isLoading) {
@@ -47,6 +48,7 @@ if (singleEvent === null) {
             <p>Date/Time: {singleEvent.eventDate}</p>
             <p>Location: {singleEvent.location}</p>
             <div>
+                <h3>Comments</h3>
                 {singleEvent.comments?.map((cmnt)=> 
                     <li>{cmnt.text}
                     {cmnt.publishDate}
