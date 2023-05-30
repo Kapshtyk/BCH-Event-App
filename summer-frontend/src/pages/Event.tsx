@@ -4,8 +4,7 @@ import axios from 'axios';
 import classes from './Event.module.css';
 import imagine from "../media/images/rock.jpg";
 import { EventType } from '../types/events';
-import { getEvents } from '../api/EventsAPI';
-
+// import { getEvents } from '../api/EventsAPI';
 
 
 const Event:React.FC = () => {
