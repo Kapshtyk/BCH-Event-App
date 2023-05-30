@@ -49,9 +49,10 @@ if (singleEvent === null) {
             <p>Location: {singleEvent.location}</p>
             <div>
                 <h3>Comments</h3>
-                {singleEvent.comments?.map((cmnt)=> 
-                    <li>{cmnt.text}
-                    {cmnt.publishDate}
+                {singleEvent.comments?.map((cmnt,i)=> 
+                    <li key={i}>
+                        <p>Author: {cmnt.author.firstName} <span>{cmnt.author.email}</span></p>
+                        <p>{cmnt.text}</p>
                     </li>
                 )}
             </div>

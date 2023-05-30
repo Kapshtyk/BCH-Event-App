@@ -21,6 +21,6 @@ export type CommentType = {
 }
 
 export type AuthorType = {
-    firstname: string;
-    lastname: string
+    email: string;
+    firstName: string;
 }
