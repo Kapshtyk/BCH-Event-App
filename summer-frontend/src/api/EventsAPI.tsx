@@ -1,6 +1,6 @@
 import { BASE_URL } from '../service/constant';
 import axios, {AxiosResponse} from 'axios';
-import { Events } from '../types/events';
+import { Events, EventType } from '../types/events';
 
     async function processRequest<T>(
         method: 'GET' | 'POST',
@@ -48,5 +48,17 @@ import { Events } from '../types/events';
             return []
         };
     }
+
+    // it hasnot been implemented yet
+    export const getEventById = async (event: string): Promise<EventType | null> => {
+      const url = BASE_URL + `api/v1/events/${event}`;
+      try {
+        const response = await processRequest<EventType>('GET', url);
+        return response;
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+    };
 
 
