@@ -33,23 +33,26 @@
 ### Other methods:
 Only GET method will be allowed via API, all CRUD operations are allowed in the admin panel, including changing the ```isPublished``` field. 
 Frontend should hide events where ```isPublished == false``` and display past events in a separate component.
+
 ### Permissions:
 The API resource should be available to any user.
 
 ## Comments
 All after-mention CRUD operations are also allowed in the admin panel
+
 ### Get endpoints:
 - http://localhost:8007/api/v1/comments - retrieves the collection of Comments resources.
 - http://localhost:8007/api/v1/comments/{id} - retrieves a single Comment.
+
 ### Post endpoint:
 - http://localhost:8007/api/v1/comments - create a new Comment.
   - request body:
   ```
-{
-"event": "string <iri-reference>",
-"author": "string <iri-reference>",
-"text": "string"
-}
+  {
+    "event": "string <iri-reference>",
+    "author": "string <iri-reference>",
+    "text": "string"
+  }
   ```
 iri-reference is a URL to the resource, for example ```api/events/1```.
 
@@ -167,11 +170,11 @@ On the backend API, the resource for GET requests must be available to any user,
 - http://localhost:8007/api/v1/polls_votes - create a new Poll vote.
   - request body:
   ```
-{
-  "question": "string <iri-reference>",
-  "choice": "string <iri-reference>",
-  "author": "string  <iri-reference>"
-}
+  {
+    "question": "string <iri-reference>",
+    "choice": "string <iri-reference>",
+    "author": "string  <iri-reference>"
+  }
   ```
 
   As the votes are linked to the question and choices, the question and choice iri-references should be taken from the props, and the author iri-reference from the current user __[TBD how to implement current user]__.
