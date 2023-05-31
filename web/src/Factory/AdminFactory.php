@@ -56,10 +56,8 @@ final class AdminFactory extends ModelFactory
     {
         return [
             'email' => 'james@yahoo.com',
-            'first_name' => self::faker()->firstName(),
             'password' => 'demodemo',
             'roles' => ['ROLE_ADMIN'],
-            'role' => RolesFactory::new(),
         ];
     }
  

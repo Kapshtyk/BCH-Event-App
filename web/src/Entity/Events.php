@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Get(),
         new GetCollection()
     ],
+    order: ['eventDate' => 'DESC'],
     normalizationContext: ['groups' => ['events:read']],
     denormalizationContext: ['groups' => ['events:write']]
 )]

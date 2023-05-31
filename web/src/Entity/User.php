@@ -31,11 +31,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Email]
     private ?string $email = null;
 
-    //@todo getter and setter
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['users:read', 'users:write', 'comments:read', 'events:read'])]
-    #[Assert\NotBlank]
-    private ?string $firstName = null;
 
     #[ORM\Column]
     private array $roles = [];
@@ -53,11 +48,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     private Collection $apiTokens;
 
-
-    #[ORM\ManyToOne(inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['users:read', 'users:write'])]
-    private ?Roles $role = null;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Questions::class)]
     private Collection $questions;
@@ -90,18 +80,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getFirstName(): ?string
-    {
-        return $this->firstName;
-    }
-
-    public function setFirstName(string $firstName): self
-    {
-        $this->firstName = $firstName;
 
         return $this;
     }
@@ -188,18 +166,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    public function getRole(): ?Roles
-    {
-        return $this->role;
-    }
-
-    public function setRole(?Roles $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
   
     /**
      * @return Collection<int, Comments>
@@ -263,7 +229,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString()
     {
-        return $this->firstName;
+        return $this->email;
     }
 
     /**

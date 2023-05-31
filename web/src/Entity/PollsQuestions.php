@@ -20,6 +20,7 @@ class PollsQuestions
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['pollquestion:read'])]
     private ?int $id = null;
     
     #[ORM\Column(type: Types::TEXT)]
