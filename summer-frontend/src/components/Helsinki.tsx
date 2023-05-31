@@ -19,9 +19,10 @@ const Helsinki = () => {
         <div className={classes.helsinki}>
             {data.length ? (
                 <ul>
-                    {data.map(event => (
-                        <li key={event.id}>
-                            <a href={event.info_url.fi}>{event.name.fi}</a>
+                    {data.map(image => (
+                        <li key={image.id}>
+                            <img src={image.url} alt={image.alt_text} />
+                            <p>{image.name}</p>
                         </li>
                     ))}
                 </ul>
