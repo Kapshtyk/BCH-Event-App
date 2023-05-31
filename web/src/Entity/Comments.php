@@ -5,6 +5,11 @@ namespace App\Entity;
 use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\CommentsRepository;
 use Carbon\Carbon;
 use Doctrine\DBAL\Types\Types;
@@ -13,6 +18,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CommentsRepository::class)]
 #[ApiResource(
+    operations: [
+            new Get(),
+            new GetCollection(),
+            new Post(),
+            new Patch(
+                denormalizationContext: ['groups' => ['comments:patch']]
+            ),
+            new Delete()
+        ],
     order: ['createdAt' => 'DESC'],
     normalizationContext: ['groups' => ['comments:read']],
     denormalizationContext: ['groups' => ['comments:write']]
@@ -37,7 +51,7 @@ class Comments
     private ?User $author = null;
     
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['users:read', 'events:read', 'comments:write', 'comments:read'])]
+    #[Groups(['users:read', 'events:read', 'comments:write', 'comments:read', 'comments:patch'])]
     private ?string $text = null;
     
     #[ORM\Column]
@@ -45,7 +59,7 @@ class Comments
     private ?\DateTimeImmutable $createdAt = null;
     
     #[ORM\Column]
-    #[Groups(['users:read', 'events:read', 'comments:read',])]
+    #[Groups(['users:read', 'events:read', 'comments:read', 'comments:patch'])]
     private bool $isPublished = true;
 
     public function __construct()
