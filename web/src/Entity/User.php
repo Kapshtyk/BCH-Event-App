@@ -31,11 +31,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Email]
     private ?string $email = null;
 
-    //@todo getter and setter
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['users:read', 'users:write', 'comments:read', 'events:read'])]
-    #[Assert\NotBlank]
-    private ?string $firstName = null;
 
     #[ORM\Column]
     private array $roles = [];
@@ -54,11 +49,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $apiTokens;
 
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['users:read', 'users:write'])]
-    private ?Roles $role = null;
-
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Questions::class)]
     private Collection $questions;
 
@@ -66,11 +56,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['users:read'])]
     private Collection $comments;
 
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: PollsVotes::class, orphanRemoval: true)]
+    private Collection $pollsVotes;
+
     public function __construct()
 {
     $this->comments = new ArrayCollection();
     $this->questions = new ArrayCollection();
     $this->apiTokens = new ArrayCollection();
+    $this->pollsVotes = new ArrayCollection();
 }
 
     public function getId(): ?int
@@ -86,18 +80,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getFirstName(): ?string
-    {
-        return $this->firstName;
-    }
-
-    public function setFirstName(string $firstName): self
-    {
-        $this->firstName = $firstName;
 
         return $this;
     }
@@ -184,18 +166,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    public function getRole(): ?Roles
-    {
-        return $this->role;
-    }
-
-    public function setRole(?Roles $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
   
     /**
      * @return Collection<int, Comments>
@@ -259,6 +229,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString()
     {
-        return $this->firstName;
+        return $this->email;
+    }
+
+    /**
+     * @return Collection<int, PollsVotes>
+     */
+    public function getPollsVotes(): Collection
+    {
+        return $this->pollsVotes;
+    }
+
+    public function addPollsVote(PollsVotes $pollsVote): self
+    {
+        if (!$this->pollsVotes->contains($pollsVote)) {
+            $this->pollsVotes->add($pollsVote);
+            $pollsVote->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removePollsVote(PollsVotes $pollsVote): self
+    {
+        if ($this->pollsVotes->removeElement($pollsVote)) {
+            // set the owning side to null (unless already changed)
+            if ($pollsVote->getAuthor() === $this) {
+                $pollsVote->setAuthor(null);
+            }
+        }
+
+        return $this;
     }
 }

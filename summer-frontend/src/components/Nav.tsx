@@ -1,26 +1,75 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-
 import classes from './Nav.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons'
+import { faHouse } from '@fortawesome/free-solid-svg-icons'
+import { faSchool } from '@fortawesome/free-solid-svg-icons'
+import { faMap } from '@fortawesome/free-solid-svg-icons'
 
 const Nav = () => {
+    const [isMobile, setIsMobile] = useState(true);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth > 650);
+        };
+
+        // Add event listener to handle window resize
+        window.addEventListener('resize', handleResize);
+
+        // Cleanup the event listener on component unmount
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <nav className={classes.nav}>
             <ul>
                 <li>
-                    <NavLink to="/">Home</NavLink>
+                    {isMobile ? (
+                        <NavLink to="/">Home</NavLink>
+                    ) : (
+                        <NavLink to="/">
+                            <FontAwesomeIcon icon={faHouse} />
+                        </NavLink>
+                    )}
                 </li>
                 <li>
-                    <NavLink to="/about">About</NavLink>
+                    {isMobile ? (
+                        <NavLink to="/college">College</NavLink>
+                    ) : (
+                        <NavLink to="/college">
+                            <FontAwesomeIcon icon={faSchool} />
+                        </NavLink>
+                    )}
                 </li>
                 <li>
-                    <NavLink to="/faq">FAQ</NavLink>
+                    {isMobile ? (
+                        <NavLink to="/helsinki">Helsinki</NavLink>
+                    ) : (
+                        <NavLink to="/helsinki">
+                            <FontAwesomeIcon icon={faMap} />
+                        </NavLink>
+                    )}
                 </li>
                 <li>
-                    <NavLink to="/profile">Profile</NavLink>
+                    {isMobile ? (
+                        <NavLink to="/faq">FAQ</NavLink>
+                    ) : (
+                        <NavLink to="/faq">
+                            <FontAwesomeIcon icon={faCircleQuestion} />
+                        </NavLink>
+                    )}
                 </li>
                 <li>
-                    <NavLink to="/login">Log In</NavLink>
+                    {isMobile ? (
+                        <NavLink to="/profile">Profile</NavLink>
+                    ) : (
+                        <NavLink to="/profile">
+                            <FontAwesomeIcon icon={faUser} />
+                        </NavLink>
+                    )}
                 </li>
             </ul>
         </nav>
@@ -28,3 +77,6 @@ const Nav = () => {
 };
 
 export default Nav;
+
+
+
