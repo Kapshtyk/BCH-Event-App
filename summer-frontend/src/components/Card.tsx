@@ -3,20 +3,33 @@ import { Link } from 'react-router-dom';
 import imagine from "../media/images/rock.jpg"
 import classes from './Card.module.css';
 
-const Card = () => {
+interface CardsProps {
+    id: number
+    title: string
+    date: string
+    location:string
+    description:string
+
+}
+
+const Card: React.FC<CardsProps> = ({id,title,date,location}) => {
+   
+    
     return (
         <div className={classes.card}>
-            <div className={classes.imagearea}>
-                <Link to={`/event`}><img src={imagine} alt="#" /></Link>
+
+            <div className={classes.image}>
+                <Link to={`${id}`}><img src={imagine} alt="#" /></Link>
             </div>
-            <div className={classes.textarea}>
-                <p>Date/Time</p>
-                <h4>Title</h4>
-                <p>Location</p>
+            <div className={classes.texte}>
+                <p>Date/Time: {date}</p>
+                <h4>Title: {title}</h4>
+                <p>Location: {location}</p>
             </div>
 
         </div>
     );
+
 };
 
 export default Card;
