@@ -146,6 +146,9 @@ On the backend API, the resource for GET requests must be available to any user,
       }
     ]
     ```
+
+    The choices should be filtered on the front-end side - we need to extract choices related to the particular question.
+
 ### Patch endpoint:
 - http://localhost:8007/api/v1/polls_choices/{id} - updates the Poll choice.
   - request headers:
