@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CommentsRepository::class)]
 #[ApiResource(
+    order: ['createdAt' => 'DESC'],
     normalizationContext: ['groups' => ['comments:read']],
     denormalizationContext: ['groups' => ['comments:write']]
 )]
