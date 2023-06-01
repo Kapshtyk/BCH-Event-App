@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Post;
 use App\Repository\PollsVotesRepository;
 use App\State\PollsVotesStateProcessor;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,6 +11,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: PollsVotesRepository::class)]
 #[ApiResource(
+    operations: [
+        new Post()
+    ],
     processor: PollsVotesStateProcessor::class,
 )]
 #[UniqueEntity(

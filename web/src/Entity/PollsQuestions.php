@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use App\Repository\PollsQuestionsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,33 +15,40 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PollsQuestionsRepository::class)]
 #[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Patch(
+            denormalizationContext: ['groups' => ['pollquestions:patch']]
+        )
+    ],
     normalizationContext: ['groups' => ['pollquestion:read']],
-    denormalizationContext: ['groups' => ['pollquestion:write']]
 )] 
 class PollsQuestions
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['pollquestion:read'])]
+    #[Groups(['pollquestion:read', 'pollchoices:read'])]
     private ?int $id = null;
     
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['pollquestion:read', 'pollquestion:write'])]
+    #[Groups(['pollquestion:read', 'pollquestions:patch', 'pollchoices:read'])]
     private ?string $question = null;
     
     #[ORM\Column]
-    #[Groups(['pollquestion:read', 'pollquestion:write'])]
+    #[Groups(['pollquestion:read'])]
     private ?\DateTimeImmutable $createdAt = null;
     
     #[ORM\OneToMany(mappedBy: 'question', targetEntity: PollsChoices::class, orphanRemoval: true)]
-    #[Groups(['pollquestion:read', 'pollquestion:write'])]
+    #[Groups(['pollquestion:read'])]
     private Collection $pollsChoices;
     
     #[ORM\OneToMany(mappedBy: 'question', targetEntity: PollsVotes::class, orphanRemoval: true)]
     private Collection $pollsVotes;
-
+    
     #[ORM\Column]
+    #[Groups(['pollquestion:read', 'pollquestions:patch'])]
     private bool $isPublished = true;
 
     public function __construct()

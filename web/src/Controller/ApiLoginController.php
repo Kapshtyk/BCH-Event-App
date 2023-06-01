@@ -28,6 +28,7 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
           return $this->json([
             'user'  => $user->getId(),
             'token' => $token,
+            'roles' => $user->getRoles()
           ]);
       }
   }

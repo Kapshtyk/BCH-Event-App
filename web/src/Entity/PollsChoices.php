@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use App\Repository\PollsChoicesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,24 +13,35 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PollsChoicesRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Patch(
+            denormalizationContext: ['groups' => ['pollchoices:patch']]
+        )
+    ],
+    normalizationContext: ['groups' => ['pollschoices:read']],
+)]
 class PollsChoices
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['pollquestion:read', 'pollschoices:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['pollquestion:read'])]
+    #[Groups(['pollquestion:read', 'pollschoices:read', 'pollchoices:patch'])]
     private ?string $choice = null;
 
     #[ORM\Column]
-    #[Groups(['pollquestion:read'])]
+    #[Groups(['pollquestion:read', 'pollschoices:read'])]
     private ?int $votes = null;
 
     #[ORM\ManyToOne(inversedBy: 'pollsChoices')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['pollschoices:read'])]
     private ?PollsQuestions $question = null;
 
     #[ORM\OneToMany(mappedBy: 'choice', targetEntity: PollsVotes::class, orphanRemoval: true)]
