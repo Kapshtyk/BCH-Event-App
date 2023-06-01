@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react';
+import { format, parseISO} from 'date-fns';
 import {Events} from '../types/events';
 import Card from './Card';
 import { getEvents } from '../api/EventsAPI';
@@ -38,6 +39,8 @@ const handleSortOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => 
     setSortOption(selectedOption);
     sortEventsByDate(selectedOption);
   };
+
+const activeEvents = events.filter((event)=> !event.isPublished);
     
     return (
         <div>
@@ -47,11 +50,12 @@ const handleSortOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => 
            <option value="latest">Latest Date</option>
            <option value="oldest">Oldest Date</option>
            </select>
-           {events.map((event)=> (<Card 
+           {activeEvents.map((event)=> (<Card 
            key={event.id}
            id={event.id}
            title={event.title}
-           date={event.eventDate}
+           date={format(parseISO(event.eventDate), 'MMMM d,yyyy')}
+           time={format(parseISO(event.eventDate), 'h:mm a')}
            location={event.location}
            description={event.description}/>)
            )}

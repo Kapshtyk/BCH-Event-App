@@ -8,7 +8,7 @@ export type EventType =
     eventDate: string;
     location: string;
     comments?: CommentType[];
-    isPublished?: boolean;
+    isPublished: boolean;
     createdAt?: string
 }
 

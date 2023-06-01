@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { format, parseISO, formatDistanceToNow } from 'date-fns';
 import classes from './Event.module.css';
 import imagine from "../media/images/rock.jpg";
 import { EventType } from '../types/events';
@@ -44,7 +45,7 @@ if (singleEvent === null) {
             <img src={imagine} alt="" />
             <h3>Event title : {singleEvent.title}</h3>
             <p>Description: {singleEvent.description}</p>
-            <p>Date/Time: {singleEvent.eventDate}</p>
+            <p>Date/Time: {format(parseISO(singleEvent.eventDate),'MMMM d,yyyy')} {format(parseISO(singleEvent.eventDate),'h:mm a')} {formatDistanceToNow(parseISO(singleEvent.eventDate))}</p>
             <p>Location: {singleEvent.location}</p>
             <div>
                 <h3>Comments</h3>

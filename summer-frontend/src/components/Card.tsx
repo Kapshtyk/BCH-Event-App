@@ -7,12 +7,13 @@ interface CardsProps {
     id: number
     title: string
     date: string
+    time: string
     location:string
     description:string
 
 }
 
-const Card: React.FC<CardsProps> = ({id,title,date,location}) => {
+const Card: React.FC<CardsProps> = ({id,title,date,time,location}) => {
    
     
     return (
@@ -22,7 +23,7 @@ const Card: React.FC<CardsProps> = ({id,title,date,location}) => {
                 <Link to={`${id}`}><img src={imagine} alt="#" /></Link>
             </div>
             <div className={classes.texte}>
-                <p>Date/Time: {date}</p>
+                <p>Date/Time: {date} {time}</p>
                 <h4>Title: {title}</h4>
                 <p>Location: {location}</p>
             </div>
