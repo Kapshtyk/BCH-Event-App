@@ -14,7 +14,7 @@
         "id": 0,
         "title": "string",
         "description": "string",
-        "eventDate": "2023-05-31T08:26:37.027Z",
+        "eventDate": "2023-06-01T08:15:34.711Z",
         "location": "string",
         "comments": [
           {
@@ -22,8 +22,9 @@
               "email": "user@example.com"
             },
             "text": "string",
-            "createdAt": "2023-05-31T08:26:37.027Z",
-            "isPublished": true
+            "createdAt": "2023-06-01T08:15:34.711Z",
+            "isPublished": true,
+            "createdAtAgo": "string"
           }
         ],
         "isPublished": true
@@ -43,7 +44,26 @@ All after-mention CRUD operations are also allowed in the admin panel
 ### Get endpoints:
 - http://localhost:8007/api/v1/comments - retrieves the collection of Comments resources.
 - http://localhost:8007/api/v1/comments/{id} - retrieves a single Comment.
-
+ - request headers:
+    ```
+    Accept: application/json
+    ```
+  - response example: 
+    ```
+    [
+     {
+        "id": 0,
+        "event": "string",
+        "author": {
+          "email": "user@example.com"
+        },
+        "text": "string",
+        "createdAt": "2023-06-01T08:13:22.822Z",
+        "isPublished": true,
+        "createdAtAgo": "string"
+      }
+    ]
+    ```
 ### Post endpoint:
 - http://localhost:8007/api/v1/comments - create a new Comment.
   - request body:

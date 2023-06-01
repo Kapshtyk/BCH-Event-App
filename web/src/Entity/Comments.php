@@ -108,6 +108,7 @@ class Comments
         return $this;
     }
 
+    #[Groups(['comments:read', 'events:read'])]
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
