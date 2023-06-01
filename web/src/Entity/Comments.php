@@ -120,6 +120,7 @@ class Comments
         return $this;
     }
 
+    #[Groups(['users:read', 'events:read', 'comments:write', 'comments:read'])]
     public function getCreatedAtAgo(): string
     {
         return Carbon::instance($this->createdAt)->diffForHumans();
