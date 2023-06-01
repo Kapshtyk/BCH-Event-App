@@ -5,7 +5,7 @@ import { UserType } from '../types/users'
 import { PollsQuiestion, PollsVote } from '../types/polls'
 
 async function processRequest<T>(
-  method: 'GET' | 'POST',
+  method: 'GET' | 'POST' | 'DELETE' | 'PATCH',
   url: string,
   data?: unknown
 ): Promise<T> {
@@ -87,7 +87,8 @@ export const getPollsQuestions = async (): Promise<PollsQuiestion[]> => {
 
 export const checkPoll = async (
   question: number,
-  author: number): Promise<PollsVote[]> => {
+  author: number
+): Promise<PollsVote[]> => {
   const url = BASE_URL + `v1/polls_votes?&question=${question}&author=${author}`
   try {
     const response = await processRequest<PollsVote[]>('GET', url)
@@ -102,7 +103,7 @@ export const postVote = async (
   question: number,
   choice: number,
   author: number
-): Promise<PollsVote> => {
+): Promise<PollsVote | {message: string}> => {
   const url = BASE_URL + 'v1/polls_votes'
   try {
     const response = await processRequest<PollsVote>('POST', url, {

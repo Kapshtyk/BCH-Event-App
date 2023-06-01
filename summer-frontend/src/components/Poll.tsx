@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { PollsQuiestion, PollsChoice, PollsVote } from '../types/polls'
 import { checkPoll, postVote } from '../api/EventsAPI'
 import { CurrentUserContext, PollsQuestionContext } from '../context/context'
+import cl from './Poll.module.css'
 
 interface PollProps {
   data: PollsQuiestion
@@ -9,29 +10,42 @@ interface PollProps {
 
 const Poll: React.FC<PollProps> = ({ data }) => {
   const currentUser = useContext(CurrentUserContext).currentUser
-  const fetchPollsQuestions = useContext(PollsQuestionContext).fetchPollsQuestions
-  const [choice, setChoice] = useState<number | null>(null)
-  const [vote, setVote] = useState<PollsVote[]>([]);
+  const fetchPollsQuestions =
+    useContext(PollsQuestionContext).fetchPollsQuestions
+  const [choiceInput, setChoiceInput] = useState<number | null>(null)
+  const [vote, setVote] = useState<PollsVote | null>(null);
 
   useEffect(() => {
-    if (currentUser && 'user' in currentUser && data.question) {
+    if (currentUser && 'user' in currentUser && data && data.question) {
       checkPoll(data.id, currentUser.user).then((data) => {
+        console.log(data)
         if (data.length > 0) {
-          setVote(data)
+          setVote(data[0])
         }
       })
     }
-  }, [currentUser])
+  }, [data, currentUser])
+
+  useEffect(() => {
+    if (vote) {
+      const segments = vote.choice.split('/')
+      const value = segments[segments.length - 1]
+      setChoiceInput(parseInt(value, 10))
+    }
+  }, [vote])
 
   const makeVote = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    console.log(vote)
-    if (currentUser && 'user' in currentUser && choice !== null) {
+    if (currentUser && 'user' in currentUser && choiceInput !== null) {
       try {
-        const result = await postVote(data.id, choice, currentUser.user)
+        const result = await postVote(data.id, choiceInput, currentUser.user)
         if ('id' in result) {
           console.log(result)
           fetchPollsQuestions()
+          setVote({id: result.id,
+                   question: result.question,
+                   choice: result.choice,
+                   author: result.author})
         } else {
         }
       } catch (error) {
@@ -42,39 +56,61 @@ const Poll: React.FC<PollProps> = ({ data }) => {
 
   const handleChoiceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedChoice = parseInt(event.target.value, 10)
-    setChoice(selectedChoice)
+    setChoiceInput(selectedChoice)
   }
 
   if (!data) {
     return <div>Loading</div>
   }
 
-  const votes: number = data.pollsChoices.reduce((total, choice) => total + choice.votes, 0)
+  const checkVoteExists = () => {
+    return !!(vote && 'id' in vote)
+  }
+
+  const votes: number = data.pollsChoices.reduce(
+    (total, choice) => total + choice.votes,
+    0
+  )
+
   return (
     <div>
       <div key={data.id}>
-        <fieldset>
+        <fieldset className={cl.poll_container}>
           <legend>{data.question}</legend>
-          {data.pollsChoices
-            .sort((a, b) => b.votes - a.votes)
-            .map((choice: PollsChoice) => (
-              <div key={choice.id}>
-                <input
-                  type="radio"
-                  id={choice.choice}
-                  name={data.id.toString()}
-                  value={choice.id.toString()}
-                  onChange={handleChoiceChange}
-
-                />
-                <label htmlFor={choice.choice}>
-                  {choice.choice}: {Math.round((choice.votes / votes) * 10000) / 100}%
-                </label>
+          {data.pollsChoices.map((choice: PollsChoice) => (
+            <div className={cl.poll_row} key={choice.id}>
+              <div className={cl.poll_left_column}>
+              <div className={cl.poll_percentage}>
+                {Math.round((choice.votes / votes) * 10000) / 100}%
               </div>
-            ))}
+                  <input
+                    type="radio"
+                    id={choice.choice}
+                    name={data.id.toString()}
+                    value={choice.id.toString()}
+                    onChange={handleChoiceChange}
+                    disabled={!currentUser || checkVoteExists()}
+                    checked={choiceInput === choice.id}
+                  />
+              </div>
+              <div className={cl.poll_choice}>
+                <div className={cl.poll_radio}>
+                  <label htmlFor={choice.choice}>{choice.choice}:</label>
+                </div>
+                <div className={cl.poll_progress_div}>
+                  <progress 
+                    className={cl.poll_progress_bar}
+                    max="100"
+                    value={Math.round((choice.votes / votes) * 10000) / 100}
+                  ></progress>
+                </div>
+              </div>
+            </div>
+          ))}
           Total votes:{` ${votes}`}
-          
-          <button onClick={makeVote}>VOTE!</button>
+          {!checkVoteExists() && currentUser && <button onClick={makeVote}>VOTE!</button>}
+          {checkVoteExists() && currentUser && <div>You have already participated in this poll!</div>}
+          {!currentUser && <div>Sign in if you want to participate!</div>}
         </fieldset>
       </div>
     </div>
