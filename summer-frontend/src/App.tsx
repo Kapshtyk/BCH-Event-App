@@ -1,31 +1,42 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Faq from './pages/Faq';
-import Event from './pages/Event';
-import Profile from './pages/Profile';
+import React, { useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import Faq from './pages/Faq'
+import Event from './pages/Event'
+import Profile from './pages/Profile'
 import Layout from './pages/Layout'
-import LoginForm from './components/LoginForm';
-import Helsinki from './components/Helsinki';
-import College from './components/College';
+import LoginForm from './components/LoginForm'
+import Helsinki from './components/Helsinki'
+import College from './components/College'
+import { CurrentUserContext } from './context/context'
+import { CurrentUserType } from './types/users'
 
 const App = () => {
+  const [currentUser, setCurrentUser] = useState<CurrentUserType>(null)
+
+  const logout = () => {
+    setCurrentUser(null)
+  }
+
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="faq" element={<Faq />} />
-          <Route path="/:event" element={<Event />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="login" element={<LoginForm />} />
-          <Route path="helsinki" element={<Helsinki />} />
-          <Route path="college" element={<College />} />
+      <CurrentUserContext.Provider
+        value={{ currentUser, setCurrentUser, logout }}
+      >
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="faq" element={<Faq />} />
+            <Route path="/:event" element={<Event />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="login" element={<LoginForm />} />
+            <Route path="helsinki" element={<Helsinki />} />
+            <Route path="college" element={<College />} />
+          </Route>
+        </Routes>
+      </CurrentUserContext.Provider>
+    </BrowserRouter>
+  )
+}
 
-        </Route>
-      </Routes>
-    </BrowserRouter >
-  );
-};
-
-export default App;
+export default App
