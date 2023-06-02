@@ -1,13 +1,13 @@
 .footer {
-    text-align: center;
-    bottom: 0;
-    height: 40px;
-    padding-top: 10px;
+  text-align: center;
+  bottom: 0;
+  height: 40px;
+  padding-top: 10px;
 }
 
 @media (max-width: 500px) {
-    .footer {
-        height: 96px;
-        padding-top: 10px;
-    }
+  .footer {
+    height: 96px;
+    padding-top: 10px;
+  }
 }

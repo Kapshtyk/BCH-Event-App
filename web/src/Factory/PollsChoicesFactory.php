@@ -49,7 +49,7 @@ final class PollsChoicesFactory extends ModelFactory
         return [
             'choice' => self::faker()->text(25),
             'question' => PollsQuestionsFactory::new(),
-            'votes' => 0,
+            'votes' => self::faker()->numberBetween(3, 15),
         ];
     }
 

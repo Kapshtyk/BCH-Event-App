@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Repository\PollsVotesRepository;
 use App\State\PollsVotesStateProcessor;
@@ -12,13 +15,21 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Entity(repositoryClass: PollsVotesRepository::class)]
 #[ApiResource(
     operations: [
+        new GetCollection(),
         new Post()
     ],
     processor: PollsVotesStateProcessor::class,
 )]
+#[ApiFilter(SearchFilter::class, properties: [
+    'question' => 'exact',
+    'author' => 'exact'
+])]
 #[UniqueEntity(
     fields: ["author", "choice"],
     message: "The combination of answer and user must be unique.")]
+#[UniqueEntity(
+    fields: ["author", "question"],
+    message: "The combination of poll and user must be unique.")]
 class PollsVotes
 {
     #[ORM\Id]

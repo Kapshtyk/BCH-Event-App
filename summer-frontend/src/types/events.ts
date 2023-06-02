@@ -13,14 +13,13 @@ export type EventType =
 }
 
 export type CommentType = {
-    author: AuthorType;
-    text: string;
-    publishDate: string;
-    isPublished: boolean;
-
+  author: AuthorType
+  text: string
+  publishDate: string
+  isPublished: boolean
 }
 
 export type AuthorType = {
-    email: string;
-    firstName: string;
+  email: string
+  firstName: string
 }
