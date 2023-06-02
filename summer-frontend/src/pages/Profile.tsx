@@ -1,10 +1,24 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import classes from './Profile.module.css'
 import LoginForm from '../components/LoginForm'
+import { CurrentUserContext } from '../context/context'
+import { UserEvent } from '../types/users'
+import { getRegisteredEvents } from '../api/EventsAPI'
 
 const Profile = () => {
+  const currentUser = useContext(CurrentUserContext).currentUser
   const [showLoginOverlay, setShowLoginOverlay] = useState(true)
   const [showRegisterModal, setShowRegisterModal] = useState(false)
+  const [events, setEvents] = useState<UserEvent[]>([])
+
+  useEffect(() => {
+    if (currentUser && 'user' in currentUser) {
+      getRegisteredEvents(currentUser.user).then((data) => {
+        setEvents(data)
+      })
+    }
+  }, [currentUser])
+
 
   const handleLoginButtonClick = () => {
     setShowLoginOverlay(true)
@@ -32,6 +46,14 @@ const Profile = () => {
       <p className={classes.accountInfo}>User</p>
       <p className={classes.accountField}>Comments posted by user:</p>
       <p className={classes.accountInfo}>No comments available</p>
+      {events.length > 0 && (
+        <h2>Events</h2>
+        {events.map(event => {
+          return <h4>{event}</h4>
+        })}
+      )}
+      
+
 
       {showLoginOverlay && (
         <div className={classes.overlay}>

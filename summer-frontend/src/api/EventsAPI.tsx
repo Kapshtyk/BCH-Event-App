@@ -1,7 +1,7 @@
 import { BASE_URL } from '../service/constant'
 import axios, { AxiosResponse } from 'axios'
 import { Events, EventType } from '../types/events'
-import { UserType } from '../types/users'
+import { UserEvent, UserType } from '../types/users'
 import { PollsQuiestion, PollsVote } from '../types/polls'
 
 async function processRequest<T>(
@@ -111,6 +111,34 @@ export const postVote = async (
       choice: `api/v1/polls_choices/${choice}`,
       author: `api/v1/users/${author}`
     })
+    return response
+  } catch (error) {
+    console.error(error)
+    return { message: `Something went wrong: ${error}` }
+  }
+}
+
+export const registerToEvent = async (
+  event: number,
+  user: number
+): Promise<UserEvent | {message: string}> => {
+  const url = BASE_URL + 'v1/events_users'
+  try {
+    const response = await processRequest<UserEvent>('POST', url, {
+      question: `api/v1/events/${event}`,
+      author: `api/v1/users/${user}`
+    })
+    return response
+  } catch (error) {
+    console.error(error)
+    return { message: `Something went wrong: ${error}` }
+  }
+}
+
+export const getRegisteredEvents = async (user: number): Promise<UserEvent[] | {message: string}> => {
+  const url = BASE_URL + 'v1/events_users'
+  try {
+    const response = await processRequest<UserEvent[]>('GET', url)
     return response
   } catch (error) {
     console.error(error)

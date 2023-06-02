@@ -67,12 +67,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: PollsVotes::class, orphanRemoval: true)]
     private Collection $pollsVotes;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: EventsUsers::class, orphanRemoval: true)]
+    private Collection $eventsUsers;
+
     public function __construct()
 {
     $this->comments = new ArrayCollection();
     $this->questions = new ArrayCollection();
     $this->apiTokens = new ArrayCollection();
     $this->pollsVotes = new ArrayCollection();
+    $this->eventsUsers = new ArrayCollection();
 }
 
     public function getId(): ?int
@@ -264,6 +268,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($pollsVote->getAuthor() === $this) {
                 $pollsVote->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EventsUsers>
+     */
+    public function getEventsUsers(): Collection
+    {
+        return $this->eventsUsers;
+    }
+
+    public function addEventsUser(EventsUsers $eventsUser): self
+    {
+        if (!$this->eventsUsers->contains($eventsUser)) {
+            $this->eventsUsers->add($eventsUser);
+            $eventsUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventsUser(EventsUsers $eventsUser): self
+    {
+        if ($this->eventsUsers->removeElement($eventsUser)) {
+            // set the owning side to null (unless already changed)
+            if ($eventsUser->getUser() === $this) {
+                $eventsUser->setUser(null);
             }
         }
 
