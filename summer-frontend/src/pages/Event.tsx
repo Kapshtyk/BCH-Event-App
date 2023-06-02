@@ -1,15 +1,16 @@
 import React,{useState,useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { format, parseISO, formatDistanceToNow } from 'date-fns';
+import { format, parseISO} from 'date-fns';
 import classes from './Event.module.css';
 import imagine from "../media/images/rock.jpg";
-import { EventType } from '../types/events';
+import { EventType, CommentType} from '../types/events';
 // import { getEvents } from '../api/EventsAPI';
 
 
 const Event:React.FC = () => {
     const [singleEvent, setEvent] = useState<EventType | null>(null);
+    const [commentText, setCommentText] = useState('');
     const {event} = useParams<{event:string}>();
     const [isLoading, setIsLoading] = useState(false)
 
@@ -33,6 +34,33 @@ useEffect(() => {
 };
 fetchSingleEvent();
 },[event]);
+const handleCommentSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post(`http://localhost:8007/api/v1/comments`, {
+        eventId: singleEvent?.id,
+        text: commentText
+      }, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+      const newComment: CommentType = response.data;
+      setEvent(prevState => {
+        if (prevState) {
+          return {
+            ...prevState,
+            comments: prevState.comments ? [...prevState.comments, newComment] : [newComment]
+          };
+        }
+        return null;
+      });
+      setCommentText('');
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 if(isLoading) {
     return <p>Loading...</p>
@@ -56,6 +84,10 @@ if (singleEvent === null) {
                     </li>
                 )}
             </div>
+            <form onSubmit={handleCommentSubmit}>
+        <input type="text" value={commentText} onChange={e => setCommentText(e.target.value)} placeholder="Add a comment" />
+        <button type="submit">Submit</button>
+      </form>
 
         </div>
     );
