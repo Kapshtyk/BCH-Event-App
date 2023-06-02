@@ -7,11 +7,22 @@ interface CardsProps {
   id: number
   title: string
   date: string
+  time: string
+  timeDifference: string
   location: string
   description: string
+  isPastEvent: boolean
 }
 
-const Card: React.FC<CardsProps> = ({ id, title, date, location }) => {
+const Card: React.FC<CardsProps> = ({
+  id,
+  title,
+  date,
+  time,
+  timeDifference,
+  isPastEvent,
+  location
+}) => {
   return (
     <div className={classes.card}>
       <div className={classes.image}>
@@ -20,7 +31,10 @@ const Card: React.FC<CardsProps> = ({ id, title, date, location }) => {
         </Link>
       </div>
       <div className={classes.texte}>
-        <p>Date/Time: {date}</p>
+        <p>
+          Date/Time: {date} {time}{' '}
+          {isPastEvent ? `${timeDifference} ago` : `${timeDifference} left`}
+        </p>
         <h4>Title: {title}</h4>
         <p>Location: {location}</p>
       </div>

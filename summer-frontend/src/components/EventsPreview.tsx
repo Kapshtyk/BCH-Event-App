@@ -1,28 +1,43 @@
 import React, { useState, useEffect } from 'react'
+import { format, parseISO, isPast, formatDistanceToNow } from 'date-fns'
 import { Events } from '../types/events'
 import Card from './Card'
 import { getEvents } from '../api/EventsAPI'
 
 const EventsPreview: React.FC = () => {
-  const [events, setEvents] = useState<Events>([])
+  const [activeEvents, setActiveEvents] = useState<Events>([])
+  const [endedEvents, setEndedEvents] = useState<Events>([])
   const [isLoading, setIsLoading] = useState(false)
   const [sortOption, setSortOption] = useState('')
 
   useEffect(() => {
     setIsLoading(true)
     Promise.all([getEvents()]).then(([events]) => {
-      setEvents(events)
+      const updateActiveEvents = events.filter((event) => {
+        const eventDate = parseISO(event.eventDate)
+        const isPastEvent = isPast(eventDate)
+        return !isPastEvent
+      })
+      const updateEndedEvents = events.filter((event) => {
+        const eventDate = parseISO(event.eventDate)
+        const isPastEvent = isPast(eventDate)
+        return isPastEvent
+      })
+      setActiveEvents(updateActiveEvents)
+      setEndedEvents(updateEndedEvents)
       setIsLoading(false)
     })
   }, [])
+
   if (isLoading) {
     return <p>Loading...</p>
   }
-  if (events.length === 0) {
-    return <p>Events not found</p>
+  if (activeEvents.length === 0 && endedEvents.length === 0) {
+    return <p> Events not found</p>
   }
+
   const sortEventsByDate = (option: string) => {
-    let sortedEvents = [...events]
+    let sortedEvents = [...activeEvents]
     if (option === 'latest') {
       sortedEvents.sort(
         (a, b) =>
@@ -34,7 +49,7 @@ const EventsPreview: React.FC = () => {
           new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime()
       )
     }
-    setEvents(sortedEvents)
+    setActiveEvents(sortedEvents)
   }
   const handleSortOptionChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -43,6 +58,8 @@ const EventsPreview: React.FC = () => {
     setSortOption(selectedOption)
     sortEventsByDate(selectedOption)
   }
+
+  // const activeEventsAll = activeEvents.filter((event)=> !event.isPublished);
 
   return (
     <div>
@@ -56,16 +73,39 @@ const EventsPreview: React.FC = () => {
         <option value="latest">Latest Date</option>
         <option value="oldest">Oldest Date</option>
       </select>
-      {events.map((event) => (
+      <h2>Active Events</h2>
+      {activeEvents.length === 0 && <p>There are no active events currently</p>}
+      {activeEvents.map((event) => (
         <Card
           key={event.id}
           id={event.id}
           title={event.title}
-          date={event.eventDate}
+          date={format(parseISO(event.eventDate), 'MMMM d,yyyy')}
+          time={format(parseISO(event.eventDate), 'h:mm a')}
+          timeDifference={formatDistanceToNow(parseISO(event.eventDate))}
           location={event.location}
           description={event.description}
+          isPastEvent={event.isPublished}
         />
       ))}
+      {endedEvents.length > 0 && (
+        <div>
+          <h2>Ended Events</h2>
+          {endedEvents.map((event) => (
+            <Card
+              key={event.id}
+              id={event.id}
+              title={event.title}
+              date={format(parseISO(event.eventDate), 'MMMM d,yyyy')}
+              time={format(parseISO(event.eventDate), 'h:mm a')}
+              timeDifference={formatDistanceToNow(parseISO(event.eventDate))}
+              location={event.location}
+              description={event.description}
+              isPastEvent={event.isPublished}
+            />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

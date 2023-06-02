@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router'
 import axios from 'axios'
+import { format, parseISO } from 'date-fns'
 import classes from './Event.module.css'
 import imagine from '../media/images/rock.jpg'
 import { EventType } from '../types/events'
 import { CurrentUserContext } from '../context/context'
 import { cancelRegistrationToEvent, checkEventRegistration, registerToEvent } from '../api/EventsAPI'
+import { EventType, CommentType } from '../types/events'
 // import { getEvents } from '../api/EventsAPI';
 
 const Event: React.FC = () => {
   const [singleEvent, setEvent] = useState<EventType | null>(null)
+  const [commentText, setCommentText] = useState('')
   const { event } = useParams<{ event: string }>()
   const [isLoading, setIsLoading] = useState(false)
   const [registered, setRegistered] = useState(false)
@@ -38,6 +41,39 @@ const Event: React.FC = () => {
     }
     fetchSingleEvent()
   }, [event])
+  const handleCommentSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
+    try {
+      const response = await axios.post(
+        `http://localhost:8007/api/v1/comments`,
+        {
+          event_id: singleEvent?.id,
+          text: commentText
+        },
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+      const newComment: CommentType = response.data
+      setEvent((prevState) => {
+        if (prevState) {
+          return {
+            ...prevState,
+            comments: prevState.comments
+              ? [...prevState.comments, newComment]
+              : [newComment]
+          }
+        }
+        return null
+      })
+      setCommentText('')
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
     if (currentUser && event) {
@@ -84,7 +120,10 @@ const Event: React.FC = () => {
       <img src={imagine} alt="" />
       <h3>Event title : {singleEvent.title}</h3>
       <p>Description: {singleEvent.description}</p>
-      <p>Date/Time: {singleEvent.eventDate}</p>
+      <p>
+        Date/Time: {format(parseISO(singleEvent.eventDate), 'MMMM d,yyyy')}{' '}
+        {format(parseISO(singleEvent.eventDate), 'h:mm a')}
+      </p>
       <p>Location: {singleEvent.location}</p>
       <div>
         <h3>Comments</h3>
@@ -105,6 +144,15 @@ const Event: React.FC = () => {
         <h2>Register for the event</h2>
         <button onClick={registration}>Register now</button>
       </div>)}
+      <form onSubmit={handleCommentSubmit}>
+        <input
+          type="text"
+          value={commentText}
+          onChange={(e) => setCommentText(e.target.value)}
+          placeholder="Add a comment"
+        />
+        <button type="submit">Submit</button>
+      </form>
     </div>
   )
 }
