@@ -1,17 +1,17 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import imagine from "../media/images/rock.jpg";
-import classes from "./Card.module.css";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import imagine from '../media/images/rock.jpg'
+import classes from './Card.module.css'
 
 interface CardsProps {
-  id: number;
-  title: string;
-  date: string;
-  time: string;
-  timeDifference: string;
-  location: string;
-  description: string;
-  isPastEvent: boolean;
+  id: number
+  title: string
+  date: string
+  time: string
+  timeDifference: string
+  location: string
+  description: string
+  isPastEvent: boolean
 }
 
 const Card: React.FC<CardsProps> = ({
@@ -21,7 +21,7 @@ const Card: React.FC<CardsProps> = ({
   time,
   timeDifference,
   isPastEvent,
-  location,
+  location
 }) => {
   return (
     <div className={classes.card}>
@@ -32,14 +32,14 @@ const Card: React.FC<CardsProps> = ({
       </div>
       <div className={classes.texte}>
         <p>
-          Date/Time: {date} {time}{" "}
+          Date/Time: {date} {time}{' '}
           {isPastEvent ? `${timeDifference} ago` : `${timeDifference} left`}
         </p>
         <h4>Title: {title}</h4>
         <p>Location: {location}</p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Card;
+export default Card

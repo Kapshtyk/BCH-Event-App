@@ -1,80 +1,80 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { format, parseISO } from "date-fns";
-import classes from "./Event.module.css";
-import imagine from "../media/images/rock.jpg";
-import { EventType, CommentType } from "../types/events";
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
+import { format, parseISO } from 'date-fns'
+import classes from './Event.module.css'
+import imagine from '../media/images/rock.jpg'
+import { EventType, CommentType } from '../types/events'
 // import { getEvents } from '../api/EventsAPI';
 
 const Event: React.FC = () => {
-  const [singleEvent, setEvent] = useState<EventType | null>(null);
-  const [commentText, setCommentText] = useState("");
-  const { event } = useParams<{ event: string }>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [singleEvent, setEvent] = useState<EventType | null>(null)
+  const [commentText, setCommentText] = useState('')
+  const { event } = useParams<{ event: string }>()
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    setIsLoading(true);
+    setIsLoading(true)
     const fetchSingleEvent = async () => {
       try {
         const response = await axios.get(
           `http://localhost:8007/api/v1/events/${event}`,
           {
             headers: {
-              Accept: "application/json",
-            },
+              Accept: 'application/json'
+            }
           }
-        );
-        const data: EventType = response.data;
-        setEvent(data);
-        setIsLoading(false);
-        console.log(data);
+        )
+        const data: EventType = response.data
+        setEvent(data)
+        setIsLoading(false)
+        console.log(data)
       } catch (error) {
-        console.log(error);
-        setEvent(null);
+        console.log(error)
+        setEvent(null)
       }
-    };
-    fetchSingleEvent();
-  }, [event]);
+    }
+    fetchSingleEvent()
+  }, [event])
   const handleCommentSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+    event.preventDefault()
     try {
       const response = await axios.post(
         `http://localhost:8007/api/v1/comments`,
         {
           event_id: singleEvent?.id,
-          text: commentText,
+          text: commentText
         },
         {
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          }
         }
-      );
-      const newComment: CommentType = response.data;
+      )
+      const newComment: CommentType = response.data
       setEvent((prevState) => {
         if (prevState) {
           return {
             ...prevState,
             comments: prevState.comments
               ? [...prevState.comments, newComment]
-              : [newComment],
-          };
+              : [newComment]
+          }
         }
-        return null;
-      });
-      setCommentText("");
+        return null
+      })
+      setCommentText('')
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p>Loading...</p>
   }
   if (singleEvent === null) {
-    return <p>Event not found</p>;
+    return <p>Event not found</p>
   }
   return (
     <div className={classes.event}>
@@ -82,8 +82,8 @@ const Event: React.FC = () => {
       <h3>Event title : {singleEvent.title}</h3>
       <p>Description: {singleEvent.description}</p>
       <p>
-        Date/Time: {format(parseISO(singleEvent.eventDate), "MMMM d,yyyy")}{" "}
-        {format(parseISO(singleEvent.eventDate), "h:mm a")}
+        Date/Time: {format(parseISO(singleEvent.eventDate), 'MMMM d,yyyy')}{' '}
+        {format(parseISO(singleEvent.eventDate), 'h:mm a')}
       </p>
       <p>Location: {singleEvent.location}</p>
       <div>
@@ -107,7 +107,7 @@ const Event: React.FC = () => {
         <button type="submit">Submit</button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default Event;
+export default Event
