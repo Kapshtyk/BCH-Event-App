@@ -2,23 +2,25 @@ import React, { useContext, useEffect, useState } from 'react'
 import classes from './Profile.module.css'
 import LoginForm from '../components/LoginForm'
 import { CurrentUserContext } from '../context/context'
-import { UserEvent } from '../types/users'
+import { UserEventGet } from '../types/users'
 import { getRegisteredEvents } from '../api/EventsAPI'
+import { Link } from 'react-router-dom'
 
 const Profile = () => {
   const currentUser = useContext(CurrentUserContext).currentUser
   const [showLoginOverlay, setShowLoginOverlay] = useState(true)
   const [showRegisterModal, setShowRegisterModal] = useState(false)
-  const [events, setEvents] = useState<UserEvent[]>([])
+  const [events, setEvents] = useState<UserEventGet[]>([])
 
   useEffect(() => {
     if (currentUser && 'user' in currentUser) {
       getRegisteredEvents(currentUser.user).then((data) => {
-        setEvents(data)
+        if (!('message' in data)) {
+          setEvents(data)
+        }
       })
     }
   }, [currentUser])
-
 
   const handleLoginButtonClick = () => {
     setShowLoginOverlay(true)
@@ -31,6 +33,17 @@ const Profile = () => {
   const handleOverlayClose = () => {
     setShowLoginOverlay(false)
     setShowRegisterModal(false)
+  }
+
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }
+    return new Date(dateString).toLocaleDateString(undefined, options)
   }
 
   return (
@@ -46,15 +59,35 @@ const Profile = () => {
       <p className={classes.accountInfo}>User</p>
       <p className={classes.accountField}>Comments posted by user:</p>
       <p className={classes.accountInfo}>No comments available</p>
-      {events.length > 0 && (
-        <h2>Events</h2>
-        {events.map(event => {
-          return <h4>{event}</h4>
-        })}
-      )}
-      
-
-
+      <div>
+        {events && events.length > 0 && (
+          <>
+            <h3>Events</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Event</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {events.map((event) => {
+                  return (
+                    <tr key={event.id}>
+                      <td>
+                        <Link to={`/events/${event.event.id}`}>
+                          {event.event.title}
+                        </Link>
+                      </td>
+                      <td>{formatDate(event.event.eventDate)}</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </>
+        )}
+      </div>
       {showLoginOverlay && (
         <div className={classes.overlay}>
           <div className={classes.modal}>
@@ -63,7 +96,6 @@ const Profile = () => {
           </div>
         </div>
       )}
-
       {showRegisterModal && (
         <div className={classes.overlay}>
           <div className={classes.modal}>

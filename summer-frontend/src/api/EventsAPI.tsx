@@ -1,7 +1,7 @@
 import { BASE_URL } from '../service/constant'
 import axios, { AxiosResponse } from 'axios'
 import { Events, EventType } from '../types/events'
-import { UserEvent, UserType } from '../types/users'
+import { UserEventGet, UserEventPost, UserType } from '../types/users'
 import { PollsQuiestion, PollsVote } from '../types/polls'
 
 async function processRequest<T>(
@@ -60,7 +60,7 @@ export const getEvents = async (): Promise<Events> => {
 export const signin = async (
   email: string,
   password: string
-): Promise<UserType> => {
+): Promise<UserType | { message: string }> => {
   const url = BASE_URL + 'login'
   try {
     const response = await processRequest<UserType>('POST', url, {
@@ -103,7 +103,7 @@ export const postVote = async (
   question: number,
   choice: number,
   author: number
-): Promise<PollsVote | {message: string}> => {
+): Promise<PollsVote | { message: string }> => {
   const url = BASE_URL + 'v1/polls_votes'
   try {
     const response = await processRequest<PollsVote>('POST', url, {
@@ -121,12 +121,12 @@ export const postVote = async (
 export const registerToEvent = async (
   event: number,
   user: number
-): Promise<UserEvent | {message: string}> => {
+): Promise<UserEventPost | { message: string }> => {
   const url = BASE_URL + 'v1/events_users'
   try {
-    const response = await processRequest<UserEvent>('POST', url, {
-      question: `api/v1/events/${event}`,
-      author: `api/v1/users/${user}`
+    const response = await processRequest<UserEventPost>('POST', url, {
+      event: `api/v1/events/${event}`,
+      user: `api/v1/users/${user}`
     })
     return response
   } catch (error) {
@@ -135,10 +135,39 @@ export const registerToEvent = async (
   }
 }
 
-export const getRegisteredEvents = async (user: number): Promise<UserEvent[] | {message: string}> => {
-  const url = BASE_URL + 'v1/events_users'
+export const cancelRegistrationToEvent = async (
+  id: number
+): Promise<any | { message: string }> => {
+  const url = BASE_URL + `v1/events_users/${id}`
   try {
-    const response = await processRequest<UserEvent[]>('GET', url)
+    const response = await processRequest<any>('DELETE', url)
+    return response
+  } catch (error) {
+    console.error(error)
+    return { message: `Something went wrong: ${error}` }
+  }
+}
+
+export const getRegisteredEvents = async (
+  user: number
+): Promise<UserEventGet[] | { message: string }> => {
+  const url = BASE_URL + `v1/events_users?user=${user}`
+  try {
+    const response = await processRequest<UserEventGet[]>('GET', url)
+    return response
+  } catch (error) {
+    console.error(error)
+    return { message: `Something went wrong: ${error}` }
+  }
+}
+
+export const checkEventRegistration = async (
+  user: number,
+  event: number
+): Promise<UserEventGet[] | { message: string }> => {
+  const url = BASE_URL + `v1/events_users?user=${user}&event=${event}`
+  try {
+    const response = await processRequest<UserEventGet[]>('GET', url)
     return response
   } catch (error) {
     console.error(error)

@@ -24,7 +24,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
     denormalizationContext: ['groups' => ['registration:write']],
 )]
 #[ApiFilter(SearchFilter::class, properties: [
-    'user' => 'exact'
+    'user' => 'exact',
+    'event' => 'exact',
 ])]
 #[UniqueEntity(
     fields: ["user", "event"],

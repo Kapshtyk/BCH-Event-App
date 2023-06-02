@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router'
 import axios from 'axios'
 import classes from './Event.module.css'
 import imagine from '../media/images/rock.jpg'
 import { EventType } from '../types/events'
+import { CurrentUserContext } from '../context/context'
+import { cancelRegistrationToEvent, checkEventRegistration, registerToEvent } from '../api/EventsAPI'
 // import { getEvents } from '../api/EventsAPI';
 
 const Event: React.FC = () => {
   const [singleEvent, setEvent] = useState<EventType | null>(null)
   const { event } = useParams<{ event: string }>()
   const [isLoading, setIsLoading] = useState(false)
+  const [registered, setRegistered] = useState(false)
+  const currentUser = useContext(CurrentUserContext).currentUser
 
   useEffect(() => {
     setIsLoading(true)
@@ -35,6 +39,40 @@ const Event: React.FC = () => {
     fetchSingleEvent()
   }, [event])
 
+  useEffect(() => {
+    if (currentUser && event) {
+      checkEventRegistration(currentUser.user, parseInt(event, 10)).then(
+        (data) => {
+         if (!('message' in data) && data.length > 0) {
+          setRegistered(true)
+         }
+        }  
+      )
+    }
+  }, [])
+
+  const registration = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    if (currentUser && event) {
+      registerToEvent(parseInt(event, 10), currentUser.user).then(data => {
+        if ('id' in data) {
+          setRegistered(true)
+        }
+      })
+    }
+  }
+
+  const cancelRegistration = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    if (currentUser && event) {
+      checkEventRegistration(currentUser.user, parseInt(event, 10)).then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          cancelRegistrationToEvent(data[0].id).then(() => setRegistered(false))
+        }
+      })
+    }
+  }
+
   if (isLoading) {
     return <p>Loading...</p>
   }
@@ -59,6 +97,14 @@ const Event: React.FC = () => {
           </li>
         ))}
       </div>
+      {currentUser && registered && (<div>
+        <h2>You are already registered for this event.</h2>
+        <button onClick={cancelRegistration}>Cancel registration</button>
+      </div>)}
+      {currentUser && !registered && (<div>
+        <h2>Register for the event</h2>
+        <button onClick={registration}>Register now</button>
+      </div>)}
     </div>
   )
 }
