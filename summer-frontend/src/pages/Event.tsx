@@ -45,7 +45,7 @@ if (singleEvent === null) {
             <img src={imagine} alt="" />
             <h3>Event title : {singleEvent.title}</h3>
             <p>Description: {singleEvent.description}</p>
-            <p>Date/Time: {format(parseISO(singleEvent.eventDate),'MMMM d,yyyy')} {format(parseISO(singleEvent.eventDate),'h:mm a')} {formatDistanceToNow(parseISO(singleEvent.eventDate))}</p>
+            <p>Date/Time: {format(parseISO(singleEvent.eventDate),'MMMM d,yyyy')} {format(parseISO(singleEvent.eventDate),'h:mm a')}</p>
             <p>Location: {singleEvent.location}</p>
             <div>
                 <h3>Comments</h3>

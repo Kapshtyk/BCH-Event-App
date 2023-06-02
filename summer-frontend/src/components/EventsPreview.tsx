@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { format, parseISO, isPast} from 'date-fns';
+import { format, parseISO, isPast,formatDistanceToNow} from 'date-fns';
 import {Events} from '../types/events';
 import Card from './Card';
 import { getEvents } from '../api/EventsAPI';
@@ -74,8 +74,11 @@ const handleSortOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => 
            title={event.title}
            date={format(parseISO(event.eventDate), 'MMMM d,yyyy')}
            time={format(parseISO(event.eventDate), 'h:mm a')}
+           timeDifference={formatDistanceToNow(parseISO(event.eventDate))}
            location={event.location}
-           description={event.description}/>)
+           description={event.description}
+           isPastEvent={event.isPublished}/>
+           )
            )}
            {endedEvents.length > 0 && (
            <div>
@@ -86,8 +89,10 @@ const handleSortOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => 
            title={event.title}
            date={format(parseISO(event.eventDate), 'MMMM d,yyyy')}
            time={format(parseISO(event.eventDate), 'h:mm a')}
+           timeDifference={formatDistanceToNow(parseISO(event.eventDate))}
            location={event.location}
-           description={event.description}/>)
+           description={event.description}
+           isPastEvent={event.isPublished}/>)
            )}
            </div>)}
         </div>
