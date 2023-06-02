@@ -16,7 +16,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $question = PollsQuestionsFactory::new()->create();
+        PollsQuestionsFactory::createMany(3);
     
         AdminFactory::createOne();
         UserFactory::createMany(15);
@@ -32,8 +32,10 @@ class AppFixtures extends Fixture
                 'author' => UserFactory::random()
             ];
         });
-        PollsChoicesFactory::new()->createMany(5, [
-            'question' => $question,
-        ]);
+        PollsChoicesFactory::new()->createMany(9, function() {
+            return [
+                'question' => PollsQuestionsFactory::random()
+            ];
+        });
     }
 }

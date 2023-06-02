@@ -2,9 +2,10 @@ import { BASE_URL } from '../service/constant'
 import axios, { AxiosResponse } from 'axios'
 import { Events, EventType } from '../types/events'
 import { UserType } from '../types/users'
+import { PollsQuiestion, PollsVote } from '../types/polls'
 
 async function processRequest<T>(
-  method: 'GET' | 'POST',
+  method: 'GET' | 'POST' | 'DELETE' | 'PATCH',
   url: string,
   data?: unknown
 ): Promise<T> {
@@ -46,7 +47,7 @@ const checkArray = (data: unknown) => {
 }
 
 export const getEvents = async (): Promise<Events> => {
-  const url = BASE_URL + 'api/v1/events'
+  const url = BASE_URL + 'v1/events'
   try {
     const response = await processRequest<Events>('GET', url)
     return checkArray(response)
@@ -60,11 +61,55 @@ export const signin = async (
   email: string,
   password: string
 ): Promise<UserType> => {
-  const url = BASE_URL + 'api/login'
+  const url = BASE_URL + 'login'
   try {
     const response = await processRequest<UserType>('POST', url, {
       email,
       password
+    })
+    return response
+  } catch (error) {
+    console.error(error)
+    return { message: `Something went wrong: ${error}` }
+  }
+}
+
+export const getPollsQuestions = async (): Promise<PollsQuiestion[]> => {
+  const url = BASE_URL + 'v1/polls_questions'
+  try {
+    const response = await processRequest<PollsQuiestion[]>('GET', url)
+    return response
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+}
+
+export const checkPoll = async (
+  question: number,
+  author: number
+): Promise<PollsVote[]> => {
+  const url = BASE_URL + `v1/polls_votes?&question=${question}&author=${author}`
+  try {
+    const response = await processRequest<PollsVote[]>('GET', url)
+    return response
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+}
+
+export const postVote = async (
+  question: number,
+  choice: number,
+  author: number
+): Promise<PollsVote | {message: string}> => {
+  const url = BASE_URL + 'v1/polls_votes'
+  try {
+    const response = await processRequest<PollsVote>('POST', url, {
+      question: `api/v1/polls_questions/${question}`,
+      choice: `api/v1/polls_choices/${choice}`,
+      author: `api/v1/users/${author}`
     })
     return response
   } catch (error) {

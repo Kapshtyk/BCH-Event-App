@@ -71,6 +71,15 @@ const Nav = () => {
             </NavLink>
           )}
         </li>
+        <li>
+          {isMobile ? (
+            <NavLink to="/polls">Polls</NavLink>
+          ) : (
+            <NavLink to="/polls">
+              <FontAwesomeIcon icon={faUser} />
+            </NavLink>
+          )}
+        </li>
       </ul>
     </nav>
   )

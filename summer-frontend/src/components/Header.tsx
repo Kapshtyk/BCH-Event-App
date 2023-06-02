@@ -12,7 +12,9 @@ const Header = () => {
       <Link to="/">
         <h1>EventApp</h1>
       </Link>
-      {currentUser && ('user' in currentUser) && <div>{currentUser.roles.join(' ')}</div>}
+      {currentUser && 'user' in currentUser && (
+        <div>{currentUser.roles.join(' ')}</div>
+      )}
       <Nav />
     </header>
   )
