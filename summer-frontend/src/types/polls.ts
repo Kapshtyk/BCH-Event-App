@@ -13,10 +13,9 @@ export type PollsChoice = {
   question?: string
 }
 
-export type PollsVote =
- {
-      id?: number
-      question: string
-      choice: string
-      author: string
-    }
+export type PollsVote = {
+  id?: number
+  question: string
+  choice: string
+  author: string
+}

@@ -34,7 +34,8 @@
   padding-left: 0.5rem;
 }
 
-.poll_progress_div, .poll_progress_bar {
+.poll_progress_div,
+.poll_progress_bar {
   width: 100%;
   transition: all 0.3s;
 }

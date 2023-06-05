@@ -15,13 +15,11 @@ import { PollsQuiestion } from './types/polls'
 import Poll from './components/Poll'
 
 const App = () => {
-  const [currentUser, setCurrentUser] = useState<CurrentUserType>(
-    {
-      user: 1,
-      token: '455...',
-      roles: ['ROLE_ADMIN', 'ROLE_USER']
-    }
-  )
+  const [currentUser, setCurrentUser] = useState<CurrentUserType>({
+    user: 1,
+    token: '455...',
+    roles: ['ROLE_ADMIN', 'ROLE_USER']
+  })
   const [pollsQuestion, setPollsQuestion] = useState<PollsQuiestion[]>([])
 
   const logout = () => {
@@ -53,7 +51,7 @@ const App = () => {
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="faq" element={<Faq />} />
-              <Route path="/:event" element={<Event />} />
+              <Route path="/events/:event" element={<Event />} />
               <Route path="profile" element={<Profile />} />
               <Route path="login" element={<LoginForm />} />
               <Route path="helsinki" element={<Helsinki />} />

@@ -32,12 +32,12 @@ class Events
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['events:read'])]
+    #[Groups(['events:read', 'registration:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Groups(['events:read', 'events:write'])]
+    #[Groups(['events:read', 'events:write', 'registration:read'])]
     private ?string $title = null;
     
     #[ORM\Column(type: Types::TEXT)]
@@ -46,7 +46,7 @@ class Events
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(['events:read', 'events:write'])]
+    #[Groups(['events:read', 'events:write', 'registration:read'])]
     #[Assert\NotBlank]
     #[Assert\DateTimeValidator]
     private ?\DateTimeInterface $eventDate = null;
@@ -70,10 +70,14 @@ class Events
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\OneToMany(mappedBy: 'event', targetEntity: EventsUsers::class, orphanRemoval: true)]
+    private Collection $eventsUsers;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
+        $this->eventsUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -198,5 +202,35 @@ class Events
     public function __toString()
     {
         return $this->title;
+    }
+
+    /**
+     * @return Collection<int, EventsUsers>
+     */
+    public function getEventsUsers(): Collection
+    {
+        return $this->eventsUsers;
+    }
+
+    public function addEventsUser(EventsUsers $eventsUser): self
+    {
+        if (!$this->eventsUsers->contains($eventsUser)) {
+            $this->eventsUsers->add($eventsUser);
+            $eventsUser->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventsUser(EventsUsers $eventsUser): self
+    {
+        if ($this->eventsUsers->removeElement($eventsUser)) {
+            // set the owning side to null (unless already changed)
+            if ($eventsUser->getEvent() === $this) {
+                $eventsUser->setEvent(null);
+            }
+        }
+
+        return $this;
     }
 };
