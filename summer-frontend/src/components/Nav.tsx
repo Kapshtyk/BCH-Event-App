@@ -32,6 +32,7 @@ const Nav = () => {
                     ) : (
                         <NavLink to="/">
                             <FontAwesomeIcon icon={faHouse} />
+                            <small>HOME</small>
                         </NavLink>
                     )}
                 </li>
