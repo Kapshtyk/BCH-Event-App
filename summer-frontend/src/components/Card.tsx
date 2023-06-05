@@ -1,23 +1,45 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import imagine from "../media/images/events.jpg"
-import classes from './Card.module.css';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import imagine from '../media/images/rock.jpg'
+import classes from './Card.module.css'
 
-const Card = () => {
-    return (
-        <div className={classes.card}>
-            <Link to={`/event`}><img src={imagine} alt="#" /></Link>
-            <div className={classes.datearea}>
-                <h2>00</h2>
-                <p>month</p>
-            </div>
-            <div className={classes.textarea}>
-                <h4>Title</h4>
-                <p>Location</p>
-            </div>
+interface CardsProps {
+  id: number
+  title: string
+  date: string
+  time: string
+  timeDifference: string
+  location: string
+  description: string
+  isPastEvent: boolean
+}
 
-        </div >
-    );
-};
+const Card: React.FC<CardsProps> = ({
+  id,
+  title,
+  date,
+  time,
+  timeDifference,
+  isPastEvent,
+  location
+}) => {
+  return (
+    <div className={classes.card}>
+      <div className={classes.image}>
+        <Link to={`/events/${id}`}>
+          <img src={imagine} alt="#" />
+        </Link>
+      </div>
+      <div className={classes.texte}>
+        <p>
+          Date/Time: {date} {time}{' '}
+          {isPastEvent ? `${timeDifference} ago` : `${timeDifference} left`}
+        </p>
+        <h4>Title: {title}</h4>
+        <p>Location: {location}</p>
+      </div>
+    </div>
+  )
+}
 
-export default Card;
+export default Card

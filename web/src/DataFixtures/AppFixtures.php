@@ -2,10 +2,13 @@
 
 namespace App\DataFixtures;
 
+use App\Factory\AdminFactory;
 use App\Factory\CommentsFactory;
 use App\Factory\EventsFactory;
-use App\Factory\RolesFactory;
-use App\Factory\UsersFactory;
+use App\Factory\PollsChoicesFactory;
+use App\Factory\PollsQuestionsFactory;
+use App\Factory\QuestionsFactory;
+use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -13,7 +16,26 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        RolesFactory::createMany(3);
-        CommentsFactory::createMany(40);
+        PollsQuestionsFactory::createMany(3);
+    
+        AdminFactory::createOne();
+        UserFactory::createMany(15);
+        EventsFactory::createMany(20);
+        CommentsFactory::createMany(40, function() {
+            return [
+                'author' => UserFactory::random(),
+                'event' => EventsFactory::random()
+            ];
+        });
+        QuestionsFactory::createMany(15, function() {
+            return [
+                'author' => UserFactory::random()
+            ];
+        });
+        PollsChoicesFactory::new()->createMany(9, function() {
+            return [
+                'question' => PollsQuestionsFactory::random()
+            ];
+        });
     }
 }

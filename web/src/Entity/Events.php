@@ -5,48 +5,79 @@ namespace App\Entity;
 use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\EventsRepository;
 use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EventsRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection()
+    ],
+    order: ['eventDate' => 'DESC'],
+    normalizationContext: ['groups' => ['events:read']],
+    denormalizationContext: ['groups' => ['events:write']]
+)]
 #[ApiFilter(BooleanFilter::class, properties: ['isPublished'])]
 class Events
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['events:read', 'registration:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Groups(['events:read', 'events:write', 'registration:read'])]
     private ?string $title = null;
-
+    
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
+    #[Groups(['events:read', 'events:write'])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['events:read', 'events:write', 'registration:read'])]
+    #[Assert\NotBlank]
+    #[Assert\DateTimeValidator]
     private ?\DateTimeInterface $eventDate = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Groups(['events:read', 'events:write'])]
     private ?string $location = null;
 
-    #[ORM\OneToMany(mappedBy: 'event_id', targetEntity: Comments::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'event', targetEntity: Comments::class, orphanRemoval: true)]
+    #[Groups(['events:read'])]
     private Collection $comments;
 
     #[ORM\Column]
+    #[Groups(['events:read', 'events:write'])]
     private bool $isPublished = true;
 
     #[ORM\Column]
-    private \DateTimeImmutable $createdAt;
+    private bool $isInternational = false;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'event', targetEntity: EventsUsers::class, orphanRemoval: true)]
+    private Collection $eventsUsers;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        //$this->createdAt = new \DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->eventsUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,7 +145,7 @@ class Events
     {
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
-            $comment->setEventId($this);
+            $comment->setEvent($this);
         }
 
         return $this;
@@ -124,8 +155,8 @@ class Events
     {
         if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getEventId() === $this) {
-                $comment->setEventId(null);
+            if ($comment->getEvent() === $this) {
+                $comment->setEvent(null);
             }
         }
 
@@ -156,9 +187,50 @@ class Events
         return $this;
     }
 
-
-    public function getCreatedAtAgo(): string
+    public function isIsInternational(): ?bool
     {
-        return Carbon::instance($this->createdAt)->diffForHumans();
+        return $this->isInternational;
     }
-}
+
+    public function setIsInternational(bool $isInternational): self
+    {
+        $this->isInternational = $isInternational;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return Collection<int, EventsUsers>
+     */
+    public function getEventsUsers(): Collection
+    {
+        return $this->eventsUsers;
+    }
+
+    public function addEventsUser(EventsUsers $eventsUser): self
+    {
+        if (!$this->eventsUsers->contains($eventsUser)) {
+            $this->eventsUsers->add($eventsUser);
+            $eventsUser->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventsUser(EventsUsers $eventsUser): self
+    {
+        if ($this->eventsUsers->removeElement($eventsUser)) {
+            // set the owning side to null (unless already changed)
+            if ($eventsUser->getEvent() === $this) {
+                $eventsUser->setEvent(null);
+            }
+        }
+
+        return $this;
+    }
+};
