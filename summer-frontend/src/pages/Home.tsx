@@ -8,7 +8,6 @@ const Home = () => {
       <div className="Herobanner">
         <h2>Helsinki Business College</h2>
         <h3>Super mega events are here!</h3>
-        <input placeholder="EVENT SEARCH" />
       </div>
       <div className="CardSection">
         <EventsPreview />

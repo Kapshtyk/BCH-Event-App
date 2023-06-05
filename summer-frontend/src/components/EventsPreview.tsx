@@ -9,6 +9,7 @@ const EventsPreview: React.FC = () => {
   const [endedEvents, setEndedEvents] = useState<Events>([])
   const [isLoading, setIsLoading] = useState(false)
   const [sortOption, setSortOption] = useState('')
+  const [searchEvents, setSearchEvents] = useState('')
 
   useEffect(() => {
     setIsLoading(true)
@@ -58,11 +59,32 @@ const EventsPreview: React.FC = () => {
     setSortOption(selectedOption)
     sortEventsByDate(selectedOption)
   }
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchEvents(event.target.value);
+  }
+
+  const filteredActiveEvents = activeEvents.filter((event) => {
+    const searchEvent = searchEvents.toLowerCase();
+    const searchTitle = event.title.toLowerCase();
+    const searchLocation = event.location.toLowerCase();
+    return (
+      searchTitle.includes(searchEvent) || searchLocation.includes(searchEvent)
+    );
+  });
+
 
   // const activeEventsAll = activeEvents.filter((event)=> !event.isPublished);
 
   return (
     <div>
+      <div>
+      <input
+        type="text"
+        value={searchEvents}
+        onChange={handleSearch}
+        placeholder="Search by title or location"
+      />
+      </div>
       <label htmlFor="sortOption">Sort by Date:</label>
       <select
         id="sortOption"
@@ -75,7 +97,7 @@ const EventsPreview: React.FC = () => {
       </select>
       <h2>Active Events</h2>
       {activeEvents.length === 0 && <p>There are no active events currently</p>}
-      {activeEvents.map((event) => (
+      {filteredActiveEvents.map((event) => (
         <Card
           key={event.id}
           id={event.id}
@@ -85,7 +107,7 @@ const EventsPreview: React.FC = () => {
           timeDifference={formatDistanceToNow(parseISO(event.eventDate))}
           location={event.location}
           description={event.description}
-          isPastEvent={event.isPublished}
+          isPastEvent={!event.isPublished}
         />
       ))}
       {endedEvents.length > 0 && (

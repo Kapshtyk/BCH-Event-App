@@ -28,6 +28,13 @@ h4 {
   margin: 0.5em;
 }
 
+.ended {
+  color: red;
+}
+.left {
+  color: green;
+}
+
 @media (max-width: 650px) {
   .card {
     display: flex;

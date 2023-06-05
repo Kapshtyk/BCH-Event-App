@@ -11,7 +11,7 @@ import { EventType, CommentType } from '../types/events'
 
 const Event: React.FC = () => {
   const [singleEvent, setEvent] = useState<EventType | null>(null)
-  const [commentText, setCommentText] = useState('')
+  const [commentText, setCommentText] = useState<string>('')
   const { event } = useParams<{ event: string }>()
   const [isLoading, setIsLoading] = useState(false)
   const [registered, setRegistered] = useState(false)
@@ -65,7 +65,7 @@ const Event: React.FC = () => {
               ? [...prevState.comments, newComment]
               : [newComment]
           }
-        }
+        } else
         return null
       })
       setCommentText('')
@@ -114,6 +114,8 @@ const Event: React.FC = () => {
   if (singleEvent === null) {
     return <p>Event not found</p>
   }
+  // Conditional rendering for the registration button
+  const showRegistrationButton = singleEvent.isPublished === true
   return (
     <div className={classes.event}>
       <img src={imagine} alt="" />
@@ -129,7 +131,7 @@ const Event: React.FC = () => {
         {singleEvent.comments?.map((cmnt, i) => (
           <li key={i}>
             <p>
-              Author: {cmnt.author.firstName} <span>{cmnt.author.email}</span>
+              Author:<span>{cmnt.author.email}</span>
             </p>
             <p>{cmnt.text}</p>
           </li>
@@ -139,7 +141,7 @@ const Event: React.FC = () => {
         <h2>You are already registered for this event.</h2>
         <button onClick={cancelRegistration}>Cancel registration</button>
       </div>)}
-      {currentUser && !registered && (<div>
+      {currentUser && !registered && showRegistrationButton &&(<div>
         <h2>Register for the event</h2>
         <button onClick={registration}>Register now</button>
       </div>)}

@@ -33,7 +33,10 @@ const Card: React.FC<CardsProps> = ({
       <div className={classes.texte}>
         <p>
           Date/Time: {date} {time}{' '}
-          {isPastEvent ? `${timeDifference} ago` : `${timeDifference} left`}
+          {isPastEvent ? 
+          (<span className={classes.left}>{timeDifference} left</span>): 
+          (<span className={classes.ended}>ended {timeDifference} ago</span>)
+          }
         </p>
         <h4>Title: {title}</h4>
         <p>Location: {location}</p>
