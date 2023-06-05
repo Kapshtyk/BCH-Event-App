@@ -13,7 +13,7 @@ const Poll: React.FC<PollProps> = ({ data }) => {
   const fetchPollsQuestions =
     useContext(PollsQuestionContext).fetchPollsQuestions
   const [choiceInput, setChoiceInput] = useState<number | null>(null)
-  const [vote, setVote] = useState<PollsVote | null>(null);
+  const [vote, setVote] = useState<PollsVote | null>(null)
 
   useEffect(() => {
     if (currentUser && 'user' in currentUser && data && data.question) {
@@ -42,10 +42,12 @@ const Poll: React.FC<PollProps> = ({ data }) => {
         if ('id' in result) {
           console.log(result)
           fetchPollsQuestions()
-          setVote({id: result.id,
-                   question: result.question,
-                   choice: result.choice,
-                   author: result.author})
+          setVote({
+            id: result.id,
+            question: result.question,
+            choice: result.choice,
+            author: result.author
+          })
         } else {
         }
       } catch (error) {
@@ -80,25 +82,25 @@ const Poll: React.FC<PollProps> = ({ data }) => {
           {data.pollsChoices.map((choice: PollsChoice) => (
             <div className={cl.poll_row} key={choice.id}>
               <div className={cl.poll_left_column}>
-              <div className={cl.poll_percentage}>
-                {Math.round((choice.votes / votes) * 10000) / 100}%
-              </div>
-                  <input
-                    type="radio"
-                    id={choice.choice}
-                    name={data.id.toString()}
-                    value={choice.id.toString()}
-                    onChange={handleChoiceChange}
-                    disabled={!currentUser || checkVoteExists()}
-                    checked={choiceInput === choice.id}
-                  />
+                <div className={cl.poll_percentage}>
+                  {Math.round((choice.votes / votes) * 10000) / 100}%
+                </div>
+                <input
+                  type="radio"
+                  id={choice.choice}
+                  name={data.id.toString()}
+                  value={choice.id.toString()}
+                  onChange={handleChoiceChange}
+                  disabled={!currentUser || checkVoteExists()}
+                  checked={choiceInput === choice.id}
+                />
               </div>
               <div className={cl.poll_choice}>
                 <div className={cl.poll_radio}>
                   <label htmlFor={choice.choice}>{choice.choice}:</label>
                 </div>
                 <div className={cl.poll_progress_div}>
-                  <progress 
+                  <progress
                     className={cl.poll_progress_bar}
                     max="100"
                     value={Math.round((choice.votes / votes) * 10000) / 100}
@@ -108,8 +110,12 @@ const Poll: React.FC<PollProps> = ({ data }) => {
             </div>
           ))}
           Total votes:{` ${votes}`}
-          {!checkVoteExists() && currentUser && <button onClick={makeVote}>VOTE!</button>}
-          {checkVoteExists() && currentUser && <div>You have already participated in this poll!</div>}
+          {!checkVoteExists() && currentUser && (
+            <button onClick={makeVote}>VOTE!</button>
+          )}
+          {checkVoteExists() && currentUser && (
+            <div>You have already participated in this poll!</div>
+          )}
           {!currentUser && <div>Sign in if you want to participate!</div>}
         </fieldset>
       </div>

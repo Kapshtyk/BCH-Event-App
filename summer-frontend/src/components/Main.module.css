@@ -1,5 +1,7 @@
 .main {
+  color: white;
   min-height: calc(90vh - 120px);
   padding: 16px;
   text-align: center;
+  background: rgba(0, 0, 0, 0.9);
 }

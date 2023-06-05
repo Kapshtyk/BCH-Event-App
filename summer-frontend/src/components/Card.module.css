@@ -1,10 +1,10 @@
 .card {
-  box-shadow: 0 0 5px;
   border-radius: 5px;
   text-align: center;
   display: flex;
   align-items: center;
   margin-top: 1em;
+  max-height: 300px;
 }
 
 .imagearea {
@@ -26,4 +26,58 @@
 .textarea p,
 h4 {
   margin: 0.5em;
+}
+
+@media (max-width: 650px) {
+  .card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .textarea {
+    text-align: start;
+    position: relative;
+    top: -150px;
+    left: -90px;
+  }
+
+  .datearea h2 {
+    margin: 10px 0 0 0;
+  }
+
+  .datearea p {
+    margin: 10px;
+  }
+
+  .textarea h4 {
+    margin: 5px 0;
+  }
+
+  .textarea p {
+    margin: 0;
+  }
+
+  .datearea {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: -590px;
+    left: 90px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    height: 75px;
+    width: 75px;
+  }
+
+  .card img {
+    width: 100%;
+    max-width: 288px;
+    /* Adjust the width as per your preference */
+    height: auto;
+    object-fit: cover;
+    border-radius: 20px;
+  }
 }
