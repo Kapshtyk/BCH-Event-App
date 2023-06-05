@@ -26,7 +26,7 @@ const Card: React.FC<CardsProps> = ({
   return (
     <div className={classes.card}>
       <div className={classes.image}>
-        <Link to={`${id}`}>
+        <Link to={`/events/${id}`}>
           <img src={imagine} alt="#" />
         </Link>
       </div>
