@@ -1,3 +1,44 @@
 .helsinki {
+    display: grid;
+    grid-template-columns: 1fr minmax(1em 1fr);
+    /* grid-template-rows: fit-content(33%) 1fr fit-content(33%); */
+    padding: 0.25em;
+    gap: 0.25em;
+    height: 100%;
+    max-width: 100%;
+}
+
+.helsinki ul {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    margin: 0;
+    padding: 0.25em;
+    width: 100%;
+    gap: 0.25em;
+}
+
+.helsinki ul li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 24em;
+    padding: 0.25em;
+    background-color: grey;
+    box-shadow: 1px 1px 1px black;
+    border: 1px solid black;
+    width: 100%;
+}
+
+.helsinki ul li img {
+    max-height: 100%;
+    max-width: 100%;
+    display: inline-block;
+    outline: 1px solid black;
+    filter: brightness(0.9) contrast(1.1);
+    box-shadow: 1px 1px 1px black;
+    margin: 1em;
+}
   text-align: center;
 }
