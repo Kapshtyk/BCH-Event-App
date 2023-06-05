@@ -2,3 +2,9 @@
   height: 280px;
   width: 280px;
 }
+.navigation button {
+  background-color: aqua;
+  box-shadow: none;
+  border: none;
+  cursor: pointer;
+}

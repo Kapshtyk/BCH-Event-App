@@ -116,6 +116,12 @@ const Event: React.FC = () => {
   }
   // Conditional rendering for the registration button
   const showRegistrationButton = singleEvent.isPublished === true
+
+  //google navigation
+  const openGoogleMapsDirections = (location: string) => {
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(location)}`
+    window.open(url, '_blank')
+  }
   return (
     <div className={classes.event}>
       <img src={imagine} alt="" />
@@ -125,7 +131,7 @@ const Event: React.FC = () => {
         Date/Time: {format(parseISO(singleEvent.eventDate), 'MMMM d,yyyy')}{' '}
         {format(parseISO(singleEvent.eventDate), 'h:mm a')}
       </p>
-      <p>Location: {singleEvent.location}</p>
+      <p>Location: {singleEvent.location} <span className={classes.navigation}><button onClick={() => openGoogleMapsDirections(singleEvent.location)}>Direction</button></span></p>
       <div>
         <h3>Comments</h3>
         {singleEvent.comments?.map((cmnt, i) => (
