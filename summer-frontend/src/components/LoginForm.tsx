@@ -42,9 +42,9 @@ function LoginForm(props: any) {
         <input type="email" id="email" onChange={inputHandler} />
         <label htmlFor="password">Password</label>
         <input type="password" id="password" onChange={inputHandler} />
-        <input className="submit-button" type="submit" value="submit" />
+        <input className={classes.submitbutton} type="submit" value="SIGN IN" />
         <p>First time here?</p>
-        <button className="register">register</button>
+        <button className="register">REGISTER</button>
       </fieldset>
       {error && error.error}
     </form>

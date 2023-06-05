@@ -6,7 +6,6 @@ import Event from "../models/Event";
 
 const Helsinki = () => {
     const [data, setData] = useState<Event[]>([]);
-    const today = new Date().toISOString().split('T')[0];
     useEffect(() => {
         // Fetch data from the API
         axios
@@ -94,14 +93,13 @@ const Helsinki = () => {
                 <ul>
                     {data.map((event) => (
                         <li key={event.id}>
-
+                            {event.images![0] ? <img src={event.images![0].url}></img> : null}
                             {event.end_time
                                 ? <span>{new Date(event.start_time).toLocaleDateString()} - {new Date(event.end_time).toLocaleDateString()}</span>
                                 : <span>{new Date(event.start_time).toLocaleDateString()}</span>}
                             {getEventNameSpan(event)}
-                            {event.images![0] ? <img src={event.images![0].url}></img> : null}
-                            {/* {getDescription(event)} */}
 
+                            {/* {getDescription(event)} */}
                         </li>
                     ))}
                 </ul>
