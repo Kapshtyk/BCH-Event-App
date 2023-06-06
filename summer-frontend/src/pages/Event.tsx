@@ -14,7 +14,6 @@ import {
 import { EventType, CommentType } from '../types/events'
 import Poll from '../components/Poll'
 // import { getEvents } from '../api/EventsAPI';
-import Poll from '../components/Poll'
 
 const Event: React.FC = () => {
   const [singleEvent, setEvent] = useState<EventType | null>(null)
