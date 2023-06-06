@@ -1,4 +1,4 @@
-FROM php:8.1-apache
+FROM php:8.2-apache
 
 # Set server name for Apache
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
