@@ -4,7 +4,7 @@ import axios from 'axios'
 import { format, parseISO } from 'date-fns'
 import classes from './Event.module.css'
 import imagine from '../media/images/events.jpg'
-import { CurrentUserContext, PollsQuestionContext } from '../context/context'
+import { CurrentUserContext } from '../context/context'
 import {
   cancelRegistrationToEvent,
   checkEventRegistration,
@@ -17,7 +17,6 @@ import Poll from '../components/Poll'
 import ImageComponent from './ImageComponent'
 import { ca } from 'date-fns/locale'
 import { PollsQuiestion } from '../types/polls'
-// import { getEvents } from '../api/EventsAPI';
 
 const Event: React.FC = () => {
   const [singleEvent, setEvent] = useState<EventType | null>(null)
@@ -49,7 +48,6 @@ const Event: React.FC = () => {
     if (event) {
       checkEventsPoll(event)
         .then((data) => {
-          console.log(data)
           if (data.length > 0) {
             setPolls(data)
           }
@@ -73,6 +71,19 @@ const Event: React.FC = () => {
         })
     }
   }, [])
+
+  const fetchPollsQuestions = async (event: string | number | undefined) => {
+    if (event) {
+      try {
+        const data = await checkEventsPoll(event)
+        if (data.length > 0) {
+          setPolls(data)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
 
   const handleCommentSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
@@ -170,7 +181,7 @@ const Event: React.FC = () => {
           <>
             <h3>{polls.length === 1 ? 'Poll' : 'Polls'}</h3>
             {polls.map((poll) => {
-              return <Poll key={poll.id} data={poll} />
+              return <Poll key={poll.id} data={poll} fetch={() => {fetchPollsQuestions(event)}} />
             })}
           </>
         )}
