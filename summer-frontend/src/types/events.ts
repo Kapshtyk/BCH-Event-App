@@ -6,7 +6,7 @@ export type EventType = {
   description: string
   eventDate: string
   location: string
-  comments?: CommentType[]
+  comments: CommentType[]
   isPublished: boolean
   createdAt?: string
   baseImage?: string
@@ -15,8 +15,8 @@ export type EventType = {
 export type CommentType = {
   author: AuthorType
   text: string
-  publishDate: string
-  isPublished: boolean
+  publishDate?: string
+  isPublished?: boolean
 }
 
 export type AuthorType = {

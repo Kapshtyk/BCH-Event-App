@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router'
-import axios from 'axios'
 import { format, parseISO } from 'date-fns'
 import classes from './Event.module.css'
 import imagine from '../media/images/events.jpg'
@@ -9,7 +8,8 @@ import {
   cancelRegistrationToEvent,
   checkEventRegistration,
   getEventById,
-  registerToEvent
+  registerToEvent,
+  postComment
 } from '../api/EventsAPI'
 import { EventType, CommentType } from '../types/events'
 import Poll from '../components/Poll'
@@ -45,30 +45,31 @@ const Event: React.FC = () => {
     }
     fetchSingleEvent()
   }, [event])
+
   const handleCommentSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
     try {
-      const response = await axios.post(
-        `http://localhost:8007/api/v1/comments`,
-        {
-          event_id: singleEvent?.id,
-          text: commentText
-        },
-        {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          }
-        }
-      )
-      const newComment: CommentType = response.data
+    const currentUserData = currentUser?.user
+    if (!currentUserData) {
+      return
+    }
+    
+    const response = await postComment(currentUserData, commentText)
+    if ('message' in response) {
+      console.error(response.message)
+      return
+    }
+
+  
+      const newComment: CommentType = response
+      console.log(newComment)
       setEvent((prevState) => {
         if (prevState) {
           return {
             ...prevState,
             comments: prevState.comments
               ? [...prevState.comments, newComment]
-              : [newComment]
+              : [newComment],
           }
         }
         return null

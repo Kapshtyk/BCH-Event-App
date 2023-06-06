@@ -1,6 +1,6 @@
 import { BASE_URL } from '../service/constant'
 import axios, { AxiosResponse } from 'axios'
-import { Events, EventType } from '../types/events'
+import { CommentType, Events, EventType } from '../types/events'
 import { UserData, UserEventGet, UserEventPost, UserType } from '../types/users'
 import { PollsQuiestion, PollsVote } from '../types/polls'
 
@@ -197,7 +197,6 @@ export const checkEventRegistration = async (
   }
 }
 
-// it hasnot been implemented yet
 export const getEventById = async (
   event: string | number
 ): Promise<EventType | { message: string }> => {
@@ -207,6 +206,22 @@ export const getEventById = async (
     return response
   } catch (error) {
     console.log(error)
+    return { message: `Something went wrong: ${error}` }
+  }
+}
+export const postComment = async (
+  author: string | number,
+  text: string
+):Promise<CommentType | {message:string}> => {
+  const url = BASE_URL + 'comments'
+  try {
+    const response = await processRequest<CommentType>('POST',url,{
+    author: `api/users/${author}`,
+    text: `api/comments/${text}`
+  })
+  return response
+  } catch(error){
+    console.error(error)
     return { message: `Something went wrong: ${error}` }
   }
 }
