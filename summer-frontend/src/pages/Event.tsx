@@ -123,6 +123,11 @@ const Event: React.FC = () => {
   if (singleEvent === null) {
     return <p>Event not found</p>
   }
+  //google navigation
+  const openGoogleMapsDirections = (location: string) => {
+   const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(location)}`
+      window.open(url, '_blank')
+    }
   return (
     <div className={classes.event}>
       {singleEvent.baseImage && (
