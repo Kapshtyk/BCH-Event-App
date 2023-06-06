@@ -47,3 +47,10 @@
 .author {
   border-bottom: solid 1px white;
 }
+.navigation button {
+  height: 20px;
+  background-color: aqua;
+  box-shadow: none;
+  border: none;
+  cursor: pointer;
+}

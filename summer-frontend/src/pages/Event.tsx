@@ -140,7 +140,7 @@ const Event: React.FC = () => {
         Date/Time: {format(parseISO(singleEvent.eventDate), 'MMMM d,yyyy')}{' '}
         {format(parseISO(singleEvent.eventDate), 'h:mm a')}
       </p>
-      <p>Location: {singleEvent.location}</p>
+      <p>Location: {singleEvent.location} <span className={classes.navigation}><button onClick={() => openGoogleMapsDirections(singleEvent.location)}>Direction</button></span></p>
       {currentUser && registered && (
         <div>
           <h2>You are already registered for this event.</h2>
