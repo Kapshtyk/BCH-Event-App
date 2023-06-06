@@ -60,8 +60,9 @@ export const getEvents = async (): Promise<Events> => {
 export const signin = async (
   email: string,
   password: string
-): Promise<UserType | { message: string }> => {
-  const url = BASE_URL + 'login'
+): Promise<UserType> => {
+  // const url = BASE_URL + 'login'
+  const url = "http://localhost:8007/login"
   try {
     const response = await processRequest<UserType>('POST', url, {
       email,
