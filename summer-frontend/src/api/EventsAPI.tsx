@@ -51,7 +51,7 @@ const checkArray = (data: unknown) => {
 }
 
 export const getEvents = async (): Promise<Events> => {
-  const url = BASE_URL + 'events'
+  const url = BASE_URL + 'events?isPublished=true'
   try {
     const response = await processRequest<Events>('GET', url)
     return checkArray(response)
@@ -97,7 +97,7 @@ export const getUserData = async (
 }
 
 export const getPollsQuestions = async (): Promise<PollsQuiestion[]> => {
-  const url = BASE_URL + 'polls_questions'
+  const url = BASE_URL + 'polls_questions?isPublished=true'
   try {
     const response = await processRequest<PollsQuiestion[]>('GET', url)
     return response
@@ -111,9 +111,22 @@ export const checkPoll = async (
   question: number,
   author: number
 ): Promise<PollsVote[]> => {
-  const url = BASE_URL + `polls_votes?&question=${question}&author=${author}`
+  const url = BASE_URL + `polls_votes?question=${question}&author=${author}`
   try {
     const response = await processRequest<PollsVote[]>('GET', url)
+    return response
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+}
+
+export const checkEventsPoll = async (
+  event: number | string
+): Promise<PollsQuiestion[]> => {
+  const url = BASE_URL + `polls_questions?event=${event}&isPublished=true`
+  try {
+    const response = await processRequest<PollsQuiestion[]>('GET', url)
     return response
   } catch (error) {
     console.log(error)
@@ -173,7 +186,7 @@ export const cancelRegistrationToEvent = async (
 export const getRegisteredEvents = async (
   user: number
 ): Promise<UserEventGet[] | { message: string }> => {
-  const url = BASE_URL + `events_users?user=${user}`
+  const url = BASE_URL + `events_users?user=${user}&isPublished=true`
   try {
     const response = await processRequest<UserEventGet[]>('GET', url)
     return response
@@ -184,8 +197,8 @@ export const getRegisteredEvents = async (
 }
 
 export const checkEventRegistration = async (
-  user: number,
-  event: number
+  user: number | string,
+  event: number | string
 ): Promise<UserEventGet[] | { message: string }> => {
   const url = BASE_URL + `events_users?user=${user}&event=${event}`
   try {
@@ -197,11 +210,10 @@ export const checkEventRegistration = async (
   }
 }
 
-// it hasnot been implemented yet
 export const getEventById = async (
   event: string | number
 ): Promise<EventType | { message: string }> => {
-  const url = BASE_URL + `events/${event}`
+  const url = BASE_URL + `events/${event}?isPublished=true`
   try {
     const response = await processRequest<EventType>('GET', url)
     return response

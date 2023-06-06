@@ -52,7 +52,6 @@ const App = () => {
               <Route path="login" element={<LoginForm />} />
               <Route path="helsinki" element={<Helsinki />} />
               <Route path="college" element={<College />} />
-              <Route path="polls" element={<Poll data={pollsQuestion[0]} />} />
             </Route>
           </Routes>
         </PollsQuestionContext.Provider>

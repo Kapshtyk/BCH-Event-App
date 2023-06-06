@@ -8,12 +8,12 @@ interface PollProps {
   data: PollsQuiestion
 }
 
-const Poll: React.FC<PollProps> = ({ data }) => {
+const Poll: React.FC<PollProps> = ({data}) => {
   const currentUser = useContext(CurrentUserContext).currentUser
-  const fetchPollsQuestions =
-    useContext(PollsQuestionContext).fetchPollsQuestions
   const [choiceInput, setChoiceInput] = useState<number | null>(null)
   const [vote, setVote] = useState<PollsVote | null>(null)
+  const fetchPollsQuestions =
+    useContext(PollsQuestionContext).fetchPollsQuestions
 
   useEffect(() => {
     if (currentUser && 'user' in currentUser && data && data.question) {
