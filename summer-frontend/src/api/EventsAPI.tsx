@@ -47,7 +47,7 @@ const checkArray = (data: unknown) => {
 }
 
 export const getEvents = async (): Promise<Events> => {
-  const url = BASE_URL + 'v1/events'
+  const url = BASE_URL + 'events'
   try {
     const response = await processRequest<Events>('GET', url)
     return checkArray(response)
@@ -60,9 +60,8 @@ export const getEvents = async (): Promise<Events> => {
 export const signin = async (
   email: string,
   password: string
-): Promise<UserType> => {
-  // const url = BASE_URL + 'login'
-  const url = "http://localhost:8007/login"
+): Promise<UserType | {message: string} > => {
+  const url = BASE_URL + 'auth'
   try {
     const response = await processRequest<UserType>('POST', url, {
       email,
@@ -76,7 +75,7 @@ export const signin = async (
 }
 
 export const getPollsQuestions = async (): Promise<PollsQuiestion[]> => {
-  const url = BASE_URL + 'v1/polls_questions'
+  const url = BASE_URL + 'polls_questions'
   try {
     const response = await processRequest<PollsQuiestion[]>('GET', url)
     return response
@@ -90,7 +89,7 @@ export const checkPoll = async (
   question: number,
   author: number
 ): Promise<PollsVote[]> => {
-  const url = BASE_URL + `v1/polls_votes?&question=${question}&author=${author}`
+  const url = BASE_URL + `polls_votes?&question=${question}&author=${author}`
   try {
     const response = await processRequest<PollsVote[]>('GET', url)
     return response
@@ -105,7 +104,7 @@ export const postVote = async (
   choice: number,
   author: number
 ): Promise<PollsVote | { message: string }> => {
-  const url = BASE_URL + 'v1/polls_votes'
+  const url = BASE_URL + 'polls_votes'
   try {
     const response = await processRequest<PollsVote>('POST', url, {
       question: `api/v1/polls_questions/${question}`,
@@ -123,7 +122,7 @@ export const registerToEvent = async (
   event: number,
   user: number
 ): Promise<UserEventPost | { message: string }> => {
-  const url = BASE_URL + 'v1/events_users'
+  const url = BASE_URL + 'events_users'
   try {
     const response = await processRequest<UserEventPost>('POST', url, {
       event: `api/v1/events/${event}`,
@@ -139,7 +138,7 @@ export const registerToEvent = async (
 export const cancelRegistrationToEvent = async (
   id: number
 ): Promise<any | { message: string }> => {
-  const url = BASE_URL + `v1/events_users/${id}`
+  const url = BASE_URL + `events_users/${id}`
   try {
     const response = await processRequest<any>('DELETE', url)
     return response
@@ -152,7 +151,7 @@ export const cancelRegistrationToEvent = async (
 export const getRegisteredEvents = async (
   user: number
 ): Promise<UserEventGet[] | { message: string }> => {
-  const url = BASE_URL + `v1/events_users?user=${user}`
+  const url = BASE_URL + `events_users?user=${user}`
   try {
     const response = await processRequest<UserEventGet[]>('GET', url)
     return response
@@ -166,7 +165,7 @@ export const checkEventRegistration = async (
   user: number,
   event: number
 ): Promise<UserEventGet[] | { message: string }> => {
-  const url = BASE_URL + `v1/events_users?user=${user}&event=${event}`
+  const url = BASE_URL + `events_users?user=${user}&event=${event}`
   try {
     const response = await processRequest<UserEventGet[]>('GET', url)
     return response
