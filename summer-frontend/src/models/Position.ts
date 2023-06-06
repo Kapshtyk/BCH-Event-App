@@ -1,4 +1,4 @@
 export default interface Position {
-    coordinates: number[];
-    type: string;
+  coordinates: number[]
+  type: string
 }

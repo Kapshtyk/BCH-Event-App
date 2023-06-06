@@ -15,11 +15,7 @@ import { PollsQuiestion } from './types/polls'
 import Poll from './components/Poll'
 
 const App = () => {
-  const [currentUser, setCurrentUser] = useState<CurrentUserType>({
-    user: 1,
-    token: '455...',
-    roles: ['ROLE_ADMIN', 'ROLE_USER']
-  })
+  const [currentUser, setCurrentUser] = useState<CurrentUserType>(null)
   const [pollsQuestion, setPollsQuestion] = useState<PollsQuiestion[]>([])
 
   const logout = () => {

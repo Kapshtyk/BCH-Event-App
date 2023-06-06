@@ -4,19 +4,23 @@ import { Events, EventType } from '../types/events'
 import { UserEventGet, UserEventPost, UserType } from '../types/users'
 import { PollsQuiestion, PollsVote } from '../types/polls'
 
+const token = `${localStorage.getItem('token')}` || ''
+
 async function processRequest<T>(
   method: 'GET' | 'POST' | 'DELETE' | 'PATCH',
   url: string,
   data?: unknown
 ): Promise<T> {
   try {
+    let headers: any = { Accept: 'application/json' }
+    if (localStorage.getItem('token')) {
+      headers = { Accept: 'application/json', Authorization: `Bearer ${token}` }
+    }
     const response: AxiosResponse<T> = await axios({
       method,
       url,
       data,
-      headers: {
-        Accept: 'application/json'
-      }
+      headers: headers
     })
     if (
       response.status === 200 ||
@@ -60,8 +64,9 @@ export const getEvents = async (): Promise<Events> => {
 export const signin = async (
   email: string,
   password: string
-): Promise<UserType | {message: string} > => {
-  const url = BASE_URL + 'auth'
+): Promise<UserType | { message: string }> => {
+  //const url = BASE_URL + 'auth'
+  const url = 'http://localhost:8007/auth'
   try {
     const response = await processRequest<UserType>('POST', url, {
       email,
@@ -177,14 +182,14 @@ export const checkEventRegistration = async (
 
 // it hasnot been implemented yet
 export const getEventById = async (
-  event: string
-): Promise<EventType | null> => {
-  const url = BASE_URL + `api/v1/events/${event}`
+  event: string | number
+): Promise<EventType | { message: string }> => {
+  const url = BASE_URL + `events/${event}`
   try {
     const response = await processRequest<EventType>('GET', url)
     return response
   } catch (error) {
     console.log(error)
-    return null
+    return { message: `Something went wrong: ${error}` }
   }
 }

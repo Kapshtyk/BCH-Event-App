@@ -30,7 +30,7 @@
     justify-content: space-around;
     align-items: center;
     backdrop-filter: blur(8px);
-    background-color: rgba(0, 0, 0, 0.50);
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
   .nav ul li a {
