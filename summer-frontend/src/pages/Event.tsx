@@ -12,6 +12,7 @@ import {
   registerToEvent
 } from '../api/EventsAPI'
 import { EventType, CommentType } from '../types/events'
+import Poll from '../components/Poll'
 // import { getEvents } from '../api/EventsAPI';
 import Poll from '../components/Poll'
 
@@ -22,7 +23,7 @@ const Event: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [registered, setRegistered] = useState(false)
   const currentUser = useContext(CurrentUserContext).currentUser
-  const PollsQuestion=useContext(PollsQuestionContext).pollsQuestion
+  const pollsQuestion = useContext(PollsQuestionContext).pollsQuestion
 
   useEffect(() => {
     setIsLoading(true)
@@ -144,7 +145,7 @@ const Event: React.FC = () => {
         </div>
       )}
       <div className={classes.comments}>
-        <Poll data={PollsQuestion[1]}/>
+        <Poll data={pollsQuestion[1]} />
         <h3>Comments</h3>
         {singleEvent.comments?.map((cmnt, i) => (
           <li key={i}>

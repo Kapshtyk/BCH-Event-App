@@ -1,7 +1,7 @@
 import * as React from 'react'
 import classes from './LoginForm.module.css'
 import { useState, useContext } from 'react'
-import { signin } from '../api/EventsAPI'
+import { getUserData, signin } from '../api/EventsAPI'
 import { useNavigate } from 'react-router-dom'
 import { CurrentUserContext } from '../context/context'
 
@@ -23,8 +23,15 @@ function LoginForm(props: any) {
     try {
       const data = await signin(formData.email, formData.password)
       if ('token' in data) {
-        //setCurrentUser(data)
         localStorage.setItem('token', data.token)
+        const userData = await getUserData(data.token) 
+        if ('roles' in userData) {
+          setCurrentUser({
+            user: userData.id,
+            token: data.token,
+            roles: userData.roles
+          })
+        }
         navigate('/')
       } else {
         setError({ error: data.message })
