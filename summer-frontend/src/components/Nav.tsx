@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
-import { faSchool } from '@fortawesome/free-solid-svg-icons'
-import { faMap } from '@fortawesome/free-solid-svg-icons'
+import { faStarHalfStroke } from '@fortawesome/free-solid-svg-icons'
+import { faBuilding } from '@fortawesome/free-solid-svg-icons'
 
 const Nav = () => {
     const [isMobile, setIsMobile] = useState(true)
@@ -48,7 +48,7 @@ const Nav = () => {
                     ) : (
                         <NavLink to="/polls" onClick={handleClick}>
                             <div className={classes.icon}>
-                                <FontAwesomeIcon icon={faSchool} />
+                                <FontAwesomeIcon icon={faStarHalfStroke} />
                                 <small>VOTES</small>
                             </div>
                         </NavLink>
@@ -60,7 +60,7 @@ const Nav = () => {
                     ) : (
                         <NavLink to="/helsinki" onClick={handleClick}>
                             <div className={classes.icon}>
-                                <FontAwesomeIcon icon={faMap} />
+                                <FontAwesomeIcon icon={faBuilding} />
                                 <small>HELSINKI</small>
                             </div>
                         </NavLink>

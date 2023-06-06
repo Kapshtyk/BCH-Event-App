@@ -10,10 +10,6 @@ const Helsinki = () => {
         // Fetch data from the API
         axios
             .get('https://api.hel.fi/linkedevents/v1/event/', {
-                // params: {
-                // star_time: today,
-                //     sort: 'start_time',
-                // },
             })
 
             .then((response) => {
@@ -27,7 +23,7 @@ const Helsinki = () => {
     console.log(data)
     const getFinnishEventNameSpan = (event: Event) => {
         if (!event.name) {
-            return <span>Tapahtuma</span>
+            return <span>Event</span>
         }
 
         return <span>{event.name.fi}</span>
@@ -49,42 +45,42 @@ const Helsinki = () => {
         return <span>{event.name.en}</span>
     }
 
-    const getFinnishDescription = (event: Event): JSX.Element => {
-        if (event.description?.fi) {
-            if (event.description.fi.length > 0) {
-                return <div className="event-description" dangerouslySetInnerHTML={{ __html: event.description.fi }}></div>
-            }
-        }
+    // const getFinnishDescription = (event: Event): JSX.Element => {
+    //     if (event.description?.fi) {
+    //         if (event.description.fi.length > 0) {
+    //             return <div className="event-description" dangerouslySetInnerHTML={{ __html: event.description.fi }}></div>
+    //         }
+    //     }
 
-        if (event.short_description?.fi) {
-            if (event.short_description.fi.length > 0) {
-                return <div className="event-description" dangerouslySetInnerHTML={{ __html: event.short_description.fi }}></div>
-            }
-        }
+    //     if (event.short_description?.fi) {
+    //         if (event.short_description.fi.length > 0) {
+    //             return <div className="event-description" dangerouslySetInnerHTML={{ __html: event.short_description.fi }}></div>
+    //         }
+    //     }
 
-        return <div className="event-description"></div>
-    }
+    //     return <div className="event-description"></div>
+    // }
 
-    const getEnglishDescription = (event: Event): JSX.Element => {
-        if (event.description?.en) {
-            if (event.description.en.length > 0) {
-                return <div className="event-description" dangerouslySetInnerHTML={{ __html: event.description.en }}></div>
-            }
-        }
+    // const getEnglishDescription = (event: Event): JSX.Element => {
+    //     if (event.description?.en) {
+    //         if (event.description.en.length > 0) {
+    //             return <div className="event-description" dangerouslySetInnerHTML={{ __html: event.description.en }}></div>
+    //         }
+    //     }
 
-        if (event.short_description?.en) {
-            if (event.short_description.en.length > 0) {
-                return <div className="event-description" dangerouslySetInnerHTML={{ __html: event.short_description.en }}></div>
-            }
-        }
+    //     if (event.short_description?.en) {
+    //         if (event.short_description.en.length > 0) {
+    //             return <div className="event-description" dangerouslySetInnerHTML={{ __html: event.short_description.en }}></div>
+    //         }
+    //     }
 
-        return getFinnishDescription(event);
-    }
+    //     return getFinnishDescription(event);
+    // }
 
-    const getDescription = (event: Event) => {
+    // const getDescription = (event: Event) => {
 
-        return getEnglishDescription(event);
-    }
+    //     return getEnglishDescription(event);
+    // }
 
 
     return (
