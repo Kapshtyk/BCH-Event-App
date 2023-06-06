@@ -129,17 +129,6 @@ const Event: React.FC = () => {
         {format(parseISO(singleEvent.eventDate), 'h:mm a')}
       </p>
       <p>Location: {singleEvent.location}</p>
-      <div>
-        <h3>Comments</h3>
-        {singleEvent.comments?.map((cmnt, i) => (
-          <li key={i}>
-            <p>
-              Author: {cmnt.author.firstName} <span>{cmnt.author.email}</span>
-            </p>
-            <p>{cmnt.text}</p>
-          </li>
-        ))}
-      </div>
       {currentUser && registered && (
         <div>
           <h2>You are already registered for this event.</h2>
@@ -152,9 +141,19 @@ const Event: React.FC = () => {
           <button onClick={registration}>Register now</button>
         </div>
       )}
-      <form onSubmit={handleCommentSubmit}>
-        <input
-          type="text"
+      <div className={classes.comments}>
+        <h3>Comments</h3>
+        {singleEvent.comments?.map((cmnt, i) => (
+          <li key={i}>
+            <p className={classes.author}>
+              Author: {cmnt.author.firstName} <span>{cmnt.author.email}</span>
+            </p>
+            <p>{cmnt.text}</p>
+          </li>
+        ))}
+      </div>
+      <form className={classes.formcontainer} onSubmit={handleCommentSubmit}>
+        <textarea
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
           placeholder="Add a comment"

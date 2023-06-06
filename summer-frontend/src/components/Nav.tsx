@@ -9,12 +9,12 @@ import { faStarHalfStroke } from '@fortawesome/free-solid-svg-icons'
 import { faBuilding } from '@fortawesome/free-solid-svg-icons'
 
 const Nav = () => {
-  const [isMobile, setIsMobile] = useState(true)
+    const [isMobile, setIsMobile] = useState(true)
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth > 650)
-    }
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth > 650)
+        }
 
     // Add event listener to handle window resize
     window.addEventListener('resize', handleResize)
