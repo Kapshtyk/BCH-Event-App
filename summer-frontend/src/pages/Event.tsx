@@ -4,7 +4,7 @@ import axios from 'axios'
 import { format, parseISO } from 'date-fns'
 import classes from './Event.module.css'
 import imagine from '../media/images/events.jpg'
-import { CurrentUserContext } from '../context/context'
+import { CurrentUserContext, PollsQuestionContext } from '../context/context'
 import {
   cancelRegistrationToEvent,
   checkEventRegistration,
@@ -13,6 +13,7 @@ import {
 } from '../api/EventsAPI'
 import { EventType, CommentType } from '../types/events'
 // import { getEvents } from '../api/EventsAPI';
+import Poll from '../components/Poll'
 
 const Event: React.FC = () => {
   const [singleEvent, setEvent] = useState<EventType | null>(null)
@@ -21,6 +22,7 @@ const Event: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [registered, setRegistered] = useState(false)
   const currentUser = useContext(CurrentUserContext).currentUser
+  const PollsQuestion=useContext(PollsQuestionContext).pollsQuestion
 
   useEffect(() => {
     setIsLoading(true)
@@ -142,6 +144,7 @@ const Event: React.FC = () => {
         </div>
       )}
       <div className={classes.comments}>
+        <Poll data={PollsQuestion[1]}/>
         <h3>Comments</h3>
         {singleEvent.comments?.map((cmnt, i) => (
           <li key={i}>
