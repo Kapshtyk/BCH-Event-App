@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Events;
 use App\Entity\Comments;
+use App\Entity\Questions;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -55,6 +56,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('Comments', 'fas fa-comments', Comments::class);
         yield MenuItem::linkToCrud('Events', 'fas fa-map-marker-alt', Events::class);
+        yield MenuItem::linkToCrud('Questions', 'fas fa-question', Questions::class);
 
     }
 }
