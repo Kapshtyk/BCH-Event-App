@@ -1,6 +1,6 @@
 .header {
   /* background-color: #ff5d4c; */
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.92);
   padding: 16px;
   color: white;
   display: flex;
@@ -20,8 +20,8 @@
   border: silver solid;
 }
 
-@media (max-width: 650px) {
+/* @media (max-width: 650px) {
   .header {
     justify-content: center;
   }
-}
+} */

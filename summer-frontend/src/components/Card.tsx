@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import imagine from '../media/images/rock.jpg'
+import imagine from '../media/images/events.jpg'
 import classes from './Card.module.css'
 
 interface CardsProps {
@@ -23,20 +23,29 @@ const Card: React.FC<CardsProps> = ({
   isPastEvent,
   location
 }) => {
+  const day = new Date(date).toLocaleDateString(undefined, {
+    day: 'numeric'
+  });
+  const month = new Date(date).toLocaleDateString(undefined, {
+    month: 'short'
+  }).toUpperCase();
+
+  const handleClick = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div className={classes.card}>
-      <div className={classes.image}>
-        <Link to={`/events/${id}`}>
-          <img src={imagine} alt="#" />
-        </Link>
+      <Link to={`/events/${id}`} onClick={handleClick}>
+        <img src={imagine} alt="#" />
+      </Link>
+      <div className={classes.datearea}>
+        <h3>{day}</h3>
+        <p>{month}</p>
       </div>
-      <div className={classes.texte}>
-        <p>
-          Date/Time: {date} {time}{' '}
-          {isPastEvent ? `${timeDifference} ago` : `${timeDifference} left`}
-        </p>
-        <h4>Title: {title}</h4>
-        <p>Location: {location}</p>
+      <div className={classes.textarea}>
+        <h2>{title}</h2>
+        <p>{location}</p>
       </div>
     </div>
   )

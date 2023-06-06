@@ -1,19 +1,13 @@
 .home {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
-.home img {
-  height: 200px;
-  width: 200px;
+.home h2 {
+  text-align: start;
 }
 
-.home a {
-  text-decoration: none;
-  color: black;
-}
-
-.home a:hover {
-  color: red;
-  text-decoration: none;
+.herobanner {
+  margin-bottom: 20px;
 }

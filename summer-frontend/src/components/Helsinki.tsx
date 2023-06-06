@@ -4,17 +4,16 @@ import classes from './Helsinki.module.css'
 import Event from '../models/Event'
 
 const Helsinki = () => {
-  const [data, setData] = useState<Event[]>([])
-  const today = new Date().toISOString().split('T')[0]
-  useEffect(() => {
-    // Fetch data from the API
-    axios
-      .get('https://api.hel.fi/linkedevents/v1/event/', {
-        // params: {
-        // star_time: today,
-        //     sort: 'start_time',
-        // },
-      })
+    const [data, setData] = useState<Event[]>([]);
+    useEffect(() => {
+        // Fetch data from the API
+        axios
+            .get('https://api.hel.fi/linkedevents/v1/event/', {
+                // params: {
+                // star_time: today,
+                //     sort: 'start_time',
+                // },
+            })
 
       .then((response) => {
         //sort filtering
@@ -41,95 +40,10 @@ const Helsinki = () => {
     if (!event.name.en) {
       return getFinnishEventNameSpan(event)
     }
-
-    if (event.name.en.length === 0) {
-      return getFinnishEventNameSpan(event)
-    }
-
     return <span>{event.name.en}</span>
   }
 
-  const getFinnishDescription = (event: Event): JSX.Element => {
-    if (event.description?.fi) {
-      if (event.description.fi.length > 0) {
-        return (
-          <div
-            className="event-description"
-            dangerouslySetInnerHTML={{ __html: event.description.fi }}
-          ></div>
-        )
-      }
-    }
-
-    if (event.short_description?.fi) {
-      if (event.short_description.fi.length > 0) {
-        return (
-          <div
-            className="event-description"
-            dangerouslySetInnerHTML={{ __html: event.short_description.fi }}
-          ></div>
-        )
-      }
-    }
-
-    return <div className="event-description"></div>
-  }
-
-  const getEnglishDescription = (event: Event): JSX.Element => {
-    if (event.description?.en) {
-      if (event.description.en.length > 0) {
-        return (
-          <div
-            className="event-description"
-            dangerouslySetInnerHTML={{ __html: event.description.en }}
-          ></div>
-        )
-      }
-    }
-
-    if (event.short_description?.en) {
-      if (event.short_description.en.length > 0) {
-        return (
-          <div
-            className="event-description"
-            dangerouslySetInnerHTML={{ __html: event.short_description.en }}
-          ></div>
-        )
-      }
-    }
-
-    return getFinnishDescription(event)
-  }
-
-  const getDescription = (event: Event) => {
-    return getEnglishDescription(event)
-  }
-
-  return (
-    <div className={classes.helsinki}>
-      {data.length ? (
-        <ul>
-          {data.map((event) => (
-            <li key={event.id}>
-              {event.end_time ? (
-                <span>
-                  {new Date(event.start_time).toLocaleDateString()} -{' '}
-                  {new Date(event.end_time).toLocaleDateString()}
-                </span>
-              ) : (
-                <span>{new Date(event.start_time).toLocaleDateString()}</span>
-              )}
-              {getEventNameSpan(event)}
-              {event.images![0] ? <img src={event.images![0].url}></img> : null}
-              {/* {getDescription(event)} */}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
-  )
+  return <div>nice</div>
 }
 
-export default Helsinki
+  export default Helsinki
