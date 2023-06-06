@@ -89,6 +89,7 @@ const EventsPreview: React.FC = () => {
           location={event.location}
           description={event.description}
           isPastEvent={event.isPublished}
+          image={event.baseImage}
         />
       ))}
       {endedEvents.length > 0 && (

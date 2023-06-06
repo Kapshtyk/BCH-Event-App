@@ -13,6 +13,7 @@ import {
 } from '../api/EventsAPI'
 import { EventType, CommentType } from '../types/events'
 import Poll from '../components/Poll'
+import ImageComponent from './ImageComponent'
 // import { getEvents } from '../api/EventsAPI';
 
 const Event: React.FC = () => {
@@ -32,6 +33,7 @@ const Event: React.FC = () => {
           const response = await getEventById(event)
           if (!('message' in response)) {
             const data: EventType = response
+            console.log(response.baseImage)
             setEvent(data)
             setIsLoading(false)
           }
@@ -123,7 +125,10 @@ const Event: React.FC = () => {
   }
   return (
     <div className={classes.event}>
-      <img src={imagine} alt="event" />
+      {singleEvent.baseImage && (
+        <ImageComponent base64Image={singleEvent.baseImage} />
+      )}
+      {!singleEvent.baseImage && <img src={imagine} alt="event" />}
       <h3>Event title : {singleEvent.title}</h3>
       <p>Description: {singleEvent.description}</p>
       <p>
