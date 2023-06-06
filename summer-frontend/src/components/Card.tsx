@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import imagine from '../media/images/events.jpg'
 import classes from './Card.module.css'
+import ImageComponent from '../pages/ImageComponent'
 
 interface CardsProps {
   id: number
@@ -12,6 +13,7 @@ interface CardsProps {
   location: string
   description: string
   isPastEvent: boolean
+  image?: string | null
 }
 
 const Card: React.FC<CardsProps> = ({
@@ -21,23 +23,29 @@ const Card: React.FC<CardsProps> = ({
   time,
   timeDifference,
   isPastEvent,
-  location
+  location,
+  image
 }) => {
   const day = new Date(date).toLocaleDateString(undefined, {
     day: 'numeric'
-  });
-  const month = new Date(date).toLocaleDateString(undefined, {
-    month: 'short'
-  }).toUpperCase();
+  })
+  const month = new Date(date)
+    .toLocaleDateString(undefined, {
+      month: 'short'
+    })
+    .toUpperCase()
 
   const handleClick = () => {
-    window.scrollTo(0, 0);
-  };
+    window.scrollTo(0, 0)
+  }
 
   return (
     <div className={classes.card}>
       <Link to={`/events/${id}`} onClick={handleClick}>
-        <img src={imagine} alt="#" />
+      {image && (
+        <ImageComponent base64Image={image} />
+      )}
+      {!image && <img src={imagine} alt="event" />}
       </Link>
       <div className={classes.datearea}>
         <h3>{day}</h3>

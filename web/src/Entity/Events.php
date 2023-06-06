@@ -73,6 +73,9 @@ class Events
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: EventsUsers::class, orphanRemoval: true)]
     private Collection $eventsUsers;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -232,5 +235,42 @@ class Events
         }
 
         return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getImageUrl(): ?string
+    {
+        if (!$this->image) {
+            return null;
+        }
+
+        if (strpos($this->image, '/') !== false) {
+            return $this->image;
+        }
+
+        return sprintf('/var/www/web/public/uploads/images/%s', $this->image);
+    }
+
+    #[Groups(['events:read', 'events:write'])]
+    public function getBaseImage()
+    {
+        $imageUrl = $this->getImageUrl();
+        
+        if ($imageUrl) {
+            $imageContent = file_get_contents($imageUrl);
+            $base64Image = base64_encode($imageContent);
+            return $base64Image;
+        }
     }
 };

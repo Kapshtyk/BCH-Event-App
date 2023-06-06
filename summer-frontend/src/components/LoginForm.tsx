@@ -24,7 +24,7 @@ function LoginForm(props: any) {
       const data = await signin(formData.email, formData.password)
       if ('token' in data) {
         localStorage.setItem('token', data.token)
-        const userData = await getUserData(data.token) 
+        const userData = await getUserData(data.token)
         if ('roles' in userData) {
           setCurrentUser({
             user: userData.id,

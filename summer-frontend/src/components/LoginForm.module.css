@@ -8,7 +8,8 @@
   border-radius: 10px;
 }
 
-.loginForm legend {}
+.loginForm legend {
+}
 
 .loginForm label {
   margin: 10px 0 5px;

@@ -81,7 +81,7 @@ export const signin = async (
 
 export const getUserData = async (
   token: string
-): Promise<UserData | { message: string}> => {
+): Promise<UserData | { message: string }> => {
   const url = BASE_URL + 'check-token'
   try {
     const response = await processRequest<UserData>('POST', url, {
@@ -94,7 +94,7 @@ export const getUserData = async (
     console.error(error)
     return { message: `Something went wrong: ${error}` }
   }
-}  
+}
 
 export const getPollsQuestions = async (): Promise<PollsQuiestion[]> => {
   const url = BASE_URL + 'polls_questions'

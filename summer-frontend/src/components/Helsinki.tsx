@@ -4,16 +4,16 @@ import classes from './Helsinki.module.css'
 import Event from '../models/Event'
 
 const Helsinki = () => {
-    const [data, setData] = useState<Event[]>([]);
-    useEffect(() => {
-        // Fetch data from the API
-        axios
-            .get('https://api.hel.fi/linkedevents/v1/event/', {
-                // params: {
-                // star_time: today,
-                //     sort: 'start_time',
-                // },
-            })
+  const [data, setData] = useState<Event[]>([])
+  useEffect(() => {
+    // Fetch data from the API
+    axios
+      .get('https://api.hel.fi/linkedevents/v1/event/', {
+        // params: {
+        // star_time: today,
+        //     sort: 'start_time',
+        // },
+      })
 
       .then((response) => {
         //sort filtering
@@ -46,4 +46,4 @@ const Helsinki = () => {
   return <div>nice</div>
 }
 
-  export default Helsinki
+export default Helsinki
