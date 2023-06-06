@@ -23,8 +23,8 @@ function LoginForm(props: any) {
     try {
       const data = await signin(formData.email, formData.password)
       if ('token' in data) {
-        console.log(data)
-        setCurrentUser(data)
+        //setCurrentUser(data)
+        localStorage.setItem('token', data.token)
         navigate('/')
       } else {
         setError({ error: data.message })

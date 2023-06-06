@@ -12,21 +12,23 @@ const EventsPreview: React.FC = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    Promise.all([getEvents()]).then(([events]) => {
-      const updateActiveEvents = events.filter((event) => {
-        const eventDate = parseISO(event.eventDate)
-        const isPastEvent = isPast(eventDate)
-        return !isPastEvent
+    if (localStorage.getItem('token')) {
+      Promise.all([getEvents()]).then(([events]) => {
+        const updateActiveEvents = events.filter((event) => {
+          const eventDate = parseISO(event.eventDate)
+          const isPastEvent = isPast(eventDate)
+          return !isPastEvent
+        })
+        const updateEndedEvents = events.filter((event) => {
+          const eventDate = parseISO(event.eventDate)
+          const isPastEvent = isPast(eventDate)
+          return isPastEvent
+        })
+        setActiveEvents(updateActiveEvents)
+        setEndedEvents(updateEndedEvents)
+        setIsLoading(false)
       })
-      const updateEndedEvents = events.filter((event) => {
-        const eventDate = parseISO(event.eventDate)
-        const isPastEvent = isPast(eventDate)
-        return isPastEvent
-      })
-      setActiveEvents(updateActiveEvents)
-      setEndedEvents(updateEndedEvents)
-      setIsLoading(false)
-    })
+    }
   }, [])
 
   if (isLoading) {
