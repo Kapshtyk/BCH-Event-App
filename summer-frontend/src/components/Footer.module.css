@@ -6,11 +6,10 @@
 }
 
 @media (max-width: 500px) {
-    .footer {
-        height: 96px;
-        padding-top: 10px;
-        background: rgba(0, 0, 0, 0.9);
-        color: white;
-    }
+  .footer {
+    height: 96px;
+    padding-top: 10px;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+  }
 }
-

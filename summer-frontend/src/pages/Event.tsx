@@ -5,7 +5,12 @@ import { format, parseISO } from 'date-fns'
 import classes from './Event.module.css'
 import imagine from '../media/images/events.jpg'
 import { CurrentUserContext } from '../context/context'
-import { cancelRegistrationToEvent, checkEventRegistration, registerToEvent } from '../api/EventsAPI'
+import {
+  cancelRegistrationToEvent,
+  checkEventRegistration,
+  getEventById,
+  registerToEvent
+} from '../api/EventsAPI'
 import { EventType, CommentType } from '../types/events'
 // import { getEvents } from '../api/EventsAPI';
 
@@ -21,18 +26,14 @@ const Event: React.FC = () => {
     setIsLoading(true)
     const fetchSingleEvent = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8007/api/v1/events/${event}`,
-          {
-            headers: {
-              Accept: 'application/json'
-            }
+        if (event) {
+          const response = await getEventById(event)
+          if (!('message' in response)) {
+            const data: EventType = response
+            setEvent(data)
+            setIsLoading(false)
           }
-        )
-        const data: EventType = response.data
-        setEvent(data)
-        setIsLoading(false)
-        console.log(data)
+        }
       } catch (error) {
         console.log(error)
         setEvent(null)
@@ -89,7 +90,7 @@ const Event: React.FC = () => {
   const registration = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     if (currentUser && event) {
-      registerToEvent(parseInt(event, 10), currentUser.user).then(data => {
+      registerToEvent(parseInt(event, 10), currentUser.user).then((data) => {
         if ('id' in data) {
           setRegistered(true)
         }
@@ -100,11 +101,15 @@ const Event: React.FC = () => {
   const cancelRegistration = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     if (currentUser && event) {
-      checkEventRegistration(currentUser.user, parseInt(event, 10)).then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          cancelRegistrationToEvent(data[0].id).then(() => setRegistered(false))
+      checkEventRegistration(currentUser.user, parseInt(event, 10)).then(
+        (data) => {
+          if (Array.isArray(data) && data.length > 0) {
+            cancelRegistrationToEvent(data[0].id).then(() =>
+              setRegistered(false)
+            )
+          }
         }
-      })
+      )
     }
   }
 
@@ -124,27 +129,32 @@ const Event: React.FC = () => {
         {format(parseISO(singleEvent.eventDate), 'h:mm a')}
       </p>
       <p>Location: {singleEvent.location}</p>
-      {currentUser && registered && (<div>
-        <h2>You are already registered for this event.</h2>
-        <button onClick={cancelRegistration}>Cancel registration</button>
-      </div>)}
-      {currentUser && !registered && (<div>
-        <h2>Register for the event</h2>
-        <button onClick={registration}>Register now</button>
-      </div>)}
-      <div className={classes.comments}>
+      <div>
         <h3>Comments</h3>
         {singleEvent.comments?.map((cmnt, i) => (
           <li key={i}>
-            <p className={classes.author}>
+            <p>
               Author: {cmnt.author.firstName} <span>{cmnt.author.email}</span>
             </p>
             <p>{cmnt.text}</p>
           </li>
         ))}
       </div>
-      <form className={classes.formcontainer} onSubmit={handleCommentSubmit}>
-        <textarea
+      {currentUser && registered && (
+        <div>
+          <h2>You are already registered for this event.</h2>
+          <button onClick={cancelRegistration}>Cancel registration</button>
+        </div>
+      )}
+      {currentUser && !registered && (
+        <div>
+          <h2>Register for the event</h2>
+          <button onClick={registration}>Register now</button>
+        </div>
+      )}
+      <form onSubmit={handleCommentSubmit}>
+        <input
+          type="text"
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
           placeholder="Add a comment"
