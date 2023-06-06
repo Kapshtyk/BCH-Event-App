@@ -4,17 +4,7 @@
   display: flex;
   align-items: center;
   margin-top: 1em;
-  max-height: 300px;
-}
-
-.imagearea {
-  display: flex;
-  padding: 0.5em;
-}
-
-.imagearea img {
-  height: 100px;
-  width: 100px;
+  height: 300px;
 }
 
 .textarea {
@@ -32,29 +22,9 @@ h4 {
   .card {
     display: flex;
     flex-direction: column;
-  }
-
-  .textarea {
-    text-align: start;
     position: relative;
-    top: -150px;
-    left: -90px;
-  }
-
-  .datearea h2 {
-    margin: 10px 0 0 0;
-  }
-
-  .datearea p {
-    margin: 10px;
-  }
-
-  .textarea h4 {
-    margin: 5px 0;
-  }
-
-  .textarea p {
-    margin: 0;
+    height: 340px;
+    width: fit-content;
   }
 
   .datearea {
@@ -62,9 +32,9 @@ h4 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
-    top: -590px;
-    left: 90px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
     border-radius: 10px;
     background-color: white;
     color: black;
@@ -72,12 +42,35 @@ h4 {
     width: 75px;
   }
 
+  .datearea h3 {
+    margin: 10px 0 0 0;
+  }
+
+  .datearea p {
+    margin: 10px;
+  }
+
+  .textarea {
+    text-align: left;
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+  }
+
+  .textarea h2 {
+    margin: 0 20px;
+  }
+
+  .textarea p {
+    margin: 0 20px;
+    height: 20px;
+  }
+
   .card img {
-    width: 100%;
-    max-width: 288px;
-    /* Adjust the width as per your preference */
+    position: relative;
+    width: 325px;
     height: auto;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 20px;
   }
 }

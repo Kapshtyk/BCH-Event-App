@@ -3,8 +3,8 @@ import { useParams } from 'react-router'
 import axios from 'axios'
 import { format, parseISO } from 'date-fns'
 import classes from './Event.module.css'
-import imagine from '../media/images/rock.jpg'
-import { CurrentUserContext } from '../context/context'
+import imagine from '../media/images/events.jpg'
+import { CurrentUserContext, PollsQuestionContext } from '../context/context'
 import {
   cancelRegistrationToEvent,
   checkEventRegistration,
@@ -12,6 +12,8 @@ import {
   registerToEvent
 } from '../api/EventsAPI'
 import { EventType, CommentType } from '../types/events'
+import Poll from '../components/Poll'
+import ImageComponent from './ImageComponent'
 // import { getEvents } from '../api/EventsAPI';
 
 const Event: React.FC = () => {
@@ -21,6 +23,7 @@ const Event: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [registered, setRegistered] = useState(false)
   const currentUser = useContext(CurrentUserContext).currentUser
+  const pollsQuestion = useContext(PollsQuestionContext).pollsQuestion
 
   useEffect(() => {
     setIsLoading(true)
@@ -30,6 +33,7 @@ const Event: React.FC = () => {
           const response = await getEventById(event)
           if (!('message' in response)) {
             const data: EventType = response
+            console.log(response.baseImage)
             setEvent(data)
             setIsLoading(false)
           }
@@ -121,7 +125,10 @@ const Event: React.FC = () => {
   }
   return (
     <div className={classes.event}>
-      <img src={imagine} alt="" />
+      {singleEvent.baseImage && (
+        <ImageComponent base64Image={singleEvent.baseImage} />
+      )}
+      {!singleEvent.baseImage && <img src={imagine} alt="event" />}
       <h3>Event title : {singleEvent.title}</h3>
       <p>Description: {singleEvent.description}</p>
       <p>
@@ -129,17 +136,6 @@ const Event: React.FC = () => {
         {format(parseISO(singleEvent.eventDate), 'h:mm a')}
       </p>
       <p>Location: {singleEvent.location}</p>
-      <div>
-        <h3>Comments</h3>
-        {singleEvent.comments?.map((cmnt, i) => (
-          <li key={i}>
-            <p>
-              Author: {cmnt.author.firstName} <span>{cmnt.author.email}</span>
-            </p>
-            <p>{cmnt.text}</p>
-          </li>
-        ))}
-      </div>
       {currentUser && registered && (
         <div>
           <h2>You are already registered for this event.</h2>
@@ -152,9 +148,20 @@ const Event: React.FC = () => {
           <button onClick={registration}>Register now</button>
         </div>
       )}
-      <form onSubmit={handleCommentSubmit}>
-        <input
-          type="text"
+      <div className={classes.comments}>
+        <Poll data={pollsQuestion[1]} />
+        <h3>Comments</h3>
+        {singleEvent.comments?.map((cmnt, i) => (
+          <li key={i}>
+            <p className={classes.author}>
+              Author: {cmnt.author.firstName} <span>{cmnt.author.email}</span>
+            </p>
+            <p>{cmnt.text}</p>
+          </li>
+        ))}
+      </div>
+      <form className={classes.formcontainer} onSubmit={handleCommentSubmit}>
+        <textarea
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
           placeholder="Add a comment"

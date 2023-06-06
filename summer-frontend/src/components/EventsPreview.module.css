@@ -1,0 +1,19 @@
+.eventspreview {
+  text-align: start;
+}
+
+.eventspreview select {
+  text-align: start;
+  margin: 0.5em 0.5em;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  border-radius: 5px;
+}
+
+.eventspreview h2 {
+  margin-top: 20px;
+}
+
+.eventspreview p {
+  margin-top: 10px;
+}

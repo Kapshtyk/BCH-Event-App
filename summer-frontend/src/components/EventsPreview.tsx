@@ -3,6 +3,7 @@ import { format, parseISO, isPast, formatDistanceToNow } from 'date-fns'
 import { Events } from '../types/events'
 import Card from './Card'
 import { getEvents } from '../api/EventsAPI'
+import classes from './EventsPreview.module.css'
 
 const EventsPreview: React.FC = () => {
   const [activeEvents, setActiveEvents] = useState<Events>([])
@@ -64,7 +65,7 @@ const EventsPreview: React.FC = () => {
   // const activeEventsAll = activeEvents.filter((event)=> !event.isPublished);
 
   return (
-    <div>
+    <div className={classes.eventspreview}>
       <label htmlFor="sortOption">Sort by Date:</label>
       <select
         id="sortOption"
@@ -76,7 +77,7 @@ const EventsPreview: React.FC = () => {
         <option value="oldest">Oldest Date</option>
       </select>
       <h2>Active Events</h2>
-      {activeEvents.length === 0 && <p>There are no active events currently</p>}
+      {activeEvents.length === 0 && <p>There are no currently active events</p>}
       {activeEvents.map((event) => (
         <Card
           key={event.id}
@@ -88,6 +89,7 @@ const EventsPreview: React.FC = () => {
           location={event.location}
           description={event.description}
           isPastEvent={event.isPublished}
+          image={event.baseImage}
         />
       ))}
       {endedEvents.length > 0 && (

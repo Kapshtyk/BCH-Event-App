@@ -23,52 +23,80 @@ const Nav = () => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  const handleClick = () => {
+    window.scrollTo(0, 0)
+  }
+
   return (
     <nav className={classes.nav}>
       <ul>
         <li>
           {isMobile ? (
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/" onClick={handleClick}>
+              Home
+            </NavLink>
           ) : (
-            <NavLink to="/">
-              <FontAwesomeIcon icon={faHouse} />
-              <small>HOME</small>
+            <NavLink to="/" onClick={handleClick}>
+              <div className={classes.icon}>
+                <FontAwesomeIcon icon={faHouse} />
+                <small>HOME</small>
+              </div>
             </NavLink>
           )}
         </li>
         <li>
           {isMobile ? (
-            <NavLink to="/college">College</NavLink>
+            <NavLink to="/polls" onClick={handleClick}>
+              Votes
+            </NavLink>
           ) : (
-            <NavLink to="/college">
-              <FontAwesomeIcon icon={faSchool} />
+            <NavLink to="/polls" onClick={handleClick}>
+              <div className={classes.icon}>
+                <FontAwesomeIcon icon={faSchool} />
+                <small>VOTES</small>
+              </div>
             </NavLink>
           )}
         </li>
         <li>
           {isMobile ? (
-            <NavLink to="/helsinki">Helsinki</NavLink>
+            <NavLink to="/helsinki" onClick={handleClick}>
+              Helsinki
+            </NavLink>
           ) : (
-            <NavLink to="/helsinki">
-              <FontAwesomeIcon icon={faMap} />
+            <NavLink to="/helsinki" onClick={handleClick}>
+              <div className={classes.icon}>
+                <FontAwesomeIcon icon={faMap} />
+                <small>HELSINKI</small>
+              </div>
             </NavLink>
           )}
         </li>
         <li>
           {isMobile ? (
-            <NavLink to="/faq">FAQ</NavLink>
+            <NavLink to="/faq" onClick={handleClick}>
+              FAQ
+            </NavLink>
           ) : (
-            <NavLink to="/faq">
-              <FontAwesomeIcon icon={faCircleQuestion} />
+            <NavLink to="/faq" onClick={handleClick}>
+              <div className={classes.icon}>
+                <FontAwesomeIcon icon={faCircleQuestion} />
+                <small>FAQ</small>
+              </div>
             </NavLink>
           )}
         </li>
         <li>
           {isMobile ? (
-            <NavLink to="/profile">Profile</NavLink>
+            <NavLink to="/profile" onClick={handleClick}>
+              Profile
+            </NavLink>
           ) : (
-            <NavLink to="/profile">
-              <FontAwesomeIcon icon={faUser} />
+            <NavLink to="/profile" onClick={handleClick}>
+              <div className={classes.icon}>
+                <FontAwesomeIcon icon={faUser} />
+                <small>PROFILE</small>
+              </div>
             </NavLink>
           )}
         </li>

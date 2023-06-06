@@ -9,6 +9,7 @@ export type EventType = {
   comments?: CommentType[]
   isPublished: boolean
   createdAt?: string
+  baseImage?: string
 }
 
 export type CommentType = {

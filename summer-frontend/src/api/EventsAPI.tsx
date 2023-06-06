@@ -1,7 +1,7 @@
 import { BASE_URL } from '../service/constant'
 import axios, { AxiosResponse } from 'axios'
 import { Events, EventType } from '../types/events'
-import { UserEventGet, UserEventPost, UserType } from '../types/users'
+import { UserData, UserEventGet, UserEventPost, UserType } from '../types/users'
 import { PollsQuiestion, PollsVote } from '../types/polls'
 
 const token = `${localStorage.getItem('token')}` || ''
@@ -79,6 +79,23 @@ export const signin = async (
   }
 }
 
+export const getUserData = async (
+  token: string
+): Promise<UserData | { message: string }> => {
+  const url = BASE_URL + 'check-token'
+  try {
+    const response = await processRequest<UserData>('POST', url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    return response
+  } catch (error) {
+    console.error(error)
+    return { message: `Something went wrong: ${error}` }
+  }
+}
+
 export const getPollsQuestions = async (): Promise<PollsQuiestion[]> => {
   const url = BASE_URL + 'polls_questions'
   try {
@@ -112,9 +129,9 @@ export const postVote = async (
   const url = BASE_URL + 'polls_votes'
   try {
     const response = await processRequest<PollsVote>('POST', url, {
-      question: `api/v1/polls_questions/${question}`,
-      choice: `api/v1/polls_choices/${choice}`,
-      author: `api/v1/users/${author}`
+      question: `api/polls_questions/${question}`,
+      choice: `api/polls_choices/${choice}`,
+      author: `api/users/${author}`
     })
     return response
   } catch (error) {
@@ -130,8 +147,8 @@ export const registerToEvent = async (
   const url = BASE_URL + 'events_users'
   try {
     const response = await processRequest<UserEventPost>('POST', url, {
-      event: `api/v1/events/${event}`,
-      user: `api/v1/users/${user}`
+      event: `api/events/${event}`,
+      user: `api/users/${user}`
     })
     return response
   } catch (error) {

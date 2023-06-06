@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import imagine from '../media/images/rock.jpg'
+import imagine from '../media/images/events.jpg'
 import classes from './Card.module.css'
+import ImageComponent from '../pages/ImageComponent'
 
 interface CardsProps {
   id: number
@@ -12,6 +13,7 @@ interface CardsProps {
   location: string
   description: string
   isPastEvent: boolean
+  image?: string | null
 }
 
 const Card: React.FC<CardsProps> = ({
@@ -21,22 +23,37 @@ const Card: React.FC<CardsProps> = ({
   time,
   timeDifference,
   isPastEvent,
-  location
+  location,
+  image
 }) => {
+  const day = new Date(date).toLocaleDateString(undefined, {
+    day: 'numeric'
+  })
+  const month = new Date(date)
+    .toLocaleDateString(undefined, {
+      month: 'short'
+    })
+    .toUpperCase()
+
+  const handleClick = () => {
+    window.scrollTo(0, 0)
+  }
+
   return (
     <div className={classes.card}>
-      <div className={classes.image}>
-        <Link to={`/events/${id}`}>
-          <img src={imagine} alt="#" />
-        </Link>
+      <Link to={`/events/${id}`} onClick={handleClick}>
+      {image && (
+        <ImageComponent base64Image={image} />
+      )}
+      {!image && <img src={imagine} alt="event" />}
+      </Link>
+      <div className={classes.datearea}>
+        <h3>{day}</h3>
+        <p>{month}</p>
       </div>
-      <div className={classes.texte}>
-        <p>
-          Date/Time: {date} {time}{' '}
-          {isPastEvent ? `${timeDifference} ago` : `${timeDifference} left`}
-        </p>
-        <h4>Title: {title}</h4>
-        <p>Location: {location}</p>
+      <div className={classes.textarea}>
+        <h2>{title}</h2>
+        <p>{location}</p>
       </div>
     </div>
   )

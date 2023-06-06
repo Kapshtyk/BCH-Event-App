@@ -1,3 +1,13 @@
+.nav ul {
+  display: flex;
+  justify-content: space-around;
+}
+
+.icon {
+  display: flex;
+  flex-direction: column;
+}
+
 .nav ul li {
   display: inline-block;
 }
@@ -14,7 +24,7 @@
 }
 
 .nav ul li a:hover {
-  color: red;
+  color: grey;
   text-decoration: none;
 }
 
@@ -33,8 +43,21 @@
     background-color: rgba(0, 0, 0, 0.5);
   }
 
+  .nav ul {
+    padding: 0;
+  }
+
+  .nav ul li {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .nav ul li a {
-    padding: 16px;
     text-decoration: none;
+  }
+
+  .nav small {
+    font-size: 9px;
+    margin-top: 5px;
   }
 }

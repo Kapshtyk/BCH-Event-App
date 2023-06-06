@@ -5,12 +5,10 @@ import EventsPreview from '../components/EventsPreview'
 const Home = () => {
   return (
     <div className={classes.home}>
-      <div className="Herobanner">
-        <h2>Helsinki Business College</h2>
-        <h3>Super mega events are here!</h3>
-        <input placeholder="EVENT SEARCH" />
+      <div className={classes.herobanner}>
+        <h2>HOMEPAGE PICTURE WILL BE ADDED INSTEAD. MAYBE...</h2>
       </div>
-      <div className="CardSection">
+      <div className={classes.cardsection}>
         <EventsPreview />
       </div>
       <div></div>

@@ -1,28 +1,29 @@
 .loginForm fieldset {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   flex-direction: column;
-  margin: 1rem;
-  padding: 1rem;
-  width: fit-content;
+  width: 300px;
   margin: auto;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .loginForm legend {
-  margin: auto;
 }
 
 .loginForm label {
-  margin-top: 1rem;
+  margin: 10px 0 5px;
 }
 
 .loginForm input {
   border-radius: 5px;
-  padding: 0.3rem;
+  padding: 10px;
 }
 
-.submit-button {
-  margin: 1rem;
+.submitbutton {
+  margin-top: 20px;
+  width: 163px;
+  background-color: black;
+  color: white;
+  border: solid 1px white;
 }

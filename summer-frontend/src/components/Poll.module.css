@@ -1,5 +1,5 @@
 .poll_row {
-  width: 350px;
+  width: 300px;
   margin-top: 0.5rem;
   display: flex;
   flex-direction: row;
@@ -10,8 +10,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 450px;
+  width: auto;
   margin: auto;
+  border-radius: 20px;
 }
 
 .poll_percentage {
