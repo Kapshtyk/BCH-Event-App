@@ -9,7 +9,9 @@ import {
   checkEventRegistration,
   getEventById,
   registerToEvent,
-  postComment
+  postComment,
+  updateComment,
+  deleteComment
 } from '../api/EventsAPI'
 import { EventType, CommentType } from '../types/events'
 import Poll from '../components/Poll'
@@ -46,7 +48,6 @@ const Event: React.FC = () => {
     fetchSingleEvent()
   }, [event])
 
-
   useEffect(() => {
     if (currentUser && event) {
       checkEventRegistration(currentUser.user, parseInt(event, 10)).then(
@@ -63,28 +64,68 @@ const Event: React.FC = () => {
     e.preventDefault()
     try {
       if (currentUser && event && commentText.length > 5) {
-        const response = await postComment(
-          currentUser.user,
-          event,
-          commentText
-        )
+        const response = await postComment(currentUser.user, event, commentText)
+        if ('message' in response) {
+          console.error(response.message)
+          return
+        }
+        setEvent((prevState) => {
+          if (prevState) {
+            return {
+              ...prevState,
+              comments: prevState.comments
+                ? [...prevState.comments, response]
+                : [response]
+            }
+          }
+          return null
+        })
+        setCommentText('')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const removeComment = async (commentId: number) => {
+    try {
+      await deleteComment(commentId)
+      setEvent((prevState) => {
+        if (prevState) {
+          const updatedComments = (prevState.comments || []).filter(
+            (comment) => comment.id !== commentId
+          )
+          return {
+            ...prevState,
+            comments: updatedComments
+          }
+        }
+        return prevState
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const editComment = async (commentId: number, newText: string) => {
+    try {
+      const response = await updateComment(commentId, newText)
       if ('message' in response) {
         console.error(response.message)
         return
       }
       setEvent((prevState) => {
         if (prevState) {
+          const updatedComments = (prevState.comments || []).map((comment) =>
+            comment.id === commentId
+              ? { ...comment, text: response.text }
+              : comment
+          )
           return {
             ...prevState,
-            comments: prevState.comments
-              ? [...prevState.comments, response]
-              : [response],
+            comments: updatedComments
           }
         }
         return null
       })
-      setCommentText('')
-    }
     } catch (error) {
       console.log(error)
     }
@@ -124,9 +165,11 @@ const Event: React.FC = () => {
   }
   //google navigation
   const openGoogleMapsDirections = (location: string) => {
-   const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(location)}`
-      window.open(url, '_blank')
-    }
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+      location
+    )}`
+    window.open(url, '_blank')
+  }
   return (
     <div className={classes.event}>
       {singleEvent.baseImage && (
@@ -139,7 +182,16 @@ const Event: React.FC = () => {
         Date/Time: {format(parseISO(singleEvent.eventDate), 'MMMM d,yyyy')}{' '}
         {format(parseISO(singleEvent.eventDate), 'h:mm a')}
       </p>
-      <p>Location: {singleEvent.location} <span className={classes.navigation}><button onClick={() => openGoogleMapsDirections(singleEvent.location)}>Direction</button></span></p>
+      <p>
+        Location: {singleEvent.location}{' '}
+        <span className={classes.navigation}>
+          <button
+            onClick={() => openGoogleMapsDirections(singleEvent.location)}
+          >
+            Direction
+          </button>
+        </span>
+      </p>
       {currentUser && registered && (
         <div>
           <h2>You are already registered for this event.</h2>
@@ -161,6 +213,16 @@ const Event: React.FC = () => {
               Author: <span>{cmnt.author.email}</span>
             </p>
             <p>{cmnt.text}</p>
+            {currentUser && event && (
+              <div>
+                <button onClick={() => removeComment(cmnt.id)}>
+                  Delete Comment
+                </button>
+                <button onClick={() => editComment(cmnt.id, 'Updated Text')}>
+                  Edit Comment
+                </button>
+              </div>
+            )}
           </li>
         ))}
       </div>

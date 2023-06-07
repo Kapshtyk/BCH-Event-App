@@ -13,6 +13,7 @@ export type EventType = {
 }
 
 export type CommentType = {
+  id: number
   author: AuthorType
   text: string
   publishDate?: string
@@ -20,5 +21,6 @@ export type CommentType = {
 }
 
 export type AuthorType = {
+  id : number
   email: string
 }
