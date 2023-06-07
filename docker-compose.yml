@@ -17,7 +17,6 @@ services:
     networks:
       dev:
   
-
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
@@ -57,6 +56,15 @@ services:
     depends_on:
       - www
 
+  socket:
+    build:
+      context: ./socket
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    networks:
+      - dev
+  
   nginx:
     image: nginx:1.19.3
     ports:
