@@ -49,12 +49,14 @@ const Event: React.FC = () => {
   const handleCommentSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
     try {
+      if(event){
     const currentUserData = currentUser?.user
     if (!currentUserData) {
-      return
+      return;
+      
     }
+    const response = await postComment(currentUser.user, commentText)
     
-    const response = await postComment(currentUserData, commentText)
     if ('message' in response) {
       console.error(response.message)
       return
@@ -75,6 +77,7 @@ const Event: React.FC = () => {
         return null
       })
       setCommentText('')
+    }
     } catch (error) {
       console.log(error)
     }
@@ -160,7 +163,7 @@ const Event: React.FC = () => {
         {singleEvent.comments?.map((cmnt, i) => (
           <li key={i}>
             <p className={classes.author}>
-              Author: {cmnt.author.firstName} <span>{cmnt.author.email}</span>
+              Author: <span>{cmnt.author.email}</span>
             </p>
             <p>{cmnt.text}</p>
           </li>

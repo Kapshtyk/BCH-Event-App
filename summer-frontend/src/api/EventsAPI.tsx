@@ -225,3 +225,29 @@ export const postComment = async (
     return { message: `Something went wrong: ${error}` }
   }
 }
+export const updateComment = async (
+  commentId: number,
+  text: string
+): Promise<CommentType | { message: string }> => {
+  const url = BASE_URL + `comments/${commentId}`;
+  try {
+    const response = await axios.patch<CommentType>(url, { text });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return { message: `Something went wrong: ${error}` };
+  }
+};
+
+export const deleteComment = async (
+  commentId: number
+): Promise<{ message: string }> => {
+  const url = BASE_URL + `comments/${commentId}`;
+  try {
+    await axios.delete(url);
+    return { message: 'Comment deleted successfully' };
+  } catch (error) {
+    console.error(error);
+    return { message: `Something went wrong: ${error}` };
+  }
+};
