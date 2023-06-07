@@ -46,42 +46,6 @@ const Event: React.FC = () => {
     fetchSingleEvent()
   }, [event])
 
-  const handleCommentSubmit = async (event: React.FormEvent) => {
-    event.preventDefault()
-    try {
-      if(event){
-    const currentUserData = currentUser?.user
-    if (!currentUserData) {
-      return;
-      
-    }
-    const response = await postComment(currentUser.user, commentText)
-    
-    if ('message' in response) {
-      console.error(response.message)
-      return
-    }
-
-  
-      const newComment: CommentType = response
-      console.log(newComment)
-      setEvent((prevState) => {
-        if (prevState) {
-          return {
-            ...prevState,
-            comments: prevState.comments
-              ? [...prevState.comments, newComment]
-              : [newComment],
-          }
-        }
-        return null
-      })
-      setCommentText('')
-    }
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   useEffect(() => {
     if (currentUser && event) {
@@ -94,6 +58,37 @@ const Event: React.FC = () => {
       )
     }
   }, [])
+
+  const createComment = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      if (currentUser && event && commentText.length > 5) {
+        const response = await postComment(
+          currentUser.user,
+          event,
+          commentText
+        )
+      if ('message' in response) {
+        console.error(response.message)
+        return
+      }
+      setEvent((prevState) => {
+        if (prevState) {
+          return {
+            ...prevState,
+            comments: prevState.comments
+              ? [...prevState.comments, response]
+              : [response],
+          }
+        }
+        return null
+      })
+      setCommentText('')
+    }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const registration = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -169,7 +164,7 @@ const Event: React.FC = () => {
           </li>
         ))}
       </div>
-      <form className={classes.formcontainer} onSubmit={handleCommentSubmit}>
+      <form className={classes.formcontainer} onSubmit={createComment}>
         <textarea
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}

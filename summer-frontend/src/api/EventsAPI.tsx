@@ -211,13 +211,15 @@ export const getEventById = async (
 }
 export const postComment = async (
   author: string | number,
+  event: string | number,
   text: string
 ):Promise<CommentType | {message:string}> => {
   const url = BASE_URL + 'comments'
   try {
     const response = await processRequest<CommentType>('POST',url,{
     author: `api/users/${author}`,
-    text: `api/comments/${text}`
+    text: text,
+    event: `api/events/${event}`
   })
   return response
   } catch(error){
