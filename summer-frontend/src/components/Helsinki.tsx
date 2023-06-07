@@ -6,13 +6,8 @@ import Event from '../models/Event'
 const Helsinki = () => {
   const [data, setData] = useState<Event[]>([])
   useEffect(() => {
-    // Fetch data from the API
     axios
-      .get('https://api.hel.fi/linkedevents/v1/event/?format=json&page=1&sort=-start_time&keyword_OR=yso:p11185,yso:p1808,yso:p5121,yso:p2625,yso:p965&division=kamppi,pasila&start=today&end=today', {
-        // params: {
-        //     sort: 'start_time',
-        // },
-      })
+      .get('https://api.hel.fi/linkedevents/v1/event/?format=json&page=1&sort=-start_time&keyword_OR=yso:p11185,yso:p1808,yso:p5121,yso:p2625,yso:p965&division=kamppi,pasila&start=today&end=today', {})
 
       .then((response) => {
         //sort filtering
@@ -44,10 +39,11 @@ const Helsinki = () => {
 
   return (
     <div className={classes.helsinki}>
+      <h2>Helsinki information</h2>
       {data.length ? (
         <ul>
           {data.map((event) => (
-            <li key={event.id}>
+            <li key={event.id} className={classes.item}>
               {event.images && event.images[0] ? (
                 <img src={event.images[0].url} alt="Event" />
               ) : null}

@@ -7,7 +7,7 @@ import Profile from './pages/Profile'
 import Layout from './pages/Layout'
 import LoginForm from './components/LoginForm'
 import Helsinki from './components/Helsinki'
-import College from './components/College'
+import Poll from './components/Poll'
 import { CurrentUserContext } from './context/context'
 import { CurrentUserType } from './types/users'
 import { getPollsQuestions } from './api/EventsAPI'
@@ -32,7 +32,7 @@ const App = () => {
               <Route path="profile" element={<Profile />} />
               <Route path="login" element={<LoginForm />} />
               <Route path="helsinki" element={<Helsinki />} />
-              <Route path="college" element={<College />} />
+              {/* <Route path="poll" element={<Poll data={}/>} /> */}
             </Route>
           </Routes>
       </CurrentUserContext.Provider>

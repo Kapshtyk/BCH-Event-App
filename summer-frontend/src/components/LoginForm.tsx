@@ -51,7 +51,7 @@ function LoginForm(props: any) {
         <input type="password" id="password" onChange={inputHandler} />
         <input className={classes.submitbutton} type="submit" value="SIGN IN" />
         <p>First time here?</p>
-        <button className="register">REGISTER</button>
+        <button className={classes.registerbutton}>REGISTER</button>
       </fieldset>
       {error && error.error}
     </form>

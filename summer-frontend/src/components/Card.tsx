@@ -50,7 +50,7 @@ const Card: React.FC<CardsProps> = ({
         <p>{month}</p>
       </div>
       <div className={classes.textarea}>
-        <h2>{title}</h2>
+        <h3>{title}</h3>
         <p>{location}</p>
       </div>
     </div>

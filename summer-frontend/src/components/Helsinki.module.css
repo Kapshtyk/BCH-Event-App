@@ -1,17 +1,33 @@
 .helsinki {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
+}
+
+.helsinki h2{
+  text-align: center;
+  margin: 30px auto;
+}
+
+.helsinki img{
+  max-width: 300px;
+  border-radius: 20px;
+  margin: 10px;
+}
+
+.helsinki span{
+  margin: 5px;
 }
 
 .helsinki ul {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
   list-style-type: none;
   padding: 0;
 }
 
 .helsinki ul li {
+  width: 325px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,5 +35,11 @@
   border: solid 1px white;
   border-radius: 20px;
   padding: 10px;
-  margin: 10px;
+  margin: 20px auto;
+}
+
+@media (max-width: 650px) {
+  
+  
+  
 }
