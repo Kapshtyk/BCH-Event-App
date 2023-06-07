@@ -4,17 +4,19 @@ import axios from 'axios'
 import { format, parseISO } from 'date-fns'
 import classes from './Event.module.css'
 import imagine from '../media/images/events.jpg'
-import { CurrentUserContext, PollsQuestionContext } from '../context/context'
+import { CurrentUserContext } from '../context/context'
 import {
   cancelRegistrationToEvent,
   checkEventRegistration,
+  checkEventsPoll,
   getEventById,
   registerToEvent
 } from '../api/EventsAPI'
 import { EventType, CommentType } from '../types/events'
 import Poll from '../components/Poll'
 import ImageComponent from './ImageComponent'
-// import { getEvents } from '../api/EventsAPI';
+import { ca } from 'date-fns/locale'
+import { PollsQuiestion } from '../types/polls'
 
 const Event: React.FC = () => {
   const [singleEvent, setEvent] = useState<EventType | null>(null)
@@ -23,28 +25,66 @@ const Event: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [registered, setRegistered] = useState(false)
   const currentUser = useContext(CurrentUserContext).currentUser
-  const pollsQuestion = useContext(PollsQuestionContext).pollsQuestion
+  const [polls, setPolls] = useState<PollsQuiestion[]>([])
 
   useEffect(() => {
     setIsLoading(true)
-    const fetchSingleEvent = async () => {
-      try {
-        if (event) {
-          const response = await getEventById(event)
-          if (!('message' in response)) {
-            const data: EventType = response
-            console.log(response.baseImage)
+    if (event) {
+      getEventById(event)
+        .then((data) => {
+          if (!('message' in data)) {
             setEvent(data)
             setIsLoading(false)
           }
+        })
+        .catch((error) => {
+          console.log(error)
+          setEvent(null)
+        })
+    }
+  }, [event])
+
+  useEffect(() => {
+    if (event) {
+      checkEventsPoll(event)
+        .then((data) => {
+          if (data.length > 0) {
+            setPolls(data)
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  }, [event])
+
+  useEffect(() => {
+    if (currentUser && event) {
+      checkEventRegistration(currentUser.user, event)
+        .then((data) => {
+          if (!('message' in data) && data.length > 0) {
+            setRegistered(true)
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  }, [])
+
+  const fetchPollsQuestions = async (event: string | number | undefined) => {
+    if (event) {
+      try {
+        const data = await checkEventsPoll(event)
+        if (data.length > 0) {
+          setPolls(data)
         }
       } catch (error) {
         console.log(error)
-        setEvent(null)
       }
     }
-    fetchSingleEvent()
-  }, [event])
+  }
+
   const handleCommentSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
     try {
@@ -78,18 +118,6 @@ const Event: React.FC = () => {
       console.log(error)
     }
   }
-
-  useEffect(() => {
-    if (currentUser && event) {
-      checkEventRegistration(currentUser.user, parseInt(event, 10)).then(
-        (data) => {
-          if (!('message' in data) && data.length > 0) {
-            setRegistered(true)
-          }
-        }
-      )
-    }
-  }, [])
 
   const registration = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -149,7 +177,14 @@ const Event: React.FC = () => {
         </div>
       )}
       <div className={classes.comments}>
-        <Poll data={pollsQuestion[1]} />
+        {polls && polls.length > 0 && (
+          <>
+            <h3>{polls.length === 1 ? 'Poll' : 'Polls'}</h3>
+            {polls.map((poll) => {
+              return <Poll key={poll.id} data={poll} fetch={() => {fetchPollsQuestions(event)}} />
+            })}
+          </>
+        )}
         <h3>Comments</h3>
         {/* add component for comments */}
         {singleEvent.comments?.map((cmnt, i) => (
