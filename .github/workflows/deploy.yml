@@ -22,13 +22,13 @@ jobs:
           uses: docker/build-push-action@v2 
           with:
             push: true
-            file: ./php/Dockerfile
+            file: ../php/Dockerfile
             tags: kapshtykas/www
         - name: Build and Push frontend image
           uses: docker/build-push-action@v2 
           with:
             push: true
-            file: ./summer-frontend/Dockerfile
+            file: ../summer-frontend/Dockerfile
             tags: kapshtykas/frontend
   deploy:
     if: github.ref_name == ${{ vars.CONDITION }} 
