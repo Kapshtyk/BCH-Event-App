@@ -7,32 +7,16 @@ import Profile from './pages/Profile'
 import Layout from './pages/Layout'
 import LoginForm from './components/LoginForm'
 import Helsinki from './components/Helsinki'
-import College from './components/College'
-import { CurrentUserContext, PollsQuestionContext } from './context/context'
+import Poll from './components/Poll'
+import { CurrentUserContext } from './context/context'
 import { CurrentUserType } from './types/users'
 import { getPollsQuestions } from './api/EventsAPI'
-import { PollsQuiestion } from './types/polls'
-import Poll from './components/Poll'
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState<CurrentUserType>(null)
-  const [pollsQuestion, setPollsQuestion] = useState<PollsQuiestion[]>([])
 
   const logout = () => {
     setCurrentUser(null)
-  }
-
-  useEffect(() => {
-    fetchPollsQuestions()
-  }, [])
-
-  const fetchPollsQuestions = async () => {
-    getPollsQuestions().then((data) => {
-      if (data.length > 0) {
-        console.log(data)
-        setPollsQuestion(data)
-      }
-    })
   }
 
   return (
@@ -40,9 +24,6 @@ const App = () => {
       <CurrentUserContext.Provider
         value={{ currentUser, setCurrentUser, logout }}
       >
-        <PollsQuestionContext.Provider
-          value={{ pollsQuestion, setPollsQuestion, fetchPollsQuestions }}
-        >
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
@@ -51,11 +32,9 @@ const App = () => {
               <Route path="profile" element={<Profile />} />
               <Route path="login" element={<LoginForm />} />
               <Route path="helsinki" element={<Helsinki />} />
-              <Route path="college" element={<College />} />
-              <Route path="polls" element={<Poll data={pollsQuestion[0]} />} />
+              {/* <Route path="poll" element={<Poll data={}/>} /> */}
             </Route>
           </Routes>
-        </PollsQuestionContext.Provider>
       </CurrentUserContext.Provider>
     </BrowserRouter>
   )

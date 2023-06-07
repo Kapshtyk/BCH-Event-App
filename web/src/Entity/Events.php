@@ -73,11 +73,18 @@ class Events
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: EventsUsers::class, orphanRemoval: true)]
     private Collection $eventsUsers;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    #[ORM\OneToMany(mappedBy: 'event', targetEntity: PollsQuestions::class)]
+    private Collection $pollsQuestions;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
         $this->eventsUsers = new ArrayCollection();
+        $this->pollsQuestions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -228,6 +235,73 @@ class Events
             // set the owning side to null (unless already changed)
             if ($eventsUser->getEvent() === $this) {
                 $eventsUser->setEvent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getImageUrl(): ?string
+    {
+        if (!$this->image) {
+            return null;
+        }
+
+        if (strpos($this->image, '/') !== false) {
+            return $this->image;
+        }
+
+        return sprintf('/var/www/web/public/uploads/images/%s', $this->image);
+    }
+
+    #[Groups(['events:read', 'events:write'])]
+    public function getBaseImage()
+    {
+        $imageUrl = $this->getImageUrl();
+        
+        if ($imageUrl) {
+            $imageContent = file_get_contents($imageUrl);
+            $base64Image = base64_encode($imageContent);
+            return $base64Image;
+        }
+    }
+
+    /**
+     * @return Collection<int, PollsQuestions>
+     */
+    public function getPollsQuestions(): Collection
+    {
+        return $this->pollsQuestions;
+    }
+
+    public function addPollsQuestion(PollsQuestions $pollsQuestion): self
+    {
+        if (!$this->pollsQuestions->contains($pollsQuestion)) {
+            $this->pollsQuestions->add($pollsQuestion);
+            $pollsQuestion->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removePollsQuestion(PollsQuestions $pollsQuestion): self
+    {
+        if ($this->pollsQuestions->removeElement($pollsQuestion)) {
+            // set the owning side to null (unless already changed)
+            if ($pollsQuestion->getEvent() === $this) {
+                $pollsQuestion->setEvent(null);
             }
         }
 

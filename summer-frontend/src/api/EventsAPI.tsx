@@ -1,7 +1,7 @@
 import { BASE_URL } from '../service/constant'
 import axios, { AxiosResponse } from 'axios'
 import { Events, EventType } from '../types/events'
-import { UserEventGet, UserEventPost, UserType } from '../types/users'
+import { UserData, UserEventGet, UserEventPost, UserType } from '../types/users'
 import { PollsQuiestion, PollsVote } from '../types/polls'
 
 const token = `${localStorage.getItem('token')}` || ''
@@ -51,7 +51,7 @@ const checkArray = (data: unknown) => {
 }
 
 export const getEvents = async (): Promise<Events> => {
-  const url = BASE_URL + 'events'
+  const url = BASE_URL + 'events?isPublished=true'
   try {
     const response = await processRequest<Events>('GET', url)
     return checkArray(response)
@@ -79,8 +79,25 @@ export const signin = async (
   }
 }
 
+export const getUserData = async (
+  token: string
+): Promise<UserData | { message: string }> => {
+  const url = BASE_URL + 'check-token'
+  try {
+    const response = await processRequest<UserData>('POST', url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    return response
+  } catch (error) {
+    console.error(error)
+    return { message: `Something went wrong: ${error}` }
+  }
+}
+
 export const getPollsQuestions = async (): Promise<PollsQuiestion[]> => {
-  const url = BASE_URL + 'polls_questions'
+  const url = BASE_URL + 'polls_questions?isPublished=true'
   try {
     const response = await processRequest<PollsQuiestion[]>('GET', url)
     return response
@@ -94,9 +111,22 @@ export const checkPoll = async (
   question: number,
   author: number
 ): Promise<PollsVote[]> => {
-  const url = BASE_URL + `polls_votes?&question=${question}&author=${author}`
+  const url = BASE_URL + `polls_votes?question=${question}&author=${author}`
   try {
     const response = await processRequest<PollsVote[]>('GET', url)
+    return response
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+}
+
+export const checkEventsPoll = async (
+  event: number | string
+): Promise<PollsQuiestion[]> => {
+  const url = BASE_URL + `polls_questions?event=${event}&isPublished=true`
+  try {
+    const response = await processRequest<PollsQuiestion[]>('GET', url)
     return response
   } catch (error) {
     console.log(error)
@@ -112,9 +142,9 @@ export const postVote = async (
   const url = BASE_URL + 'polls_votes'
   try {
     const response = await processRequest<PollsVote>('POST', url, {
-      question: `api/v1/polls_questions/${question}`,
-      choice: `api/v1/polls_choices/${choice}`,
-      author: `api/v1/users/${author}`
+      question: `api/polls_questions/${question}`,
+      choice: `api/polls_choices/${choice}`,
+      author: `api/users/${author}`
     })
     return response
   } catch (error) {
@@ -130,8 +160,8 @@ export const registerToEvent = async (
   const url = BASE_URL + 'events_users'
   try {
     const response = await processRequest<UserEventPost>('POST', url, {
-      event: `api/v1/events/${event}`,
-      user: `api/v1/users/${user}`
+      event: `api/events/${event}`,
+      user: `api/users/${user}`
     })
     return response
   } catch (error) {
@@ -156,7 +186,7 @@ export const cancelRegistrationToEvent = async (
 export const getRegisteredEvents = async (
   user: number
 ): Promise<UserEventGet[] | { message: string }> => {
-  const url = BASE_URL + `events_users?user=${user}`
+  const url = BASE_URL + `events_users?user=${user}&isPublished=true`
   try {
     const response = await processRequest<UserEventGet[]>('GET', url)
     return response
@@ -167,8 +197,8 @@ export const getRegisteredEvents = async (
 }
 
 export const checkEventRegistration = async (
-  user: number,
-  event: number
+  user: number | string,
+  event: number | string
 ): Promise<UserEventGet[] | { message: string }> => {
   const url = BASE_URL + `events_users?user=${user}&event=${event}`
   try {
@@ -180,11 +210,10 @@ export const checkEventRegistration = async (
   }
 }
 
-// it hasnot been implemented yet
 export const getEventById = async (
   event: string | number
 ): Promise<EventType | { message: string }> => {
-  const url = BASE_URL + `events/${event}`
+  const url = BASE_URL + `events/${event}?isPublished=true`
   try {
     const response = await processRequest<EventType>('GET', url)
     return response

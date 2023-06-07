@@ -4,6 +4,11 @@ export type UserType = {
   roles: string[]
 }
 
+export type UserData = {
+  id: number
+  roles: string[]
+}
+
 export type UsersType = UserType[]
 
 export type CurrentUserType = UserType | null

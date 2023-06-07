@@ -6,15 +6,15 @@ import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
 import { faStarHalfStroke } from '@fortawesome/free-solid-svg-icons'
-import { faBuilding } from '@fortawesome/free-solid-svg-icons'
+import { faCalendarDays } from '@fortawesome/free-solid-svg-icons'
 
 const Nav = () => {
-    const [isMobile, setIsMobile] = useState(true)
+  const [isMobile, setIsMobile] = useState(true)
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth > 650)
-        }
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 650)
+    }
 
     // Add event listener to handle window resize
     window.addEventListener('resize', handleResize)
@@ -24,75 +24,88 @@ const Nav = () => {
   }, [])
 
   const handleClick = () => {
-    window.scrollTo(0, 0);
-  };
+    window.scrollTo(0, 0)
+  }
 
   return (
     <nav className={classes.nav}>
       <ul>
         <li>
           {isMobile ? (
-            <NavLink to="/" onClick={handleClick}>Home</NavLink>
-          ) : (
             <NavLink to="/" onClick={handleClick}>
               <div className={classes.icon}>
                 <FontAwesomeIcon icon={faHouse} />
                 <small>HOME</small>
               </div>
             </NavLink>
-          )}
-        </li>
-        <li>
-          {isMobile ? (
-            <NavLink to="/polls" onClick={handleClick}>Votes</NavLink>
           ) : (
-            <NavLink to="/polls" onClick={handleClick}>
-              <div className={classes.icon}>
-                <FontAwesomeIcon icon={faStarHalfStroke} />
-                <small>VOTES</small>
-              </div>
+            <NavLink to="/" onClick={handleClick}>
+              Home
             </NavLink>
           )}
         </li>
         <li>
           {isMobile ? (
-            <NavLink to="/helsinki" onClick={handleClick}>Helsinki</NavLink>
+            <NavLink to="/poll" onClick={handleClick}>
+            <div className={classes.icon}>
+            <FontAwesomeIcon icon={faStarHalfStroke} />
+              <small>VOTES</small>
+            </div>
+            </NavLink>
+          ) : (
+            <NavLink to="/poll" onClick={handleClick}>
+            Votes
+            </NavLink>
+          )}
+        </li>
+        <li>
+          {isMobile ? (
+            <NavLink to="/helsinki" onClick={handleClick}>
+            <div className={classes.icon}>
+            <FontAwesomeIcon icon={faCalendarDays} />
+              <small>HELSINKI</small>
+            </div>
+            </NavLink>
           ) : (
             <NavLink to="/helsinki" onClick={handleClick}>
-              <div className={classes.icon}>
-                <FontAwesomeIcon icon={faBuilding} />
-                <small>HELSINKI</small>
-              </div>
+            Helsinki
             </NavLink>
           )}
         </li>
         <li>
           {isMobile ? (
-            <NavLink to="/faq" onClick={handleClick}>FAQ</NavLink>
+            <NavLink to="/faq" onClick={handleClick}>
+            <div className={classes.icon}>
+              <FontAwesomeIcon icon={faCircleQuestion} />
+              <small>FAQ</small>
+            </div>
+            </NavLink>
           ) : (
             <NavLink to="/faq" onClick={handleClick}>
-              <div className={classes.icon}>
-                <FontAwesomeIcon icon={faCircleQuestion} />
-                <small>FAQ</small>
-              </div>
+            FAQ
             </NavLink>
           )}
         </li>
         <li>
           {isMobile ? (
-            <NavLink to="/profile" onClick={handleClick}>Profile</NavLink>
+
+            <NavLink to="/profile" onClick={handleClick}>
+            <div className={classes.icon}>
+              <FontAwesomeIcon icon={faUser} />
+              <small>PROFILE</small>
+            </div>
+            </NavLink>
           ) : (
             <NavLink to="/profile" onClick={handleClick}>
-              <div className={classes.icon}>
-                <FontAwesomeIcon icon={faUser} />
-                <small>PROFILE</small>
-              </div>
+            Profile
             </NavLink>
           )}
         </li>
       </ul>
     </nav>
-  );
-};
+
+  )
+}
+
 
 export default Nav

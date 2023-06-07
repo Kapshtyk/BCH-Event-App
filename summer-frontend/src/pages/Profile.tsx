@@ -8,12 +8,14 @@ import { Link } from 'react-router-dom'
 
 const Profile = () => {
   const currentUser = useContext(CurrentUserContext).currentUser
-  const [showLoginOverlay, setShowLoginOverlay] = useState(true)
+  const [showLoginOverlay, setShowLoginOverlay] = useState(false)
   const [showRegisterModal, setShowRegisterModal] = useState(false)
+  const [showLoginButton, setShowLoginButton] = useState(true)
   const [events, setEvents] = useState<UserEventGet[]>([])
 
   useEffect(() => {
     if (currentUser && 'user' in currentUser) {
+      setShowLoginButton(false)
       getRegisteredEvents(currentUser.user).then((data) => {
         if (!('message' in data)) {
           setEvents(data)
@@ -26,9 +28,9 @@ const Profile = () => {
     setShowLoginOverlay(true)
   }
 
-  const handleRegisterButtonClick = () => {
-    setShowRegisterModal(true)
-  }
+  // const handleRegisterButtonClick = () => {
+  //   setShowRegisterModal(true)
+  // }
 
   const handleOverlayClose = () => {
     setShowLoginOverlay(false)
@@ -48,21 +50,13 @@ const Profile = () => {
 
   return (
     <div className={classes.profile}>
-      <h3>ACCOUNT</h3>
-      <p className={classes.accountField}>First name:</p>
-      <p className={classes.accountInfo}>John</p>
-      <p className={classes.accountField}>Last name:</p>
-      <p className={classes.accountInfo}>Doe</p>
-      <p className={classes.accountField}>Email:</p>
-      <p className={classes.accountInfo}>john.doe@example.com</p>
-      <p className={classes.accountField}>Role:</p>
-      <p className={classes.accountInfo}>User</p>
-      <p className={classes.accountField}>Comments posted by user:</p>
-      <p className={classes.accountInfo}>No comments available</p>
+      <h2>Your Account</h2>
+      {showLoginButton && (
+      <button onClick={handleLoginButtonClick}>Login</button>)}
       <div>
         {events && events.length > 0 && (
           <>
-            <h3>Events</h3>
+            <h3>Your events</h3>
             <table>
               <thead>
                 <tr>
@@ -106,7 +100,7 @@ const Profile = () => {
         </div>
       )}
 
-      <button onClick={handleLoginButtonClick}>Login</button>
+      
     </div>
   )
 }
