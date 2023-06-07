@@ -19,35 +19,17 @@ jobs:
           with:
             username: ${{ secrets.USERNAME_DOCKER_HUB }}  
             password: ${{ secrets.PASSWORD_DOCKER_HUB }}  
-        - name: Build and Push Nginx image
-          uses: docker/build-push-action@v2 
-          with:
-            push: true
-            file: ./nginx.conf
-            tags: kapshtykas/nginx
-        - name: Build and Push DB image
-          uses: docker/build-push-action@v2 
-          with:
-            push: true
-            file: ./api_yamdb/Dockerfile
-            tags: kapshtykas/db
-        - name: Build and Push PhpMyAdmin image
-          uses: docker/build-push-action@v2 
-          with:
-            push: true
-            file: ./phpmyadmin/Dockerfile
-            tags: kapshtykas/phpmyadmin
         - name: Build and Push www image
           uses: docker/build-push-action@v2 
           with:
             push: true
-            file: ./api_yamdb/Dockerfile
+            file: ../php/Dockerfile
             tags: kapshtykas/www
         - name: Build and Push frontend image
           uses: docker/build-push-action@v2 
           with:
             push: true
-            file: ./summer-frontend/Dockerfile
+            file: ../summer-frontend/Dockerfile
             tags: kapshtykas/frontend
   deploy:
     if: github.ref_name == ${{ vars.CONDITION }} 
@@ -65,9 +47,6 @@ jobs:
             sudo docker-compose stop
             sudo docker-compose rm web
             sudo docker pull kapshtykas/www
-            sudo docker pull kapshtykas/nginx
-            sudo docker pull kapshtykas/db
-            sudo docker pull kapshtykas/phpmyadmin
             sudo docker pull kapshtykas/frontend
             touch web/.env
             echo "APP_ENV=${{ secrets.APP_ENV }}" >> web/.env
