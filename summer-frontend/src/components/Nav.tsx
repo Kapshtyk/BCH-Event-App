@@ -88,6 +88,7 @@ const Nav = () => {
         </li>
         <li>
           {isMobile ? (
+
             <NavLink to="/profile" onClick={handleClick}>
             <div className={classes.icon}>
               <FontAwesomeIcon icon={faUser} />
@@ -102,7 +103,9 @@ const Nav = () => {
         </li>
       </ul>
     </nav>
+
   )
 }
+
 
 export default Nav
