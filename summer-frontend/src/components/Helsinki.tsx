@@ -8,9 +8,8 @@ const Helsinki = () => {
   useEffect(() => {
     // Fetch data from the API
     axios
-      .get('https://api.hel.fi/linkedevents/v1/event/', {
+      .get('https://api.hel.fi/linkedevents/v1/event/?format=json&page=1&sort=-start_time&keyword_OR=yso:p11185,yso:p1808,yso:p5121,yso:p2625,yso:p965&division=kamppi,pasila&start=today&end=today', {
         // params: {
-        // star_time: today,
         //     sort: 'start_time',
         // },
       })
@@ -43,7 +42,32 @@ const Helsinki = () => {
     return <span>{event.name.en}</span>
   }
 
-  return <div>nice</div>
+  return (
+    <div className={classes.helsinki}>
+      {data.length ? (
+        <ul>
+          {data.map((event) => (
+            <li key={event.id}>
+              {event.images && event.images[0] ? (
+                <img src={event.images[0].url} alt="Event" />
+              ) : null}
+              {event.end_time ? (
+                <span>
+                  {new Date(event.start_time).toLocaleDateString()} -{' '}
+                  {new Date(event.end_time).toLocaleDateString()}
+                </span>
+              ) : (
+                <span>{new Date(event.start_time).toLocaleDateString()}</span>
+              )}
+              {getEventNameSpan(event)}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
+  );
 }
 
 export default Helsinki

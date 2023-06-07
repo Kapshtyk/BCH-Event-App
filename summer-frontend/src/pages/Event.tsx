@@ -151,6 +151,7 @@ const Event: React.FC = () => {
       <div className={classes.comments}>
         <Poll data={pollsQuestion[1]} />
         <h3>Comments</h3>
+        {/* add component for comments */}
         {singleEvent.comments?.map((cmnt, i) => (
           <li key={i}>
             <p className={classes.author}>
