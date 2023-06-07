@@ -18,13 +18,6 @@ jobs:
           with:
             username: ${{ secrets.USERNAME_DOCKER_HUB }}  
             password: ${{ secrets.PASSWORD_DOCKER_HUB }}  
-        - name: Build and Push www image
-          uses: docker/build-push-action@v2 
-          with:
-            context: ./php
-            file: ./php/Dockerfile
-            push: true
-            tags: kapshtykas/www
         - name: Build and Push frontend image
           uses: docker/build-push-action@v2 
           with:
