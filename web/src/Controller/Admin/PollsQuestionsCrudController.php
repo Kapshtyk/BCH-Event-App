@@ -51,8 +51,9 @@ class PollsQuestionsCrudController extends AbstractCrudController
             yield IdField::new('id')->onlyOnIndex(),
             yield TextareaField::new('question'),
             // yield AssociationField::new('pollsChoices'),
-
+            
             // yield IntegerField::new('pollsVotes')->onlyOnIndex(),
+            yield AssociationField::new('event'),
             yield DateTimeField::new('createdAt')->onlyOnIndex(),
             yield BooleanField::new('isPublished')
             

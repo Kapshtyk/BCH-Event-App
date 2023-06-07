@@ -10,7 +10,9 @@
     </div>
   {% endif %}
 
-  <form action="{{ path('app_login') }}" method="post">
+  <form class="login-form" action="{{ path('app_login') }}" method="post">
+  <fieldset>
+  <legend>Sign In</legend>
     <label for="username">Email:</label>
     <input type="text"
       id="username"
@@ -20,9 +22,10 @@
     <label for="password">Password:</label>
     <input type="password" id="password" name="_password" />
 
-    {# If you want to control the URL the user is redirected to on success
-        <input type="hidden" name="_target_path" value="/account"> #}
+    {# redirece after successful login #}
+        <input type="hidden" name="_target_path" value="/admin">
 
     <button type="submit">login</button>
+  </fieldset>
   </form>
 {% endblock %}
