@@ -21,9 +21,13 @@ jobs:
         - name: Build and Push www image
           uses: docker/build-push-action@v2 
           with:
+            context: ./php
+            file: ./php/Dockerfile
+            script: |
+              pwd
+              ls
             push: true
-            file: ../php/Dockerfile
-            tags: kapshtykas/www
+            tags: ${{ secrets.DOCKER_USERNAME }}/www
         - name: Build and Push frontend image
           uses: docker/build-push-action@v2 
           with:
