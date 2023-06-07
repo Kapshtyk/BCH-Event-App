@@ -99,7 +99,7 @@ const Event: React.FC = () => {
             comments: updatedComments
           }
         }
-        return prevState
+        return null
       })
     } catch (error) {
       console.log(error)
