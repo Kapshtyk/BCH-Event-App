@@ -8,6 +8,7 @@
     "ext-ctype": "*",
     "ext-iconv": "*",
     "api-platform/core": "^3.1",
+    "cboden/ratchet": "^0.4.4",
     "doctrine/annotations": "^2.0",
     "doctrine/doctrine-bundle": "^2.9",
     "doctrine/doctrine-migrations-bundle": "^3.2",
@@ -35,7 +36,8 @@
     "symfony/twig-bundle": "6.2.*",
     "symfony/validator": "6.2.*",
     "symfony/yaml": "6.2.*",
-    "symfonycasts/verify-email-bundle": "^1.13"
+    "symfonycasts/verify-email-bundle": "^1.13",
+    "textalk/websocket": "*"
   },
   "config": {
     "allow-plugins": {

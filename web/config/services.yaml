@@ -22,6 +22,11 @@ services:
     App\State\PollsVotesStateProcessor:
         bind:
             $persistProcessor: '@api_platform.doctrine.orm.state.persist_processor'
+    App\State\CommentsStateProcessor:
+        bind:
+            $persistProcessor: '@api_platform.doctrine.orm.state.persist_processor'
+    App\Entity\Comments:
+        autowire: true
 
 
     # add more service definitions when explicit configuration is needed

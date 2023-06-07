@@ -10,7 +10,7 @@ import Helsinki from './components/Helsinki'
 import College from './components/College'
 import { CurrentUserContext } from './context/context'
 import { CurrentUserType } from './types/users'
-import { getPollsQuestions } from './api/EventsAPI'
+import SocketComponent from './components/SocketComponent'
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState<CurrentUserType>(null)
@@ -24,17 +24,18 @@ const App = () => {
       <CurrentUserContext.Provider
         value={{ currentUser, setCurrentUser, logout }}
       >
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="faq" element={<Faq />} />
-              <Route path="/events/:event" element={<Event />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="login" element={<LoginForm />} />
-              <Route path="helsinki" element={<Helsinki />} />
-              <Route path="college" element={<College />} />
-            </Route>
-          </Routes>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="faq" element={<Faq />} />
+            <Route path="/events/:event" element={<Event />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="login" element={<LoginForm />} />
+            <Route path="helsinki" element={<Helsinki />} />
+            <Route path="college" element={<College />} />
+            <Route path="socket" element={<SocketComponent />} />
+          </Route>
+        </Routes>
       </CurrentUserContext.Provider>
     </BrowserRouter>
   )

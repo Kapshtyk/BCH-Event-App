@@ -5,15 +5,14 @@ import { CurrentUserContext } from '../context/context'
 import cl from './Poll.module.css'
 
 interface PollProps {
-  data: PollsQuiestion,
+  data: PollsQuiestion
   fetch?: () => void
 }
 
-const Poll: React.FC<PollProps> = ({data , fetch}) => {
+const Poll: React.FC<PollProps> = ({ data, fetch }) => {
   const currentUser = useContext(CurrentUserContext).currentUser
   const [choiceInput, setChoiceInput] = useState<number | null>(null)
   const [vote, setVote] = useState<PollsVote | null>(null)
-
 
   useEffect(() => {
     if (currentUser && 'user' in currentUser && data && data.question) {

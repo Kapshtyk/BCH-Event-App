@@ -181,7 +181,15 @@ const Event: React.FC = () => {
           <>
             <h3>{polls.length === 1 ? 'Poll' : 'Polls'}</h3>
             {polls.map((poll) => {
-              return <Poll key={poll.id} data={poll} fetch={() => {fetchPollsQuestions(event)}} />
+              return (
+                <Poll
+                  key={poll.id}
+                  data={poll}
+                  fetch={() => {
+                    fetchPollsQuestions(event)
+                  }}
+                />
+              )
             })}
           </>
         )}

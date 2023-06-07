@@ -16,6 +16,7 @@ services:
       - db-data:/var/lib/mysql
     networks:
       dev:
+  
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -29,6 +30,8 @@ services:
     restart: always
     networks:
       - dev
+    depends_on:
+      - db
 
   www:
     build: php
@@ -40,6 +43,32 @@ services:
     restart: always
     networks:
       - dev
+    depends_on:
+      - phpmyadmin  
+
+  frontend:
+    build:
+      context: ./summer-frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./summer-frontend/:/app/result_build/
+    networks:
+      - dev
+    depends_on:
+      - www
+
+  nginx:
+    image: nginx:1.19.3
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./summer-frontend/build:/usr/share/nginx/html/
+    depends_on:
+      - frontend
+    networks:
+      - dev
+
 
 networks:
   dev:

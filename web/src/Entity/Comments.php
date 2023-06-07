@@ -11,6 +11,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\CommentsRepository;
+use App\State\CommentsStateProcessor;
 use Carbon\Carbon;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,6 +28,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             ),
             new Delete()
         ],
+    processor: CommentsStateProcessor::class,
     order: ['createdAt' => 'DESC'],
     normalizationContext: ['groups' => ['comments:read']],
     denormalizationContext: ['groups' => ['comments:write']]
