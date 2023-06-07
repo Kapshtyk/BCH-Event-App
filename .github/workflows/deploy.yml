@@ -23,11 +23,8 @@ jobs:
           with:
             context: ./php
             file: ./php/Dockerfile
-            script: |
-              pwd
-              ls
             push: true
-            tags: ${{ secrets.DOCKER_USERNAME }}/www
+            tags: kapshtykas/www
         - name: Build and Push frontend image
           uses: docker/build-push-action@v2 
           with:
