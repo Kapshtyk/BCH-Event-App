@@ -1,6 +1,6 @@
 export default interface Name {
-  fi?: string;
-  en?: string;
+  fi?: string
+  en?: string
 }
 
 export default interface Image {

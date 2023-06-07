@@ -7,7 +7,6 @@ import Profile from './pages/Profile'
 import Layout from './pages/Layout'
 import LoginForm from './components/LoginForm'
 import Helsinki from './components/Helsinki'
-import Poll from './components/Poll'
 import { CurrentUserContext } from './context/context'
 import { CurrentUserType } from './types/users'
 
@@ -43,17 +42,17 @@ const App = () => {
       <CurrentUserContext.Provider
         value={{ currentUser, setCurrentUser, logout }}
       >
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="faq" element={<Faq />} />
-              <Route path="/events/:event" element={<Event />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="login" element={<LoginForm />} />
-              <Route path="helsinki" element={<Helsinki />} />
-              {/* <Route path="poll" element={<Poll data={}/>} /> */}
-            </Route>
-          </Routes>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="faq" element={<Faq />} />
+            <Route path="/events/:event" element={<Event />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="login" element={<LoginForm />} />
+            <Route path="helsinki" element={<Helsinki />} />
+            {/* <Route path="poll" element={<Poll data={}/>} /> */}
+          </Route>
+        </Routes>
       </CurrentUserContext.Provider>
     </BrowserRouter>
   )

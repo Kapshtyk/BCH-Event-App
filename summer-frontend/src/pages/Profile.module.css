@@ -3,21 +3,20 @@
   margin: 10px;
 }
 
-.profile table{
+.profile table {
   margin-top: 50px;
-  
 }
 
-.profile a{
+.profile a {
   text-decoration: none;
   color: white;
 }
 
-.profile th{
+.profile th {
   text-align: start;
 }
 
-.profile td{
+.profile td {
   padding: 10px 5px;
 }
 
@@ -39,10 +38,8 @@
 .profile h2 {
   margin-bottom: 10px;
   text-align: center;
-  width:100%
+  width: 100%;
 }
-
-
 
 @media (min-width: 500px) {
   .profile {
@@ -52,18 +49,17 @@
     padding: 30px;
     padding-top: 0;
   }
-  .profile td{
+  .profile td {
     padding: 10px 15px;
   }
 
-  .profile th{
+  .profile th {
     padding: 10px 15px;
   }
 
   .profile h2 {
     text-align: start;
   }
-
 }
 
 .overlay {

@@ -6,13 +6,13 @@
   min-width: fit-content;
 }
 
-.card img{
+.card img {
   max-width: 200px;
   margin: 10px;
   border-radius: 20px;
 }
 
-.datearea{
+.datearea {
   display: flex;
   align-items: baseline;
   margin: 10px 20px;
@@ -24,12 +24,11 @@
   margin: 10px 20px;
 }
 
-.datearea p{
+.datearea p {
   margin-left: 10px;
 }
 
-.textarea p
-{
+.textarea p {
   margin-left: 25px;
 }
 

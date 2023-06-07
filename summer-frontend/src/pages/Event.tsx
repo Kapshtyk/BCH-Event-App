@@ -29,7 +29,7 @@ const Event: React.FC = () => {
   const currentUser = useContext(CurrentUserContext).currentUser
   const [polls, setPolls] = useState<PollsQuiestion[]>([])
 
- useEffect(() => {
+  useEffect(() => {
     if (event) {
       setIsLoading(true)
       getEventById(event).then((data) => {
@@ -41,13 +41,11 @@ const Event: React.FC = () => {
     }
   }, [event])
 
-
   useEffect(() => {
     if (event) {
-      getComments(event)
-      .then((data) => {
+      getComments(event).then((data) => {
         if (!('message' in data) && data.length > 0) {
-        setComments(data)
+          setComments(data)
         }
       })
     }
@@ -85,7 +83,7 @@ const Event: React.FC = () => {
     if (event) {
       try {
         const data = await getComments(event)
-        if (!('message' in data) && data.length > 0) {
+        if (!('message' in data)) {
           setComments(data)
         }
       } catch (error) {
@@ -93,7 +91,6 @@ const Event: React.FC = () => {
       }
     }
   }
-
 
   const fetchPollsQuestions = async (event: string | number | undefined) => {
     if (event) {
@@ -108,7 +105,7 @@ const Event: React.FC = () => {
     }
   }
 
- const createComment = async (e: React.FormEvent) => {
+  const createComment = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
       if (currentUser && event && commentText.length > 5) {
@@ -182,22 +179,37 @@ const Event: React.FC = () => {
           <button onClick={registration}>Register now</button>
         </div>
       )}
-          <div className={classes.comments}>
+      <div className={classes.comments}>
         {polls && polls.length > 0 && (
           <>
             <h3>{polls.length === 1 ? 'Poll' : 'Polls'}</h3>
             {polls.map((poll) => {
-              return <Poll key={poll.id} data={poll} fetch={() => {fetchPollsQuestions(event)}} />
+              return (
+                <Poll
+                  key={poll.id}
+                  data={poll}
+                  fetch={() => {
+                    fetchPollsQuestions(event)
+                  }}
+                />
+              )
             })}
           </>
         )}
-        </div>
-       <div className={classes.comments}>
+      </div>
+      <div className={classes.comments}>
         <h3>Comments</h3>
         {comments &&
           comments.length > 0 &&
           comments.map((comment) => (
-            <Comment key={comment.id} comment={comment} event={event} fetch={() => {fetchComments(event)}}/>
+            <Comment
+              key={comment.id}
+              comment={comment}
+              event={event}
+              fetch={() => {
+                fetchComments(event)
+              }}
+            />
           ))}
         <form className={classes.formcontainer} onSubmit={createComment}>
           <textarea
@@ -206,7 +218,9 @@ const Event: React.FC = () => {
             onChange={(e) => setCommentText(e.target.value)}
             placeholder="Add a comment"
           />
-          <button className={classes.submit} type="submit">Add</button>
+          <button className={classes.submit} type="submit">
+            Add
+          </button>
         </form>
       </div>
     </div>

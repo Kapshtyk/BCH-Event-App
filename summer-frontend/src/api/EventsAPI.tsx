@@ -250,7 +250,7 @@ export const postComment = async (
 
 export const updateComment = async (
   commentId: number,
-  text: string,
+  text: string
 ): Promise<CommentType | { message: string }> => {
   const url = BASE_URL + `comments/${commentId}`
   try {
@@ -269,14 +269,16 @@ export const hideComment = async (
 ): Promise<CommentType | { message: string }> => {
   const url = BASE_URL + `comments/${commentId}`
   try {
-    const response = await processRequest<CommentType>('PATCH', url, {isPublished: false})
+    const response = await processRequest<CommentType>('PATCH', url, {
+      isPublished: false
+    })
     return response
   } catch (error) {
     console.error(error)
     return { message: `Something went wrong: ${error}` }
   }
 }
-  
+
 export const deleteComment = async (
   commentId: number
 ): Promise<{ message: string }> => {

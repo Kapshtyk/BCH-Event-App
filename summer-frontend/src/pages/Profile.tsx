@@ -52,7 +52,8 @@ const Profile = () => {
     <div className={classes.profile}>
       <h2>Your Account</h2>
       {showLoginButton && (
-      <button onClick={handleLoginButtonClick}>Login</button>)}
+        <button onClick={handleLoginButtonClick}>Login</button>
+      )}
       <div>
         {events && events.length > 0 && (
           <>
@@ -99,8 +100,6 @@ const Profile = () => {
           </div>
         </div>
       )}
-
-      
     </div>
   )
 }

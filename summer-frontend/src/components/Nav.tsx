@@ -47,65 +47,62 @@ const Nav = () => {
         <li>
           {isMobile ? (
             <NavLink to="/poll" onClick={handleClick}>
-            <div className={classes.icon}>
-            <FontAwesomeIcon icon={faStarHalfStroke} />
-              <small>VOTES</small>
-            </div>
+              <div className={classes.icon}>
+                <FontAwesomeIcon icon={faStarHalfStroke} />
+                <small>VOTES</small>
+              </div>
             </NavLink>
           ) : (
             <NavLink to="/poll" onClick={handleClick}>
-            Votes
+              Votes
             </NavLink>
           )}
         </li>
         <li>
           {isMobile ? (
             <NavLink to="/helsinki" onClick={handleClick}>
-            <div className={classes.icon}>
-            <FontAwesomeIcon icon={faCalendarDays} />
-              <small>HELSINKI</small>
-            </div>
+              <div className={classes.icon}>
+                <FontAwesomeIcon icon={faCalendarDays} />
+                <small>HELSINKI</small>
+              </div>
             </NavLink>
           ) : (
             <NavLink to="/helsinki" onClick={handleClick}>
-            Helsinki
+              Helsinki
             </NavLink>
           )}
         </li>
         <li>
           {isMobile ? (
             <NavLink to="/faq" onClick={handleClick}>
-            <div className={classes.icon}>
-              <FontAwesomeIcon icon={faCircleQuestion} />
-              <small>FAQ</small>
-            </div>
+              <div className={classes.icon}>
+                <FontAwesomeIcon icon={faCircleQuestion} />
+                <small>FAQ</small>
+              </div>
             </NavLink>
           ) : (
             <NavLink to="/faq" onClick={handleClick}>
-            FAQ
+              FAQ
             </NavLink>
           )}
         </li>
         <li>
           {isMobile ? (
-
             <NavLink to="/profile" onClick={handleClick}>
-            <div className={classes.icon}>
-              <FontAwesomeIcon icon={faUser} />
-              <small>PROFILE</small>
-            </div>
+              <div className={classes.icon}>
+                <FontAwesomeIcon icon={faUser} />
+                <small>PROFILE</small>
+              </div>
             </NavLink>
           ) : (
             <NavLink to="/profile" onClick={handleClick}>
-            Profile
+              Profile
             </NavLink>
           )}
         </li>
       </ul>
     </nav>
-
   )
 }
-
 
 export default Nav

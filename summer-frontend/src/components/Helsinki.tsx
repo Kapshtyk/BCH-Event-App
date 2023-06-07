@@ -1,46 +1,48 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import classes from './Helsinki.module.css';
-import Event from "../models/Event";
-
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import classes from './Helsinki.module.css'
+import Event from '../models/Event'
 
 const Helsinki = () => {
   const [data, setData] = useState<Event[]>([])
   useEffect(() => {
     axios
-      .get('https://api.hel.fi/linkedevents/v1/event/?format=json&page=1&sort=-start_time&keyword_OR=yso:p11185,yso:p1808,yso:p5121,yso:p2625,yso:p965&division=kamppi,pasila&start=today&end=today', {})
-            .then((response) => {
-                setData(response.data.data);
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-            });
-    }, []);
-    console.log(data)
-  
-    const getFinnishEventNameSpan = (event: Event) => {
-        if (!event.name) {
-            return <span>Tapahtuma</span>
-        }
+      .get(
+        'https://api.hel.fi/linkedevents/v1/event/?format=json&page=1&sort=-start_time&keyword_OR=yso:p11185,yso:p1808,yso:p5121,yso:p2625,yso:p965&division=kamppi,pasila&start=today&end=today',
+        {}
+      )
+      .then((response) => {
+        setData(response.data.data)
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error)
+      })
+  }, [])
+  console.log(data)
 
-        return <span>{event.name.fi}</span>
+  const getFinnishEventNameSpan = (event: Event) => {
+    if (!event.name) {
+      return <span>Tapahtuma</span>
     }
 
-    const getEventNameSpan = (event: Event) => {
-        if (!event.name) {
-            return <span>Event</span>
-        }
+    return <span>{event.name.fi}</span>
+  }
 
-        if (!event.name.en) {
-            return getFinnishEventNameSpan(event);
-        }
-
-        if (event.name.en.length === 0) {
-            return getFinnishEventNameSpan(event);
-        }
-
-        return <span>{event.name.en}</span>
+  const getEventNameSpan = (event: Event) => {
+    if (!event.name) {
+      return <span>Event</span>
     }
+
+    if (!event.name.en) {
+      return getFinnishEventNameSpan(event)
+    }
+
+    if (event.name.en.length === 0) {
+      return getFinnishEventNameSpan(event)
+    }
+
+    return <span>{event.name.en}</span>
+  }
 
   return (
     <div className={classes.helsinki}>
@@ -68,7 +70,7 @@ const Helsinki = () => {
         <p>Loading...</p>
       )}
     </div>
-  );
+  )
 }
 
 export default Helsinki

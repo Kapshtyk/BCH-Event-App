@@ -5,12 +5,12 @@ import { hideComment, updateComment } from '../api/EventsAPI'
 import cl from './Comment.module.css'
 
 interface CommentProps {
-  comment: CommentType,
-  event?: number | string,
+  comment: CommentType
+  event?: number | string
   fetch?: () => void
 }
 
-const Comment: React.FC<CommentProps> = ({comment, event, fetch}) => {
+const Comment: React.FC<CommentProps> = ({ comment, event, fetch }) => {
   const currentUser = useContext(CurrentUserContext).currentUser
   const [commentText, setCommentText] = useState(comment.text)
   const [isEdit, setIsEdit] = useState(true)
@@ -35,24 +35,23 @@ const Comment: React.FC<CommentProps> = ({comment, event, fetch}) => {
   }
 
   const handleHide = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       if (currentUser && event) {
-        const response = await hideComment(comment.id);
-        console.log(response);
+        const response = await hideComment(comment.id)
+        console.log(response)
         if ('message' in response) {
-          console.error(response.message);
+          console.error(response.message)
         } else {
           if (fetch) {
-            fetch();
+            fetch()
           }
         }
       }
     } catch (e) {
-      console.error(e);
+      console.error(e)
     }
   }
-
 
   const toggle = () => {
     setIsEdit(!isEdit)
@@ -69,15 +68,16 @@ const Comment: React.FC<CommentProps> = ({comment, event, fetch}) => {
         <div className={cl.comment_container}>
           <h3 className={cl.comment_author}>{comment.author.email}</h3>
           <p className={cl.comment_text}>{comment.text}</p>
-          {currentUser && comment.author.id === currentUser.user && 
-          <button className={cl.comment_button} onClick={toggle}>
-            Edit
-          </button>
-          }
-          {currentUser && currentUser.roles.includes('ROLE_ADMIN') && (
-            <button className={cl.comment_button_hide} onClick={handleHide}>Hide</button>
+          {currentUser && comment.author.id === currentUser.user && (
+            <button className={cl.comment_button} onClick={toggle}>
+              Edit
+            </button>
           )}
-       
+          {currentUser && currentUser.roles.includes('ROLE_ADMIN') && (
+            <button className={cl.comment_button_hide} onClick={handleHide}>
+              Hide
+            </button>
+          )}
         </div>
       )}
 

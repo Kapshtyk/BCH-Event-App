@@ -3,20 +3,19 @@
   flex-wrap: wrap;
 }
 
-.helsinki h2{
+.helsinki h2 {
   text-align: center;
   margin: 30px auto;
 }
 
-.helsinki img{
+.helsinki img {
   max-width: 300px;
   border-radius: 20px;
   margin: 10px;
 }
 
-.helsinki span{
+.helsinki span {
   margin: 5px;
-
 }
 
 .helsinki ul {
@@ -40,5 +39,4 @@
 }
 
 @media (max-width: 650px) {
-
 }
