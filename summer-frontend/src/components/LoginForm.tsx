@@ -31,6 +31,8 @@ function LoginForm(props: any) {
             token: data.token,
             roles: userData.roles
           })
+          localStorage.setItem('user', userData.id.toString())
+          localStorage.setItem('roles', JSON.stringify(userData.roles))
         }
         navigate('/')
       } else {

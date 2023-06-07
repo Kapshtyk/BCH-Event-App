@@ -41,12 +41,12 @@ const EventsPreview: React.FC = () => {
 
   const sortEventsByDate = (option: string) => {
     let sortedEvents = [...activeEvents]
-    if (option === 'latest') {
+    if (option === 'oldest') {
       sortedEvents.sort(
         (a, b) =>
           new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime()
       )
-    } else if (option === 'oldest') {
+    } else if (option === 'latest') {
       sortedEvents.sort(
         (a, b) =>
           new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime()
