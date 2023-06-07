@@ -10,7 +10,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
@@ -45,44 +44,8 @@ class CommentCrudController extends AbstractCrudController
         yield AssociationField::new('author');
         yield TextareaField::new('text');
         yield BooleanField::new('isPublished');
-        // yield TextField::new('photoFilename')
-        //     ->onlyOnIndex();
-
-        /* $createdAt = DateTimeField::new('createdAt')->setFormTypeOptions([
-            'years' => range(date('Y'), date('Y') + 5),
-            'widget' => 'single_text',
-        ]);
-        if (Crud::PAGE_EDIT === $pageName) {
-            yield $createdAt->setFormTypeOption('disabled', true);
-        } else {
-            yield $createdAt;
-        } */
+       
     }
 }
     
 
-// class CommentCrudController extends AbstractCrudController
-// {
-//     public static function getEntityFqcn(): string
-//     {
-//         return Comment::class;
-//     }
-
-//     /*
-//     public function configureFields(string $pageName): iterable
-//     {
-//         return [
-//             IdField::new('id'),
-//             TextField::new('title'),
-//             TextEditorField::new('description'),
-//         ];
-//     }
-//     */
-//     public function configureFields(string $pageName): iterable
-//         {
-//             $fields = parent::configureFields($pageName);
-//             $fields[] = AssociationField::new('event');
-//             return $fields;
-        
-//         }
-// }
