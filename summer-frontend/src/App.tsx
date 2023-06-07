@@ -10,14 +10,33 @@ import Helsinki from './components/Helsinki'
 import Poll from './components/Poll'
 import { CurrentUserContext } from './context/context'
 import { CurrentUserType } from './types/users'
-import { getPollsQuestions } from './api/EventsAPI'
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState<CurrentUserType>(null)
 
   const logout = () => {
     setCurrentUser(null)
+    localStorage.removeItem('user')
+    localStorage.removeItem('roles')
+    localStorage.removeItem('token')
   }
+
+  useEffect(() => {
+    const checkLocalStorage = () => {
+      const storedUser = localStorage.getItem('user')
+      const storedToken = localStorage.getItem('token')
+      const storedRoles = localStorage.getItem('roles')
+      if (storedUser && storedToken && storedRoles) {
+        const userData = {
+          user: Number(storedUser),
+          token: storedToken,
+          roles: JSON.parse(storedRoles)
+        }
+        setCurrentUser(userData)
+      }
+    }
+    checkLocalStorage()
+  }, [])
 
   return (
     <BrowserRouter>

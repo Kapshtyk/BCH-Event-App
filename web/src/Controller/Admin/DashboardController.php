@@ -61,7 +61,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Events', 'fas fa-map-marker-alt', Events::class);
         yield MenuItem::linkToCrud('Questions', 'fas fa-question', Questions::class);
         yield MenuItem::linkToCrud('Polls questions', 'fas fa-question-circle', PollsQuestions::class);
-        yield MenuItem::linkToCrud('Polls votes', 'fas fa-vote-yea', PollsVotes::class);
+        // yield MenuItem::linkToCrud('Polls votes', 'fas fa-vote-yea', PollsVotes::class);
         yield MenuItem::linkToCrud('Polls choices', 'fas fa-check-square', PollsChoices::class);
 
     }

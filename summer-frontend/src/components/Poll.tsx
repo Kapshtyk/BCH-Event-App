@@ -109,7 +109,8 @@ const Poll: React.FC<PollProps> = ({data , fetch}) => {
               </div>
             </div>
           ))}
-          Total votes:{` ${votes}`}
+          <div className={cl.total}>
+            Total votes:{` ${votes}`}
           {!checkVoteExists() && currentUser && (
             <button onClick={makeVote}>VOTE!</button>
           )}
@@ -117,6 +118,7 @@ const Poll: React.FC<PollProps> = ({data , fetch}) => {
             <div>You have already participated in this poll!</div>
           )}
           {!currentUser && <div>Sign in if you want to participate!</div>}
+            </div>
         </fieldset>
       </div>
     </div>

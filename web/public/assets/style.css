@@ -1,0 +1,53 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+body{
+    background-color: #66003b;
+}
+
+body div{
+    color: #fff;
+}
+
+.login-form fieldset{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    align-items: center;
+    margin: auto;
+    margin-top: 5rem;
+    line-height: 1.8rem;
+    padding: 0.4rem;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.login-form input{
+    border-radius: 5px;
+    padding: 0.3rem;
+    margin: 0.5rem;
+    height: 2.2rem;
+    width: 270px
+}
+
+.login-form fieldset legend{
+    margin: auto;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.login-form button{
+    margin: 1rem 0;
+    background-color: #66003b;
+    font-weight: bold;
+    padding: 0.5rem;
+    border-radius: 15px;
+    color: #66003b;
+    background-color: #fcdec9;
+    width: 100px;
+    
+}

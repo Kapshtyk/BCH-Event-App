@@ -49,7 +49,7 @@ final class EventsFactory extends ModelFactory
         return [
             'created_at' => \DateTimeImmutable::createFromMutable(self::faker()->dateTimeBetween('this year', 'now')),
             'description' => self::faker()->text(),
-            'eventDate' => self::faker()->dateTimeBetween('created_at', '2023-08-31'),
+            'eventDate' => self::faker()->dateTimeBetween('created_at', '2023-10-31'),
             'isPublished' => self::faker()->boolean(),
             'location' => self::faker()->text(50),
             'title' => self::faker()->text(20),

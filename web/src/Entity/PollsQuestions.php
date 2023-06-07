@@ -69,11 +69,16 @@ class PollsQuestions
         $this->createdAt = new \DateTimeImmutable();
     }
 
+    public function __toString()
+    {
+        return $this->question;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
-
+   
     public function getQuestion(): ?string
     {
         return $this->question;

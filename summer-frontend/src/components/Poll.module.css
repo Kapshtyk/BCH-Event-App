@@ -3,6 +3,7 @@
   margin-top: 0.5rem;
   display: flex;
   flex-direction: row;
+  
 }
 
 .poll_container {
@@ -10,15 +11,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: auto;
+  width: 250px;
   margin: auto;
+  border: none;
   margin-top: 1rem;
-  border-radius: 20px;
 }
 
 .poll_percentage {
   width: 75px;
   text-align: end;
+  font-size: 1rem;
 }
 
 .poll_left_column {
@@ -40,4 +42,9 @@
 .poll_progress_bar {
   width: 100%;
   transition: all 0.3s;
+}
+
+.total {
+  margin-top: 0.5rem;
+  border-bottom: 1px solid white;
 }
