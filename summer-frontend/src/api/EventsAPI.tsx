@@ -13,8 +13,14 @@ async function processRequest<T>(
 ): Promise<T> {
   try {
     let headers: any = { Accept: 'application/json' }
+    if (method === 'PATCH') {
+      headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/merge-patch+json'
+      }
+    }
     if (localStorage.getItem('token')) {
-      headers = { Accept: 'application/json', Authorization: `Bearer ${token}` }
+      headers = { ...headers, Authorization: `Bearer ${token}` }
     }
     const response: AxiosResponse<T> = await axios({
       method,
@@ -184,8 +190,8 @@ export const getRegisteredEvents = async (
 }
 
 export const checkEventRegistration = async (
-  user: number,
-  event: number
+  user: number | string,
+  event: number | string
 ): Promise<UserEventGet[] | { message: string }> => {
   const url = BASE_URL + `events_users?user=${user}&event=${event}`
   try {
@@ -213,43 +219,48 @@ export const postComment = async (
   author: string | number,
   event: string | number,
   text: string
-):Promise<CommentType | {message:string}> => {
+): Promise<CommentType | { message: string }> => {
   const url = BASE_URL + 'comments'
   try {
-    const response = await processRequest<CommentType>('POST',url,{
-    author: `api/users/${author}`,
-    text: text,
-    event: `api/events/${event}`
-  })
-  return response
-  } catch(error){
+    const response = await processRequest<CommentType>('POST', url, {
+      author: `api/users/${author}`,
+      text: text,
+      event: `api/events/${event}`
+    })
+    return response
+  } catch (error) {
     console.error(error)
     return { message: `Something went wrong: ${error}` }
   }
 }
+
 export const updateComment = async (
   commentId: number,
-  text: string
+  text?: string,
+  isPublished: boolean = true
 ): Promise<CommentType | { message: string }> => {
-  const url = BASE_URL + `comments/${commentId}`;
+  const url = BASE_URL + `comments/${commentId}`
   try {
-    const response = await axios.patch<CommentType>(url, { text });
-    return response.data;
+    const body: Partial<CommentType> = {}
+    if (text) body['text'] = text
+    if (isPublished) body['isPublished'] = isPublished
+    const response = await processRequest<CommentType>('PATCH', url, body)
+    return response
   } catch (error) {
-    console.error(error);
-    return { message: `Something went wrong: ${error}` };
+    console.error(error)
+    return { message: `Something went wrong: ${error}` }
   }
-};
+}
 
 export const deleteComment = async (
   commentId: number
 ): Promise<{ message: string }> => {
-  const url = BASE_URL + `comments/${commentId}`;
+  const url = BASE_URL + `comments/${commentId}`
   try {
-    await axios.delete(url);
-    return { message: 'Comment deleted successfully' };
+    await axios.delete(url)
+    return { message: 'Comment deleted successfully' }
   } catch (error) {
-    console.error(error);
-    return { message: `Something went wrong: ${error}` };
+    console.error(error)
+    return { message: `Something went wrong: ${error}` }
   }
-};
+}

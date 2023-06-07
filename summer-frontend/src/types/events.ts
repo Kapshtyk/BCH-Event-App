@@ -18,9 +18,10 @@ export type CommentType = {
   text: string
   publishDate?: string
   isPublished?: boolean
+  createdAgo?: string
 }
 
 export type AuthorType = {
-  id : number
+  id: number
   email: string
 }

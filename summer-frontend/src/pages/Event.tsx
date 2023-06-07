@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router'
-import { format, parseISO } from 'date-fns'
+import { format, parseISO, set } from 'date-fns'
 import classes from './Event.module.css'
 import imagine from '../media/images/events.jpg'
 import { CurrentUserContext, PollsQuestionContext } from '../context/context'
@@ -9,18 +9,18 @@ import {
   checkEventRegistration,
   getEventById,
   registerToEvent,
-  postComment,
-  updateComment,
-  deleteComment
+  postComment
 } from '../api/EventsAPI'
-import { EventType, CommentType } from '../types/events'
+import { CommentType, EventType } from '../types/events'
 import Poll from '../components/Poll'
+import Comment from '../components/Comment'
 import ImageComponent from './ImageComponent'
 // import { getEvents } from '../api/EventsAPI';
 
 const Event: React.FC = () => {
   const [singleEvent, setEvent] = useState<EventType | null>(null)
   const [commentText, setCommentText] = useState('')
+  const [comments, setComments] = useState<CommentType[]>([])
   const { event } = useParams<{ event: string }>()
   const [isLoading, setIsLoading] = useState(false)
   const [registered, setRegistered] = useState(false)
@@ -29,36 +29,30 @@ const Event: React.FC = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    const fetchSingleEvent = async () => {
-      try {
-        if (event) {
-          const response = await getEventById(event)
-          if (!('message' in response)) {
-            const data: EventType = response
-            console.log(response.baseImage)
-            setEvent(data)
-            setIsLoading(false)
-          }
+    if (event) {
+      getEventById(event).then((data) => {
+        if ('message' in data) {
+          console.error(data.message)
+          return
         }
-      } catch (error) {
-        console.log(error)
-        setEvent(null)
-      }
+        setEvent(data)
+        setComments(data.comments)
+        setIsLoading(false)
+      })
+    } else {
+      setIsLoading(false)
     }
-    fetchSingleEvent()
   }, [event])
 
   useEffect(() => {
     if (currentUser && event) {
-      checkEventRegistration(currentUser.user, parseInt(event, 10)).then(
-        (data) => {
-          if (!('message' in data) && data.length > 0) {
-            setRegistered(true)
-          }
+      checkEventRegistration(currentUser.user, event).then((data) => {
+        if (!('message' in data) && data.length > 0) {
+          setRegistered(true)
         }
-      )
+      })
     }
-  }, [])
+  }, [currentUser, event])
 
   const createComment = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -82,50 +76,6 @@ const Event: React.FC = () => {
         })
         setCommentText('')
       }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  const removeComment = async (commentId: number) => {
-    try {
-      await deleteComment(commentId)
-      setEvent((prevState) => {
-        if (prevState) {
-          const updatedComments = (prevState.comments || []).filter(
-            (comment) => comment.id !== commentId
-          )
-          return {
-            ...prevState,
-            comments: updatedComments
-          }
-        }
-        return null
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  const editComment = async (commentId: number, newText: string) => {
-    try {
-      const response = await updateComment(commentId, newText)
-      if ('message' in response) {
-        console.error(response.message)
-        return
-      }
-      setEvent((prevState) => {
-        if (prevState) {
-          const updatedComments = (prevState.comments || []).map((comment) =>
-            comment.id === commentId
-              ? { ...comment, text: response.text }
-              : comment
-          )
-          return {
-            ...prevState,
-            comments: updatedComments
-          }
-        }
-        return null
-      })
     } catch (error) {
       console.log(error)
     }
@@ -207,24 +157,11 @@ const Event: React.FC = () => {
       <div className={classes.comments}>
         <Poll data={pollsQuestion[1]} />
         <h3>Comments</h3>
-        {singleEvent.comments?.map((cmnt, i) => (
-          <li key={i}>
-            <p className={classes.author}>
-              Author: <span>{cmnt.author.email}</span>
-            </p>
-            <p>{cmnt.text}</p>
-            {currentUser && event && (
-              <div>
-                <button onClick={() => removeComment(cmnt.id)}>
-                  Delete Comment
-                </button>
-                <button onClick={() => editComment(cmnt.id, 'Updated Text')}>
-                  Edit Comment
-                </button>
-              </div>
-            )}
-          </li>
-        ))}
+        {comments &&
+          comments.length > 0 &&
+          comments.map((comment) => (
+            <Comment key={comment.id} comment={comment} />
+          ))}
       </div>
       <form className={classes.formcontainer} onSubmit={createComment}>
         <textarea
