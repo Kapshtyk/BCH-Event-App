@@ -19,7 +19,17 @@
   border-radius: 50%;
   border: silver solid;
 }
-
+.logoutButton {
+  box-shadow: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 5px 10px;
+  background-color: #f2f7f5;
+}
 /* @media (max-width: 650px) {
   .header {
     justify-content: center;

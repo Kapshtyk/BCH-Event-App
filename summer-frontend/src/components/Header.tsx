@@ -18,7 +18,9 @@ const Header = () => {
         <img className={classes.logo} src={BCC} alt="#" />
       </Link>
       <Nav />
-      {currentUser && <button>Logout</button>}
+      {currentUser && <button className={classes.logoutButton}><span className="material-symbols-outlined" style={{color: '#b23b3b',fontWeight:'bold'}}>
+logout
+</span></button>}
     </header>
   )
 }
