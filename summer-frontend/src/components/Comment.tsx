@@ -70,7 +70,12 @@ const Comment: React.FC<CommentProps> = ({ comment, event, fetch }) => {
           <p className={cl.comment_text}>{comment.text}</p>
           {currentUser && comment.author.id === currentUser.user && (
             <button className={cl.comment_button} onClick={toggle}>
-              Edit
+              <span
+                className="material-symbols-outlined"
+                style={{ verticalAlign: 'middle' }}
+              >
+                edit
+              </span>
             </button>
           )}
           {currentUser && currentUser.roles.includes('ROLE_ADMIN') && (
