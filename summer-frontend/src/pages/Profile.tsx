@@ -35,7 +35,9 @@ const Profile = () => {
       <div className={classes.profile}>
         <div className={classes.profileElements}>
       <h2>Your Account</h2>
+      <p>
       Your email: {currentUser && 'user' in currentUser && currentUser.email}
+      </p>
       <div>
         <h3>Your events</h3>
         {events && events.length > 0 && (

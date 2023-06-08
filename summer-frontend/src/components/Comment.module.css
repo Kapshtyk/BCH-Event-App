@@ -11,7 +11,7 @@
 .comment_author {
   font-size: 0.8rem;
   font-weight: 200;
-  color: #fff;
+  color: #393d3f;
 }
 
 .comment_text,
@@ -21,7 +21,7 @@
   width: calc(100% - 70px);
   padding-left: 1rem;
   font-size: 0.8rem;
-  font-weight: 300;
+  font-weight: 400;
   margin: 0;
   padding-right: 1rem;
   margin-top: 0.5rem;
@@ -29,7 +29,7 @@
 
 .comment_input {
   font-family: Arial, Helvetica, sans-serif;
-  color: white;
+  color: #393d3f;
   background-color: inherit;
 }
 

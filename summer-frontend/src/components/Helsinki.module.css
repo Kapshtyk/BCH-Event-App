@@ -1,6 +1,7 @@
 .helsinki {
   display: flex;
   flex-wrap: wrap;
+  color: #393d3f;
 }
 
 .helsinki h2 {

@@ -1,6 +1,6 @@
 .main {
   color: white;
   min-height: calc(90vh - 120px);
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.9);
+  /* background: rgba(0, 0, 0, 0.9); */
+  background-color: #fdfdff;
 }

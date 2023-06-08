@@ -1,6 +1,6 @@
 .cards {
   display: inline-block;
-  padding: 1rem;
+  padding: 2rem;
 }
 .card {
   display: flex;
@@ -43,6 +43,7 @@
 
 .textarea h3 {
   margin-left: 10px;
+  padding: 10px;
 }
 .locationArea {
   margin-left: 10px;

@@ -1,7 +1,6 @@
 .profileContainer {
   height: 100vh;
   margin: 0;
-  padding: 0;
   box-sizing: border-box;
   display: flex;
   align-items: start;
@@ -14,13 +13,14 @@
   height: 400px;
   margin: 10px;
   background-color: white;
-  color: black;
+  color: #393d3f;
   position: relative;
   border-radius: 16px;
   box-shadow: 0 2px 4px rgb(249, 246, 246);
 }
 .profileElements {
   margin: 20px 20px;
+  padding: 10px;
 }
 .profile table {
   margin-top: 50px;
@@ -51,10 +51,15 @@
 
 .profile h3 {
   margin-bottom: 10px;
+  padding: 10px;
 }
-
+.profile p {
+  margin-bottom: 10px;
+  padding: 10px;
+}
 .profile h2 {
   margin-bottom: 10px;
+  padding: 10px;
   width: 100%;
 }
 a.eventLink {

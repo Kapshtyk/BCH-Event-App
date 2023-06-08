@@ -1,20 +1,23 @@
 .eventspreview {
   text-align: start;
+  color: #393d3f;
 }
 
 .eventspreview h2 {
-  margin: 20px 10px;
+  margin: 20px 40px;
 }
 
 .eventspreview p {
   margin-top: 10px;
+  padding: 10px;
 }
 
 .endedEvents {
   opacity: 0.5;
 }
 .sortField select {
-  margin-left: 10px;
+  margin-left: 40px;
+  margin-top: 10px;
   padding: 4px;
   border: 1px solid #ccc;
   border-radius: 4px;

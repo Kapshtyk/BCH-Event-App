@@ -3,7 +3,8 @@
   bottom: 0;
   height: 40px;
   padding-top: 10px;
-  background: rgba(0, 0, 0, 0.9);
+  /* background: rgba(0, 0, 0, 0.9); */
+  background-color: #69013b;
   color: white;
 }
 

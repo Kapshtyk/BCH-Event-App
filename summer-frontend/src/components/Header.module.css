@@ -2,7 +2,8 @@
 
 .header {
   /* background-color: #ff5d4c; */
-  background: rgba(0, 0, 0, 0.92);
+  /* background: rgba(0, 0, 0, 0.92); */
+  background-color: #69013b;
   padding: 16px;
   color: white;
   display: flex;
