@@ -24,4 +24,5 @@ export type CommentType = {
 export type AuthorType = {
   id: number
   email: string
+  roles: string[]
 }

@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -20,6 +21,7 @@ class EventCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
 
+        yield IdField::new ('id')->hideOnForm();
         yield TextField::new ('title');
         yield TextField::new ('description');
         yield TextField::new ('location');

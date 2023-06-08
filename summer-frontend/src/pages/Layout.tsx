@@ -1,16 +1,17 @@
 import React from 'react'
 import Header from '../components/Header'
-import Main from '../components/Main'
 import Footer from '../components/Footer'
+import classes from '../components/Main.module.css'
+import { LayoutType } from '../types/layout'
 
-const Home = () => {
+const Layout = ({ children }: LayoutType) => {
   return (
     <>
       <Header />
-      <Main />
+      <main className={classes.main}>{children}</main>
       <Footer />
     </>
   )
 }
 
-export default Home
+export default Layout

@@ -41,7 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
     #[ORM\Column]
-    #[Groups(['users:read'])]
+    #[Groups(['users:read', 'comments:read', 'events:read'])]
     private array $roles = [];
 
     /**

@@ -5,10 +5,11 @@ import Faq from './pages/Faq'
 import Event from './pages/Event'
 import Profile from './pages/Profile'
 import Layout from './pages/Layout'
-import LoginForm from './components/LoginForm'
 import Helsinki from './components/Helsinki'
 import { CurrentUserContext } from './context/context'
 import { CurrentUserType } from './types/users'
+import ProtectedRoute from './components/ProtectedRoute'
+import Authorization from './components/Authorization'
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState<CurrentUserType>(null)
@@ -18,6 +19,7 @@ const App = () => {
     localStorage.removeItem('user')
     localStorage.removeItem('roles')
     localStorage.removeItem('token')
+    localStorage.removeItem('email')
   }
 
   useEffect(() => {
@@ -25,12 +27,15 @@ const App = () => {
       const storedUser = localStorage.getItem('user')
       const storedToken = localStorage.getItem('token')
       const storedRoles = localStorage.getItem('roles')
-      if (storedUser && storedToken && storedRoles) {
+      const storedEmail = localStorage.getItem('email')
+      if (storedUser && storedToken && storedRoles && storedEmail) {
         const userData = {
           user: Number(storedUser),
           token: storedToken,
-          roles: JSON.parse(storedRoles)
+          roles: JSON.parse(storedRoles),
+          email: storedEmail
         }
+        console.log(userData)
         setCurrentUser(userData)
       }
     }
@@ -42,17 +47,44 @@ const App = () => {
       <CurrentUserContext.Provider
         value={{ currentUser, setCurrentUser, logout }}
       >
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
+        <Layout>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
             <Route path="faq" element={<Faq />} />
-            <Route path="/events/:event" element={<Event />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="login" element={<LoginForm />} />
+            <Route
+              path="/events/:event"
+              element={
+                <ProtectedRoute>
+                  <Event />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/login"
+              element={<Authorization hasAccount={true} />}
+            />
+            <Route
+              path="/signup"
+              element={<Authorization hasAccount={false} />}
+            />
             <Route path="helsinki" element={<Helsinki />} />
-            {/* <Route path="poll" element={<Poll data={}/>} /> */}
-          </Route>
-        </Routes>
+          </Routes>
+        </Layout>
       </CurrentUserContext.Provider>
     </BrowserRouter>
   )
