@@ -36,8 +36,7 @@
   align-items: baseline;
 }
 
-.datearea p,
-.datearea h3 {
+.datearea p {
   color: #ff3d00;
   margin-left: 10px;
 }
@@ -50,19 +49,28 @@
   margin-bottom: 10px;
 }
 @media (max-width: 650px) {
+  .cards {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
   .card {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     position: relative;
     height: 340px;
-    width: fit-content;
+    max-width: 370px;
     border: none;
     background: none;
     box-shadow: none;
+    padding: 10px;
+    border-radius: 10px;
   }
 
   .datearea {
-    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -72,17 +80,14 @@
     border-radius: 10px;
     background-color: white;
     color: black;
-    height: 75px;
-    width: 75px;
-    margin: 0;
-  }
-
-  .datearea h3 {
-    margin: 10px 0 0 0;
+    height: 70px;
+    width: 70px;
+    padding: 5px;
   }
 
   .datearea p {
-    margin: 10px;
+    color: black;
+    margin: 5px 0;
   }
 
   .textarea {
@@ -91,23 +96,26 @@
     align-items: flex-start;
     text-align: left;
     position: absolute;
-    bottom: 30px;
-    left: 0;
+    bottom: 100px;
+    left: 10px;
     margin: 0;
+    color: #ffffff;
   }
 
-  .textarea h3 {
-    margin: 0 20px;
+  .locationArea {
+    position: absolute;
+    left: 10px;
+    bottom: 40px;
+    color: #ffffff;
   }
-
-  .textarea p {
-    margin: 0 20px;
-    height: 20px;
+  .imgArea {
+    width: 300px;
+    height: 250px;
+    border-radius: 20px;
   }
-
-  .card img {
+  .imgArea img {
     position: relative;
-    max-width: 325px;
+    max-width: 100%;
     height: auto;
     object-fit: contain;
     margin: 0;
