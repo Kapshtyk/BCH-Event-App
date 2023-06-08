@@ -20,9 +20,9 @@ const Header = () => {
       </Link>
       <Nav />
       {currentUser && (
-        <div>
+        <div className={classes.user}>
           <h2>Hello, {currentUser.email.split('@')[0].toUpperCase()}</h2>
-          <button onClick={logout}>Logout</button>
+          <button onClick={logout} className={classes.logoutButton}>Logout</button>
         </div>
       )}
     </header>

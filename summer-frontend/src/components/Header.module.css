@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
 .header {
   /* background-color: #ff5d4c; */
   background: rgba(0, 0, 0, 0.92);
@@ -30,8 +32,31 @@
   padding: 5px 10px;
   background-color: #f2f7f5;
 }
+.user {
+  font-family: 'Raleway', sans-serif;
+}
 /* @media (max-width: 650px) {
   .header {
     justify-content: center;
   }
 } */
+
+.logoutButton {
+  background: #5e5df0;
+  border-radius: 999px;
+  box-shadow: #5e5df0 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 8px 18px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+  word-break: break-word;
+  border: 0;
+}

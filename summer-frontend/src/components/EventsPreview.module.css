@@ -3,7 +3,7 @@
 }
 
 .eventspreview h2 {
-  margin-top: 20px;
+  margin: 20px 10px;
 }
 
 .eventspreview p {
@@ -13,12 +13,9 @@
 .endedEvents {
   opacity: 0.5;
 }
-.sortField label {
-  font-weight: bold;
-  margin-right: 10px;
-}
 .sortField select {
-  padding: 5px;
+  margin-left: 10px;
+  padding: 4px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
