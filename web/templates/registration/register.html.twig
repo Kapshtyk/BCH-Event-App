@@ -5,11 +5,14 @@
 {% endblock %}
 
 {% block body %}
+  
   <h1>
     Register
   </h1>
 
   {{ form_start(registrationForm) }}
+  <fieldset>
+  <legend>Register</legend>
   {{ form_row(registrationForm.email) }}
   {{
     form_row(
@@ -22,5 +25,6 @@
   {{ form_row(registrationForm.agreeTerms) }}
 
   <button type="submit" class="btn">Register</button>
+  </fieldset>
   {{ form_end(registrationForm) }}
 {% endblock %}

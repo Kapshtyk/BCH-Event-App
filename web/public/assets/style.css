@@ -9,8 +9,46 @@ body{
     background-color: #66003b;
 }
 
-body div{
+body div, h1{
     color: #fff;
+}
+
+
+form fieldset{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    align-items: center;
+    justify-content: right;
+    margin: auto;
+    margin-top: 5rem;
+    line-height: 1.8rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    color: #fff;
+}
+
+
+form input{
+    border-radius: 5px;
+    padding: 0.3rem;
+    margin: 0.5rem;
+    height: 2.2rem;
+    width: 270px;
+}
+form legend{
+    margin:auto;
+}
+form .btn{
+    margin: auto;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+form label{
+    text-align: center;
+}
+form .required{
+    display: block;
 }
 
 .login-form fieldset{
@@ -40,7 +78,7 @@ body div{
     font-weight: bold;
 }
 
-.login-form button{
+.login-form button, .btn{
     margin: 1rem 0;
     background-color: #66003b;
     font-weight: bold;
