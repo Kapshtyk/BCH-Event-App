@@ -75,7 +75,7 @@ const Comment: React.FC<CommentProps> = ({ comment, event, fetch }) => {
             <button className={cl.comment_button} onClick={toggle}>
               <span
                 className="material-symbols-outlined"
-                style={{ verticalAlign: 'middle' }}
+                style={{ verticalAlign: 'middle',fontSize:'18px' }}
               >
                 edit
               </span>

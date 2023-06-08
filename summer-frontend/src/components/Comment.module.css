@@ -17,7 +17,7 @@
 .comment_text,
 .comment_input {
   text-align: start;
-  border: none;
+  border-bottom: none;
   width: calc(100% - 70px);
   padding-left: 1rem;
   font-size: 0.8rem;
@@ -47,7 +47,7 @@
 }
 .comment_button {
   background: none;
-  color: red;
+  color: #4a89f3;
 }
 .comment_button_hide {
   margin-top: 2rem;

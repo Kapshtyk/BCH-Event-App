@@ -21,7 +21,7 @@ fieldset {
   font-weight: bold;
   margin: 15px 10px;
   padding: 4px;
-  color: #be264c;
+  color: #69013b;
   text-transform: uppercase;
 }
 .formGroup {
@@ -80,5 +80,5 @@ fieldset {
 
 .registerText {
   font-size: 14px;
-  color: #be264c;
+  color: #69013b;
 }

@@ -56,11 +56,11 @@ function LoginForm(props: any) {
       <fieldset>
         <legend className={classes.legend}>Sign for extra features</legend>
         <div className={classes.formGroup}>
-        <i className="login__icon fas fa-user" style={{position:'absolute',top:'13px',marginLeft:'4px',color:'#be264c'}}></i>
+        <i className="login__icon fas fa-user" style={{position:'absolute',top:'13px',marginLeft:'4px',color:'#69013B'}}></i>
         <input type="email" id="email" onChange={inputHandler} className={classes.input} placeholder='Email'/>
         </div>
         <div className={classes.formGroup}>
-        <i className="login__icon fas fa-lock" style={{position:'absolute',top:'13px',marginLeft:'4px',color:'#be264c'}}></i>
+        <i className="login__icon fas fa-lock" style={{position:'absolute',top:'13px',marginLeft:'4px',color:'#69013B'}}></i>
         <input type="password" id="password" onChange={inputHandler}className={classes.input} placeholder='Password'/>
         </div>
         <div className={classes.button}>

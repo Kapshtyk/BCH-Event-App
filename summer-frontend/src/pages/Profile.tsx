@@ -31,7 +31,9 @@ const Profile = () => {
   }
 
   return (
-    <div className={classes.profile}>
+    <div className={classes.profileContainer}>
+      <div className={classes.profile}>
+        <div className={classes.profileElements}>
       <h2>Your Account</h2>
       Your email: {currentUser && 'user' in currentUser && currentUser.email}
       <div>
@@ -50,7 +52,7 @@ const Profile = () => {
                   return (
                     <tr key={event.id}>
                       <td>
-                        <Link to={`/events/${event.event.id}`}>
+                        <Link to={`/events/${event.event.id}`} className={classes.eventLink}>
                           {event.event.title}
                         </Link>
                       </td>
@@ -65,6 +67,8 @@ const Profile = () => {
         {(!events || events.length === 0) && (
           <p>You have not registered for any events yet!</p>
         )}
+      </div>
+      </div>
       </div>
     </div>
   )

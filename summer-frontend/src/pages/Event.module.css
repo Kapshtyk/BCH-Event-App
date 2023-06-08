@@ -93,7 +93,8 @@
   top: 0.5rem;
   right: calc(0.5rem + 10px);
 }
-.register button {
+.register button,
+.cancelButton button {
   margin-left: 10px;
   padding: 10px 20px;
   box-shadow: none;
@@ -105,4 +106,10 @@
 }
 .register button:hover {
   background-color: #ff3d00;
+}
+.cancelButton button {
+  background-color: #ff3d00;
+}
+.cancelButton h3 {
+  color: #37bc8b;
 }

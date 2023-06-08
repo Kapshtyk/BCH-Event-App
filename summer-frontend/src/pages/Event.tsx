@@ -214,8 +214,8 @@ const Event: React.FC = () => {
         </p>
       </div>
       {currentUser && registered && (
-        <div>
-          <h2>You are already registered for this event.</h2>
+        <div className={classes.cancelButton}>
+          <h3>You are already registered for this event.</h3>
           <button onClick={cancelRegistration}>Cancel registration</button>
         </div>
       )}

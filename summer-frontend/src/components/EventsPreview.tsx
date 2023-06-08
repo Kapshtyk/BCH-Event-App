@@ -66,6 +66,7 @@ const EventsPreview: React.FC = () => {
 
   return (
     <div className={classes.eventspreview}>
+      <div className={classes.sortField}>
       <label htmlFor="sortOption">Sort by Date:</label>
       <select
         id="sortOption"
@@ -76,6 +77,7 @@ const EventsPreview: React.FC = () => {
         <option value="latest">Latest Date</option>
         <option value="oldest">Oldest Date</option>
       </select>
+      </div>
       <h2>Active Events</h2>
       {activeEvents.length === 0 && <p>There are no currently active events</p>}
       {activeEvents.map((event) => (
@@ -93,7 +95,7 @@ const EventsPreview: React.FC = () => {
         />
       ))}
       {endedEvents.length > 0 && (
-        <div>
+        <div className={classes.endedEvents}>
           <h2>Ended Events</h2>
           {endedEvents.map((event) => (
             <Card
