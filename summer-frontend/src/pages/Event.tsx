@@ -205,7 +205,7 @@ const Event: React.FC = () => {
             >
               <span
                 className="material-symbols-outlined"
-                style={{ verticalAlign: 'middle', color: '#4A89F3' }}
+                style={{ verticalAlign: 'middle', color: '#4A89F3',padding:'8px' }}
               >
                 near_me
               </span>
@@ -265,7 +265,9 @@ const Event: React.FC = () => {
             placeholder="Add a comment"
           />
           <button className={classes.submit} type="submit">
-            Add
+          <span className="material-symbols-outlined">
+send
+</span>
           </button>
         </form>
       </div>
