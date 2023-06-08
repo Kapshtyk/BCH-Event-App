@@ -54,14 +54,20 @@ function LoginForm(props: any) {
   return (
     <form className={classes.loginForm} onSubmit={handleSubmit}>
       <fieldset>
-        <legend>Sign in to get extra features</legend>
-        <label htmlFor="email">Your Email</label>
-        <input type="email" id="email" onChange={inputHandler} />
-        <label htmlFor="password">Password</label>
-        <input type="password" id="password" onChange={inputHandler} />
+        <legend className={classes.legend}>Sign for extra features</legend>
+        <div className={classes.formGroup}>
+        <i className="login__icon fas fa-user" style={{position:'absolute',top:'13px',marginLeft:'4px',color:'#be264c'}}></i>
+        <input type="email" id="email" onChange={inputHandler} className={classes.input} placeholder='Email'/>
+        </div>
+        <div className={classes.formGroup}>
+        <i className="login__icon fas fa-lock" style={{position:'absolute',top:'13px',marginLeft:'4px',color:'#be264c'}}></i>
+        <input type="password" id="password" onChange={inputHandler}className={classes.input} placeholder='Password'/>
+        </div>
+        <div className={classes.button}>
         <input className={classes.submitbutton} type="submit" value="SIGN IN" />
-        <p>First time here?</p>
+        <p className={classes.registerText}>First time here?</p>
         <button className={classes.registerbutton}>REGISTER</button>
+        </div>
       </fieldset>
       {error && error.error}
     </form>

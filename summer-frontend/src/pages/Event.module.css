@@ -8,11 +8,26 @@
 .event h3,
 .event h4 {
   align-items: start;
+  padding: 10px;
 }
-
+.description,
+.date_location {
+  padding: 10px;
+}
+.lightfont {
+  font-weight: lighter;
+  line-height: 0.5;
+  margin-left: 30px;
+}
 .event img {
   width: 350px;
   border-radius: 20px;
+}
+.time,
+.location {
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 10px;
 }
 
 .event textarea {
@@ -47,8 +62,7 @@
   border-bottom: solid 1px white;
 }
 .navigation button {
-  height: 20px;
-  background-color: aqua;
+  background: none;
   box-shadow: none;
   border: none;
   cursor: pointer;
@@ -78,4 +92,17 @@
   position: absolute;
   top: 0.5rem;
   right: calc(0.5rem + 10px);
+}
+.register button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  box-shadow: none;
+  border: none;
+  color: #fff;
+  background-color: #4a89f3;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.register button:hover {
+  background-color: #ff3d00;
 }

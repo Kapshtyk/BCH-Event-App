@@ -1,11 +1,11 @@
 import { AuthorizationType, AuthorizationUserDataType } from '../types/users'
 
 import cl from './Authorization.module.css'
-import style from './Form.module.css'
 import { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { CurrentUserContext } from '../context/context'
 import { getUserData, signin, signup } from '../api/EventsAPI'
+import classes from './LoginForm.module.css'
 
 const Authorization = ({ hasAccount }: AuthorizationType) => {
   const [userData, setUserData] = useState<AuthorizationUserDataType>({
@@ -91,45 +91,27 @@ const Authorization = ({ hasAccount }: AuthorizationType) => {
   }
 
   return (
-    <div className={style.container} style={{ width: 400 }}>
-      <h2 className={cl.authorization_title}>
-        {hasAccount ? 'Login' : 'Sign up'}
-      </h2>
-      <form className={cl.authorization_form} onSubmit={handleSubmit}>
-        <label className={cl.authorization_lable} htmlFor="email">
-          Email:
-        </label>
-        <input
-          className={cl.authorization_input}
-          type="email"
-          name="email"
-          onChange={onChangeInput}
-          required
-        />
-        <label className={cl.authorization_lable} htmlFor="password">
-          Password:
-        </label>
-        <input
-          className={cl.authorization_input}
-          type="password"
-          name="password"
-          onChange={onChangeInput}
-          required
-        />
-        <button className={cl.authorization_submit}>Sign up</button>
-      </form>
-      {error && <span className={cl.authorization_error}>{error}</span>}
-      {hasAccount && (
-        <div className={cl.authorization_signup}>
-          If you do not have an account! <br />
-          You can{' '}
+    <form className={classes.loginForm} onSubmit={handleSubmit}>
+    <fieldset>
+      <legend className={classes.legend}>{hasAccount ? 'Login' : 'Sign up'}</legend>
+      <div className={classes.formGroup}>
+      <i className="login__icon fas fa-user" style={{position:'absolute',top:'13px',marginLeft:'4px',color:'#be264c'}}></i>
+      <input type="email" name="email" onChange={onChangeInput} className={classes.input} placeholder='Email'/>
+      </div>
+      <div className={classes.formGroup}>
+      <i className="login__icon fas fa-lock" style={{position:'absolute',top:'13px',marginLeft:'4px',color:'#be264c'}}></i>
+      <input type="password" name="password" onChange={onChangeInput}className={classes.input} placeholder='Password'/>
+      </div>
+      <div className={classes.button}>
+      <input className={classes.submitbutton} type="submit" value="SIGN IN" />
+      {hasAccount && <p className={classes.registerText}>If you do not have an account you can{' '}
           <Link className={cl.authorization_signup_link} to="/signup">
             sign up here
-          </Link>
-        </div>
-      )}
-    </div>
-  )
-}
+          </Link></p>}
+      </div>
+    </fieldset>
+    {error && error}
+  </form>
+)}
 
 export default Authorization

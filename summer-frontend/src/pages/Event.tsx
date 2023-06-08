@@ -154,19 +154,65 @@ const Event: React.FC = () => {
   if (singleEvent === null) {
     return <p>Event not found</p>
   }
+  //google navigation
+  const openGoogleMapsDirections = (location: string) => {
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+      location
+    )}`
+    window.open(url, '_blank')
+  }
   return (
     <div className={classes.event}>
       {singleEvent.baseImage && (
         <ImageComponent base64Image={singleEvent.baseImage} />
       )}
       {!singleEvent.baseImage && <img src={imagine} alt="event" />}
-      <h3>Event title : {singleEvent.title}</h3>
-      <p>Description: {singleEvent.description}</p>
-      <p>
-        Date/Time: {format(parseISO(singleEvent.eventDate), 'MMMM d,yyyy')}{' '}
-        {format(parseISO(singleEvent.eventDate), 'h:mm a')}
-      </p>
-      <p>Location: {singleEvent.location}</p>
+      <h3>{singleEvent.title}</h3>
+      <div className={classes.description}>
+        <p>{singleEvent.description}</p>
+      </div>
+      <h3>When and where</h3>
+      <div className={classes.date_location}>
+        <p>
+          <span
+            className="material-symbols-outlined"
+            style={{ verticalAlign: 'middle' }}
+          >
+            event
+          </span>
+          <span className={classes.time}>Date and Time: </span>
+        </p>
+        <p className={classes.lightfont}>
+          {format(parseISO(singleEvent.eventDate), 'MMMM d,yyyy')}{' '}
+          {format(parseISO(singleEvent.eventDate), 'h:mm a')}
+        </p>
+
+        <p>
+          <span
+            className="material-symbols-outlined"
+            style={{ verticalAlign: 'middle' }}
+          >
+            location_on
+          </span>
+          <span className={classes.location}>Location:</span>
+        </p>
+        <p className={classes.lightfont}>
+          {singleEvent.location}
+          {''}
+          <span className={classes.navigation}>
+            <button
+              onClick={() => openGoogleMapsDirections(singleEvent.location)}
+            >
+              <span
+                className="material-symbols-outlined"
+                style={{ verticalAlign: 'middle', color: '#4A89F3' }}
+              >
+                near_me
+              </span>
+            </button>
+          </span>
+        </p>
+      </div>
       {currentUser && registered && (
         <div>
           <h2>You are already registered for this event.</h2>
@@ -174,8 +220,8 @@ const Event: React.FC = () => {
         </div>
       )}
       {currentUser && !registered && (
-        <div>
-          <h2>Register for the event</h2>
+        <div className={classes.register}>
+          <h3>Register for the event</h3>
           <button onClick={registration}>Register now</button>
         </div>
       )}

@@ -45,7 +45,10 @@
   top: 0.5rem;
   right: 0.5rem;
 }
-
+.comment_button {
+  background: none;
+  color: red;
+}
 .comment_button_hide {
-  top: 2rem;
+  margin-top: 2rem;
 }
