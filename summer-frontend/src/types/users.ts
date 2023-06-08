@@ -1,7 +1,16 @@
+import { CommentType } from './events'
+
 export type UserType = {
   user: number
   token: string
   roles: string[]
+}
+
+export type UserTypePostRepsonse = {
+  id: number
+  email: string
+  roles: string[]
+  comments: CommentType[]
 }
 
 export type UserData = {

@@ -13,8 +13,6 @@ const Header = () => {
     window.scrollTo(0, 0)
   }
 
-  
-
   return (
     <header className={classes.header}>
       <Link to="/" onClick={handleClick}>

@@ -10,6 +10,7 @@ import Helsinki from './components/Helsinki'
 import { CurrentUserContext } from './context/context'
 import { CurrentUserType } from './types/users'
 import ProtectedRoute from './components/ProtectedRoute'
+import Authorization from './components/Authorization'
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState<CurrentUserType>(null)
@@ -44,7 +45,7 @@ const App = () => {
         value={{ currentUser, setCurrentUser, logout }}
       >
         <Layout>
-        <Routes>
+          <Routes>
             <Route path="faq" element={<Faq />} />
             <Route
               path="/"
@@ -72,9 +73,8 @@ const App = () => {
             />
             <Route path="login" element={<LoginForm />} />
             <Route path="helsinki" element={<Helsinki />} />
-
-        </Routes>
-
+            <Route path="auth" element={<Authorization hasAccount={false} />} />
+          </Routes>
         </Layout>
       </CurrentUserContext.Provider>
     </BrowserRouter>

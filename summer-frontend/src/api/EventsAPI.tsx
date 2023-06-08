@@ -1,9 +1,14 @@
 import { BASE_URL } from '../service/constant'
 import axios, { AxiosResponse } from 'axios'
 import { CommentType, Events, EventType } from '../types/events'
-import { UserData, UserEventGet, UserEventPost, UserType } from '../types/users'
+import {
+  UserData,
+  UserEventGet,
+  UserEventPost,
+  UserType,
+  UserTypePostRepsonse
+} from '../types/users'
 import { PollsQuiestion, PollsVote } from '../types/polls'
-
 
 async function processRequest<T>(
   method: 'GET' | 'POST' | 'DELETE' | 'PATCH',
@@ -19,7 +24,10 @@ async function processRequest<T>(
       }
     }
     if (localStorage.getItem('token')) {
-      headers = { ...headers, Authorization: `Bearer ${localStorage.getItem('token')}` }
+      headers = {
+        ...headers,
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
     }
     const response: AxiosResponse<T> = await axios({
       method,
@@ -70,7 +78,6 @@ export const signin = async (
   email: string,
   password: string
 ): Promise<UserType | { message: string }> => {
-  //const url = BASE_URL + 'auth'
   const url = 'http://localhost:8007/auth'
   try {
     const response = await processRequest<UserType>('POST', url, {
@@ -87,11 +94,11 @@ export const signin = async (
 export const signup = async (
   email: string,
   password: string
-): Promise<UserType | { message: string }> => {
+): Promise<UserTypePostRepsonse | { message: string }> => {
   //const url = BASE_URL + 'auth'
-  const url = 'http://localhost:8007/auth'
+  const url = 'http://localhost:8007/api/users'
   try {
-    const response = await processRequest<UserType>('POST', url, {
+    const response = await processRequest<UserTypePostRepsonse>('POST', url, {
       email,
       password
     })
