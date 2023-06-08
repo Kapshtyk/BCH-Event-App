@@ -46,20 +46,6 @@ const Nav = () => {
         </li>
         <li>
           {isMobile ? (
-            <NavLink to="/poll" onClick={handleClick}>
-              <div className={classes.icon}>
-                <FontAwesomeIcon icon={faStarHalfStroke} />
-                <small>VOTES</small>
-              </div>
-            </NavLink>
-          ) : (
-            <NavLink to="/poll" onClick={handleClick}>
-              Votes
-            </NavLink>
-          )}
-        </li>
-        <li>
-          {isMobile ? (
             <NavLink to="/helsinki" onClick={handleClick}>
               <div className={classes.icon}>
                 <FontAwesomeIcon icon={faCalendarDays} />

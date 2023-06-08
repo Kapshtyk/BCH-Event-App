@@ -8,6 +8,7 @@ import { CurrentUserContext } from '../context/context'
 
 const Header = () => {
   const currentUser = useContext(CurrentUserContext).currentUser
+  const logout = useContext(CurrentUserContext).logout
   const handleClick = () => {
     window.scrollTo(0, 0)
   }
@@ -18,9 +19,12 @@ const Header = () => {
         <img className={classes.logo} src={BCC} alt="#" />
       </Link>
       <Nav />
-      {currentUser && <button className={classes.logoutButton}><span className="material-symbols-outlined" style={{color: '#b23b3b',fontWeight:'bold'}}>
-logout
-</span></button>}
+      {currentUser && (
+        <div>
+          <h2>Hello, {currentUser.email.split('@')[0].toUpperCase()}</h2>
+          <button onClick={logout}>Logout</button>
+        </div>
+      )}
     </header>
   )
 }

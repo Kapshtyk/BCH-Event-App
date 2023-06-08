@@ -66,7 +66,10 @@ const Comment: React.FC<CommentProps> = ({ comment, event, fetch }) => {
     <div>
       {isEdit && (
         <div className={cl.comment_container}>
-          <h3 className={cl.comment_author}>{comment.author.email}</h3>
+          <h3 className={cl.comment_author}>
+            {comment.author.email}{' '}
+            {comment.author.roles.includes('ROLE_ADMIN') ? '👑' : ''}
+          </h3>
           <p className={cl.comment_text}>{comment.text}</p>
           {currentUser && comment.author.id === currentUser.user && (
             <button className={cl.comment_button} onClick={toggle}>
@@ -88,7 +91,10 @@ const Comment: React.FC<CommentProps> = ({ comment, event, fetch }) => {
 
       {!isEdit && (
         <div className={cl.comment_container}>
-          <h3 className={cl.comment_author}>{comment.author.email}</h3>
+          <h3 className={cl.comment_author}>
+            {comment.author.email}{' '}
+            {comment.author.roles.includes('ROLE_ADMIN') ? '👑' : ''}
+          </h3>
           <textarea
             className={cl.comment_input}
             name="commentText"

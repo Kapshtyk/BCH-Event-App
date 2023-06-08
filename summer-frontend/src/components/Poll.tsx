@@ -82,7 +82,10 @@ const Poll: React.FC<PollProps> = ({ data, fetch }) => {
             <div className={cl.poll_row} key={choice.id}>
               <div className={cl.poll_left_column}>
                 <div className={cl.poll_percentage}>
-                  {Math.round((choice.votes / votes) * 10000) / 100}%
+                  {choice.votes
+                    ? Math.round((choice.votes / votes) * 10000) / 100
+                    : 0}
+                  %
                 </div>
                 <input
                   type="radio"
