@@ -9,6 +9,7 @@ import LoginForm from './components/LoginForm'
 import Helsinki from './components/Helsinki'
 import { CurrentUserContext } from './context/context'
 import { CurrentUserType } from './types/users'
+import ProtectedRoute from './components/ProtectedRoute'
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState<CurrentUserType>(null)
@@ -42,17 +43,39 @@ const App = () => {
       <CurrentUserContext.Provider
         value={{ currentUser, setCurrentUser, logout }}
       >
+        <Layout>
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
             <Route path="faq" element={<Faq />} />
-            <Route path="/events/:event" element={<Event />} />
-            <Route path="profile" element={<Profile />} />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/events/:event"
+              element={
+                <ProtectedRoute>
+                  <Event />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
             <Route path="login" element={<LoginForm />} />
             <Route path="helsinki" element={<Helsinki />} />
-            {/* <Route path="poll" element={<Poll data={}/>} /> */}
-          </Route>
+
         </Routes>
+
+        </Layout>
       </CurrentUserContext.Provider>
     </BrowserRouter>
   )

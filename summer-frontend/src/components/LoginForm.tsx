@@ -34,7 +34,13 @@ function LoginForm(props: any) {
               token: data.token,
               roles: response.roles,
             });
-            navigate('/');
+            const redirectPath = localStorage.getItem('redirectPath')
+            if (redirectPath) {
+              localStorage.removeItem('redirectPath')
+              navigate(JSON.parse(redirectPath).pathname)
+          } else {
+            navigate('/')
+          }
           }
         } else {
           setError({ error: data.message });

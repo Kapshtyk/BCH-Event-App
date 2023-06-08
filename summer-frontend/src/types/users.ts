@@ -29,3 +29,12 @@ export type Event = {
   title: string
   eventDate: string
 }
+
+export type AuthorizationUserDataType = {
+  email: string
+  password: string
+}
+
+export type AuthorizationType = {
+  hasAccount: boolean
+}

@@ -8,9 +8,12 @@ import { CurrentUserContext } from '../context/context'
 
 const Header = () => {
   const currentUser = useContext(CurrentUserContext).currentUser
+  const logout = useContext(CurrentUserContext).logout
   const handleClick = () => {
     window.scrollTo(0, 0)
   }
+
+  
 
   return (
     <header className={classes.header}>
@@ -18,7 +21,7 @@ const Header = () => {
         <img className={classes.logo} src={BCC} alt="#" />
       </Link>
       <Nav />
-      {currentUser && <button>Logout</button>}
+      {currentUser && <button onClick={logout}>Logout</button>}
     </header>
   )
 }
