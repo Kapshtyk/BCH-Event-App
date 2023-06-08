@@ -4,6 +4,7 @@ export type PollsQuiestion = {
   createdAt: Date
   pollsChoices: PollsChoice[]
   isPublished: boolean
+  event?: string
 }
 
 export type PollsChoice = {

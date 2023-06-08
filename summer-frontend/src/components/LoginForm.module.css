@@ -27,3 +27,12 @@
   color: white;
   border: solid 1px white;
 }
+.registerbutton {
+  padding: 10px;
+  margin-top: 20px;
+  width: 163px;
+  background-color: black;
+  border-radius: 5px;
+  color: white;
+  border: solid 1px white;
+}

@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Events;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -27,8 +28,9 @@ class EventCrudController extends AbstractCrudController
         yield DateTimeField::new ('eventDate');
         yield DateTimeField::new ('createdAt')->hideOnForm();
         yield ImageField::new ('image')->setBasePath('uploads/images')
-            ->setUploadDir('public/uploads/images')
-            ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]');
+        ->setUploadDir('public/uploads/images')
+        ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]');
+        yield AssociationField::new ('pollsQuestions')->onlyOnIndex();
     }
 
 }

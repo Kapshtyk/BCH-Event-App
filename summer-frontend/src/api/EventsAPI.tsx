@@ -1,6 +1,6 @@
 import { BASE_URL } from '../service/constant'
 import axios, { AxiosResponse } from 'axios'
-import { Events, EventType } from '../types/events'
+import { CommentType, Events, EventType } from '../types/events'
 import { UserData, UserEventGet, UserEventPost, UserType } from '../types/users'
 import { PollsQuiestion, PollsVote } from '../types/polls'
 
@@ -13,8 +13,14 @@ async function processRequest<T>(
 ): Promise<T> {
   try {
     let headers: any = { Accept: 'application/json' }
+    if (method === 'PATCH') {
+      headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/merge-patch+json'
+      }
+    }
     if (localStorage.getItem('token')) {
-      headers = { Accept: 'application/json', Authorization: `Bearer ${token}` }
+      headers = { ...headers, Authorization: `Bearer ${token}` }
     }
     const response: AxiosResponse<T> = await axios({
       method,
@@ -51,7 +57,7 @@ const checkArray = (data: unknown) => {
 }
 
 export const getEvents = async (): Promise<Events> => {
-  const url = BASE_URL + 'events'
+  const url = BASE_URL + 'events?isPublished=true'
   try {
     const response = await processRequest<Events>('GET', url)
     return checkArray(response)
@@ -97,7 +103,7 @@ export const getUserData = async (
 }
 
 export const getPollsQuestions = async (): Promise<PollsQuiestion[]> => {
-  const url = BASE_URL + 'polls_questions'
+  const url = BASE_URL + 'polls_questions?isPublished=true'
   try {
     const response = await processRequest<PollsQuiestion[]>('GET', url)
     return response
@@ -111,9 +117,22 @@ export const checkPoll = async (
   question: number,
   author: number
 ): Promise<PollsVote[]> => {
-  const url = BASE_URL + `polls_votes?&question=${question}&author=${author}`
+  const url = BASE_URL + `polls_votes?question=${question}&author=${author}`
   try {
     const response = await processRequest<PollsVote[]>('GET', url)
+    return response
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+}
+
+export const checkEventsPoll = async (
+  event: number | string
+): Promise<PollsQuiestion[]> => {
+  const url = BASE_URL + `polls_questions?event=${event}&isPublished=true`
+  try {
+    const response = await processRequest<PollsQuiestion[]>('GET', url)
     return response
   } catch (error) {
     console.log(error)
@@ -173,7 +192,7 @@ export const cancelRegistrationToEvent = async (
 export const getRegisteredEvents = async (
   user: number
 ): Promise<UserEventGet[] | { message: string }> => {
-  const url = BASE_URL + `events_users?user=${user}`
+  const url = BASE_URL + `events_users?user=${user}&isPublished=true`
   try {
     const response = await processRequest<UserEventGet[]>('GET', url)
     return response
@@ -184,8 +203,8 @@ export const getRegisteredEvents = async (
 }
 
 export const checkEventRegistration = async (
-  user: number,
-  event: number
+  user: number | string,
+  event: number | string
 ): Promise<UserEventGet[] | { message: string }> => {
   const url = BASE_URL + `events_users?user=${user}&event=${event}`
   try {
@@ -197,13 +216,88 @@ export const checkEventRegistration = async (
   }
 }
 
-// it hasnot been implemented yet
 export const getEventById = async (
   event: string | number
 ): Promise<EventType | { message: string }> => {
-  const url = BASE_URL + `events/${event}`
+  const url = BASE_URL + `events/${event}?isPublished=true`
   try {
     const response = await processRequest<EventType>('GET', url)
+    return response
+  } catch (error) {
+    console.log(error)
+    return { message: `Something went wrong: ${error}` }
+  }
+}
+
+export const postComment = async (
+  author: string | number,
+  event: string | number,
+  text: string
+): Promise<CommentType | { message: string }> => {
+  const url = BASE_URL + 'comments'
+  try {
+    const response = await processRequest<CommentType>('POST', url, {
+      author: `api/users/${author}`,
+      text: text,
+      event: `api/events/${event}`
+    })
+    return response
+  } catch (error) {
+    console.error(error)
+    return { message: `Something went wrong: ${error}` }
+  }
+}
+
+export const updateComment = async (
+  commentId: number,
+  text: string
+): Promise<CommentType | { message: string }> => {
+  const url = BASE_URL + `comments/${commentId}`
+  try {
+    const body: Partial<CommentType> = {}
+    if (text) body['text'] = text
+    const response = await processRequest<CommentType>('PATCH', url, body)
+    return response
+  } catch (error) {
+    console.error(error)
+    return { message: `Something went wrong: ${error}` }
+  }
+}
+
+export const hideComment = async (
+  commentId: number
+): Promise<CommentType | { message: string }> => {
+  const url = BASE_URL + `comments/${commentId}`
+  try {
+    const response = await processRequest<CommentType>('PATCH', url, {
+      isPublished: false
+    })
+    return response
+  } catch (error) {
+    console.error(error)
+    return { message: `Something went wrong: ${error}` }
+  }
+}
+
+export const deleteComment = async (
+  commentId: number
+): Promise<{ message: string }> => {
+  const url = BASE_URL + `comments/${commentId}`
+  try {
+    await axios.delete(url)
+    return { message: 'Comment deleted successfully' }
+  } catch (error) {
+    console.error(error)
+    return { message: `Something went wrong: ${error}` }
+  }
+}
+
+export const getComments = async (
+  event: string | number
+): Promise<CommentType[] | { message: string }> => {
+  const url = BASE_URL + `comments?event=${event}&isPublished=true`
+  try {
+    const response = await processRequest<CommentType[]>('GET', url)
     return response
   } catch (error) {
     console.log(error)

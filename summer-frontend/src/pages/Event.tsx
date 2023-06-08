@@ -1,95 +1,126 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router'
-import axios from 'axios'
 import { format, parseISO } from 'date-fns'
 import classes from './Event.module.css'
 import imagine from '../media/images/events.jpg'
-import { CurrentUserContext, PollsQuestionContext } from '../context/context'
+import { CurrentUserContext } from '../context/context'
 import {
   cancelRegistrationToEvent,
   checkEventRegistration,
+  checkEventsPoll,
+  getComments,
   getEventById,
+  postComment,
   registerToEvent
 } from '../api/EventsAPI'
 import { EventType, CommentType } from '../types/events'
 import Poll from '../components/Poll'
 import ImageComponent from './ImageComponent'
-// import { getEvents } from '../api/EventsAPI';
+import { PollsQuiestion } from '../types/polls'
+import Comment from '../components/Comment'
 
 const Event: React.FC = () => {
   const [singleEvent, setEvent] = useState<EventType | null>(null)
   const [commentText, setCommentText] = useState('')
   const { event } = useParams<{ event: string }>()
+  const [comments, setComments] = useState<CommentType[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [registered, setRegistered] = useState(false)
   const currentUser = useContext(CurrentUserContext).currentUser
-  const pollsQuestion = useContext(PollsQuestionContext).pollsQuestion
+  const [polls, setPolls] = useState<PollsQuiestion[]>([])
 
   useEffect(() => {
-    setIsLoading(true)
-    const fetchSingleEvent = async () => {
-      try {
-        if (event) {
-          const response = await getEventById(event)
-          if (!('message' in response)) {
-            const data: EventType = response
-            console.log(response.baseImage)
-            setEvent(data)
-            setIsLoading(false)
+    if (event) {
+      setIsLoading(true)
+      getEventById(event).then((data) => {
+        if (!('message' in data)) {
+          setEvent(data)
+          setIsLoading(false)
+        }
+      })
+    }
+  }, [event])
+
+  useEffect(() => {
+    if (event) {
+      getComments(event).then((data) => {
+        if (!('message' in data) && data.length > 0) {
+          setComments(data)
+        }
+      })
+    }
+  }, [event])
+
+  useEffect(() => {
+    if (currentUser && event) {
+      checkEventRegistration(currentUser.user, event)
+        .then((data) => {
+          if (!('message' in data) && data.length > 0) {
+            setRegistered(true)
           }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (event) {
+      checkEventsPoll(event)
+        .then((data) => {
+          if (data.length > 0) {
+            setPolls(data)
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  }, [event])
+
+  const fetchComments = async (event: string | number | undefined) => {
+    if (event) {
+      try {
+        const data = await getComments(event)
+        if (!('message' in data)) {
+          setComments(data)
         }
       } catch (error) {
         console.log(error)
-        setEvent(null)
       }
     }
-    fetchSingleEvent()
-  }, [event])
-  const handleCommentSubmit = async (event: React.FormEvent) => {
-    event.preventDefault()
+  }
+
+  const fetchPollsQuestions = async (event: string | number | undefined) => {
+    if (event) {
+      try {
+        const data = await checkEventsPoll(event)
+        if (data.length > 0) {
+          setPolls(data)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
+  const createComment = async (e: React.FormEvent) => {
+    e.preventDefault()
     try {
-      const response = await axios.post(
-        `http://localhost:8007/api/v1/comments`,
-        {
-          event_id: singleEvent?.id,
-          text: commentText
-        },
-        {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          }
+      if (currentUser && event && commentText.length > 5) {
+        const response = await postComment(currentUser.user, event, commentText)
+        if ('message' in response) {
+          console.error(response.message)
+          return
         }
-      )
-      const newComment: CommentType = response.data
-      setEvent((prevState) => {
-        if (prevState) {
-          return {
-            ...prevState,
-            comments: prevState.comments
-              ? [...prevState.comments, newComment]
-              : [newComment]
-          }
-        }
-        return null
-      })
-      setCommentText('')
+        fetchComments(event)
+        setCommentText('')
+      }
     } catch (error) {
       console.log(error)
     }
   }
-
-  useEffect(() => {
-    if (currentUser && event) {
-      checkEventRegistration(currentUser.user, parseInt(event, 10)).then(
-        (data) => {
-          if (!('message' in data) && data.length > 0) {
-            setRegistered(true)
-          }
-        }
-      )
-    }
-  }, [])
 
   const registration = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -149,25 +180,49 @@ const Event: React.FC = () => {
         </div>
       )}
       <div className={classes.comments}>
-        <Poll data={pollsQuestion[1]} />
-        <h3>Comments</h3>
-        {singleEvent.comments?.map((cmnt, i) => (
-          <li key={i}>
-            <p className={classes.author}>
-              Author: {cmnt.author.firstName} <span>{cmnt.author.email}</span>
-            </p>
-            <p>{cmnt.text}</p>
-          </li>
-        ))}
+        {polls && polls.length > 0 && (
+          <>
+            <h3>{polls.length === 1 ? 'Poll' : 'Polls'}</h3>
+            {polls.map((poll) => {
+              return (
+                <Poll
+                  key={poll.id}
+                  data={poll}
+                  fetch={() => {
+                    fetchPollsQuestions(event)
+                  }}
+                />
+              )
+            })}
+          </>
+        )}
       </div>
-      <form className={classes.formcontainer} onSubmit={handleCommentSubmit}>
-        <textarea
-          value={commentText}
-          onChange={(e) => setCommentText(e.target.value)}
-          placeholder="Add a comment"
-        />
-        <button type="submit">Submit</button>
-      </form>
+      <div className={classes.comments}>
+        <h3>Comments</h3>
+        {comments &&
+          comments.length > 0 &&
+          comments.map((comment) => (
+            <Comment
+              key={comment.id}
+              comment={comment}
+              event={event}
+              fetch={() => {
+                fetchComments(event)
+              }}
+            />
+          ))}
+        <form className={classes.formcontainer} onSubmit={createComment}>
+          <textarea
+            className={classes.textarea}
+            value={commentText}
+            onChange={(e) => setCommentText(e.target.value)}
+            placeholder="Add a comment"
+          />
+          <button className={classes.submit} type="submit">
+            Add
+          </button>
+        </form>
+      </div>
     </div>
   )
 }

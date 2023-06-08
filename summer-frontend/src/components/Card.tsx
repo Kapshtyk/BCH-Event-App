@@ -42,17 +42,15 @@ const Card: React.FC<CardsProps> = ({
   return (
     <div className={classes.card}>
       <Link to={`/events/${id}`} onClick={handleClick}>
-      {image && (
-        <ImageComponent base64Image={image} />
-      )}
-      {!image && <img src={imagine} alt="event" />}
+        {image && <ImageComponent base64Image={image} />}
+        {!image && <img src={imagine} alt="event" />}
       </Link>
       <div className={classes.datearea}>
         <h3>{day}</h3>
         <p>{month}</p>
       </div>
       <div className={classes.textarea}>
-        <h2>{title}</h2>
+        <h3>{title}</h3>
         <p>{location}</p>
       </div>
     </div>

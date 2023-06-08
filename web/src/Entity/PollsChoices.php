@@ -52,11 +52,16 @@ class PollsChoices
         $this->pollsVotes = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->choice;
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
     }
-
+    
     public function getChoice(): ?string
     {
         return $this->choice;

@@ -47,9 +47,9 @@ final class EventsFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'created_at' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+            'created_at' => \DateTimeImmutable::createFromMutable(self::faker()->dateTimeBetween('-2 month', 'now')),
             'description' => self::faker()->text(),
-            'eventDate' => self::faker()->dateTimeThisYear(),
+            'eventDate' => self::faker()->dateTimeBetween('-1 month', '+2 month'),
             'isPublished' => self::faker()->boolean(),
             'location' => self::faker()->text(50),
             'title' => self::faker()->text(20),

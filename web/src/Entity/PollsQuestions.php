@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
@@ -24,6 +27,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ],
     normalizationContext: ['groups' => ['pollquestion:read']],
 )] 
+#[ApiFilter(SearchFilter::class, properties: [
+    'event' => 'exact'
+])]
+#[ApiFilter(BooleanFilter::class, properties: ['isPublished'])]
 class PollsQuestions
 {
     #[ORM\Id]
@@ -51,6 +58,10 @@ class PollsQuestions
     #[Groups(['pollquestion:read', 'pollquestions:patch'])]
     private bool $isPublished = true;
 
+    #[Groups(['pollquestion:read', 'pollquestions:patch'])]
+    #[ORM\ManyToOne(inversedBy: 'pollsQuestions')]
+    private ?Events $event = null;
+
     public function __construct()
     {
         $this->pollsChoices = new ArrayCollection();
@@ -58,11 +69,16 @@ class PollsQuestions
         $this->createdAt = new \DateTimeImmutable();
     }
 
+    public function __toString()
+    {
+        return $this->question;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
-
+   
     public function getQuestion(): ?string
     {
         return $this->question;
@@ -155,6 +171,18 @@ class PollsQuestions
     public function setIsPublished(bool $isPublished): self
     {
         $this->isPublished = $isPublished;
+
+        return $this;
+    }
+
+    public function getEvent(): ?Events
+    {
+        return $this->event;
+    }
+
+    public function setEvent(?Events $event): self
+    {
+        $this->event = $event;
 
         return $this;
     }

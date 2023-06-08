@@ -49,6 +49,7 @@ final class PollsQuestionsFactory extends ModelFactory
         return [
             'createdAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'question' => self::faker()->text(75),
+            'event' => EventsFactory::new(),
         ];
     }
 

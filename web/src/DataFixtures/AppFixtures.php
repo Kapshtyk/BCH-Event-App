@@ -16,23 +16,21 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        PollsQuestionsFactory::createMany(3);
-    
+        EventsFactory::createMany(20);
+        PollsQuestionsFactory::createMany(7, function() {
+            return [
+                'event' => EventsFactory::random()
+            ];
+        });
         AdminFactory::createOne();
         UserFactory::createMany(15);
-        EventsFactory::createMany(20);
         CommentsFactory::createMany(40, function() {
             return [
                 'author' => UserFactory::random(),
                 'event' => EventsFactory::random()
             ];
         });
-        QuestionsFactory::createMany(15, function() {
-            return [
-                'author' => UserFactory::random()
-            ];
-        });
-        PollsChoicesFactory::new()->createMany(9, function() {
+        PollsChoicesFactory::new()->createMany(21, function() {
             return [
                 'question' => PollsQuestionsFactory::random()
             ];

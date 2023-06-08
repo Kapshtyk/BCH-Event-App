@@ -76,11 +76,15 @@ class Events
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
+    #[ORM\OneToMany(mappedBy: 'event', targetEntity: PollsQuestions::class)]
+    private Collection $pollsQuestions;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
         $this->eventsUsers = new ArrayCollection();
+        $this->pollsQuestions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -272,5 +276,35 @@ class Events
             $base64Image = base64_encode($imageContent);
             return $base64Image;
         }
+    }
+
+    /**
+     * @return Collection<int, PollsQuestions>
+     */
+    public function getPollsQuestions(): Collection
+    {
+        return $this->pollsQuestions;
+    }
+
+    public function addPollsQuestion(PollsQuestions $pollsQuestion): self
+    {
+        if (!$this->pollsQuestions->contains($pollsQuestion)) {
+            $this->pollsQuestions->add($pollsQuestion);
+            $pollsQuestion->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removePollsQuestion(PollsQuestions $pollsQuestion): self
+    {
+        if ($this->pollsQuestions->removeElement($pollsQuestion)) {
+            // set the owning side to null (unless already changed)
+            if ($pollsQuestion->getEvent() === $this) {
+                $pollsQuestion->setEvent(null);
+            }
+        }
+
+        return $this;
     }
 };

@@ -1,8 +1,4 @@
-import ExternalLink from './ExternalLink'
 import Image from './Image'
-import Keyword from './Keyword'
-import Offer from './Offer'
-import Place from './Place'
 
 interface KeywordResource {
   '@id': string
@@ -58,9 +54,8 @@ export default interface Event {
   event: {}
   id?: string
   location: PlaceResource
-  linkedLocation?: Place
   keywords?: KeywordResource[]
-  linkedKeywords?: Keyword[]
+
   in_language?: InLanguage
   super_event?: string
   super_event_type?: string
@@ -81,8 +76,6 @@ export default interface Event {
   deleted?: boolean
   replaced_by?: Object
   extension_course?: ExtensionCourse
-  offers?: Offer[]
-  external_links?: ExternalLink[]
   provider?: Provider
   '@id': string
   '@context'?: string

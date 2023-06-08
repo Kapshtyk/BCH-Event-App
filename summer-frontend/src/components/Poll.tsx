@@ -1,24 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { PollsQuiestion, PollsChoice, PollsVote } from '../types/polls'
 import { checkPoll, postVote } from '../api/EventsAPI'
-import { CurrentUserContext, PollsQuestionContext } from '../context/context'
+import { CurrentUserContext } from '../context/context'
 import cl from './Poll.module.css'
 
 interface PollProps {
   data: PollsQuiestion
+  fetch?: () => void
 }
 
-const Poll: React.FC<PollProps> = ({ data }) => {
+const Poll: React.FC<PollProps> = ({ data, fetch }) => {
   const currentUser = useContext(CurrentUserContext).currentUser
-  const fetchPollsQuestions =
-    useContext(PollsQuestionContext).fetchPollsQuestions
   const [choiceInput, setChoiceInput] = useState<number | null>(null)
   const [vote, setVote] = useState<PollsVote | null>(null)
 
   useEffect(() => {
     if (currentUser && 'user' in currentUser && data && data.question) {
       checkPoll(data.id, currentUser.user).then((data) => {
-        console.log(data)
         if (data.length > 0) {
           setVote(data[0])
         }
@@ -40,14 +38,15 @@ const Poll: React.FC<PollProps> = ({ data }) => {
       try {
         const result = await postVote(data.id, choiceInput, currentUser.user)
         if ('id' in result) {
-          console.log(result)
-          fetchPollsQuestions()
           setVote({
             id: result.id,
             question: result.question,
             choice: result.choice,
             author: result.author
           })
+          if (fetch) {
+            fetch()
+          }
         } else {
         }
       } catch (error) {
@@ -109,14 +108,16 @@ const Poll: React.FC<PollProps> = ({ data }) => {
               </div>
             </div>
           ))}
-          Total votes:{` ${votes}`}
-          {!checkVoteExists() && currentUser && (
-            <button onClick={makeVote}>VOTE!</button>
-          )}
-          {checkVoteExists() && currentUser && (
-            <div>You have already participated in this poll!</div>
-          )}
-          {!currentUser && <div>Sign in if you want to participate!</div>}
+          <div className={cl.total}>
+            Total votes:{` ${votes}`}
+            {!checkVoteExists() && currentUser && (
+              <button onClick={makeVote}>VOTE!</button>
+            )}
+            {checkVoteExists() && currentUser && (
+              <div>You have already participated in this poll!</div>
+            )}
+            {!currentUser && <div>Sign in if you want to participate!</div>}
+          </div>
         </fieldset>
       </div>
     </div>

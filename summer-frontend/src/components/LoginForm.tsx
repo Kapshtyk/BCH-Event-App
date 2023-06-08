@@ -19,27 +19,31 @@ function LoginForm(props: any) {
   }
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const data = await signin(formData.email, formData.password)
+      const data = await signin(formData.email, formData.password);
       if ('token' in data) {
         localStorage.setItem('token', data.token)
-        const userData = await getUserData(data.token)
-        if ('roles' in userData) {
-          setCurrentUser({
-            user: userData.id,
-            token: data.token,
-            roles: userData.roles
-          })
+          const response = await getUserData(localStorage.getItem('token') ?? ''); // Ожидание завершения промиса
+          if ('roles' in response) {
+            console.log(response)
+            localStorage.setItem('user', response.id.toString());
+            localStorage.setItem('roles', JSON.stringify(response.roles));
+            setCurrentUser({
+              user: response.id,
+              token: data.token,
+              roles: response.roles,
+            });
+            navigate('/');
+          }
+        } else {
+          setError({ error: data.message });
         }
-        navigate('/')
-      } else {
-        setError({ error: data.message })
-      }
-    } catch (error) {
-      console.error(error)
+        }
+    catch (error) {
+      console.error(error);
     }
-  }
+  };
 
   return (
     <form className={classes.loginForm} onSubmit={handleSubmit}>
@@ -51,7 +55,7 @@ function LoginForm(props: any) {
         <input type="password" id="password" onChange={inputHandler} />
         <input className={classes.submitbutton} type="submit" value="SIGN IN" />
         <p>First time here?</p>
-        <button className="register">REGISTER</button>
+        <button className={classes.registerbutton}>REGISTER</button>
       </fieldset>
       {error && error.error}
     </form>
