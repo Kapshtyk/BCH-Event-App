@@ -149,7 +149,13 @@ const Event: React.FC = () => {
   }
 
   if (isLoading) {
-    return <p>Loading...</p>
+    return <div className={classes.wave}>
+      <div className={classes.ball}></div>
+      <div className={classes.ball}></div>
+      <div className={classes.ball}></div>
+      <div className={classes.ball}></div>
+      <div className={classes.ball}></div>
+    </div>
   }
   if (singleEvent === null) {
     return <p>Event not found</p>

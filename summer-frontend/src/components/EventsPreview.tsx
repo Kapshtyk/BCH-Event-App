@@ -33,7 +33,13 @@ const EventsPreview: React.FC = () => {
   }, [])
 
   if (isLoading) {
-    return <p>Loading...</p>
+    return <div className={classes.wave}>
+      <div className={classes.ball}></div>
+      <div className={classes.ball}></div>
+      <div className={classes.ball}></div>
+      <div className={classes.ball}></div>
+      <div className={classes.ball}></div>
+    </div>
   }
   if (activeEvents.length === 0 && endedEvents.length === 0) {
     return <p> Events not found</p>

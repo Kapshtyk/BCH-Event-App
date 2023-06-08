@@ -67,7 +67,13 @@ const Helsinki = () => {
           ))}
         </ul>
       ) : (
-        <p>Loading...</p>
+        <div className={classes.wave}>
+          <div className={classes.ball}></div>
+          <div className={classes.ball}></div>
+          <div className={classes.ball}></div>
+          <div className={classes.ball}></div>
+          <div className={classes.ball}></div>
+        </div>
       )}
     </div>
   )
