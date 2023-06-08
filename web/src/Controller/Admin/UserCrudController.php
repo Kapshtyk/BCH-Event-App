@@ -43,7 +43,7 @@ class UserCrudController extends AbstractCrudController
         $password = TextField::new('password')
             ->setFormType(PasswordType::class)
             ->setRequired($pageName === Crud::PAGE_NEW)
-            ->onlyOnForms()
+            ->onlyWhenCreating()
             ;
         $fields[] = $password;
 
@@ -59,14 +59,17 @@ class UserCrudController extends AbstractCrudController
     public function createEditFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface
     {
         $formBuilder = parent::createEditFormBuilder($entityDto, $formOptions, $context);
-        return $this->addPasswordEventListener($formBuilder);
+        // return $this->addPasswordEventListener($formBuilder);
+        return ($formBuilder);
+
+
     }
 
     private function addPasswordEventListener(FormBuilderInterface $formBuilder): FormBuilderInterface
     {
         return $formBuilder->addEventListener(FormEvents::POST_SUBMIT, $this->hashPassword());
     }
-
+    
     private function hashPassword() {
         return function($event) {
             $form = $event->getForm();
