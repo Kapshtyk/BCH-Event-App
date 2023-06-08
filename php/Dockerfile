@@ -22,7 +22,7 @@ COPY php.ini /usr/local/etc/php/php.ini
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
     mv composer.phar /usr/local/bin/composer
 
-# PHP utilites
+# PHP utilities
 RUN docker-php-ext-configure intl && \
     docker-php-ext-install pdo pdo_mysql gd opcache intl zip calendar dom mbstring xsl && \
     pecl install apcu && docker-php-ext-enable apcu && \
@@ -37,6 +37,9 @@ RUN a2enmod rewrite
 
 # Set working directory
 WORKDIR /var/www/
+
+# Copy application files
+COPY . /var/www/
 
 # Install.sh script
 COPY install.sh /web/install.sh
