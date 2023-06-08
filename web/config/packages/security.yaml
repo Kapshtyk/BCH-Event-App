@@ -42,6 +42,7 @@ security:
             jwt: ~
 
     access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/$, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
         - { path: ^/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI docs
         - { path: ^/auth, roles: PUBLIC_ACCESS }
@@ -53,7 +54,17 @@ security:
 
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
 
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+
+        # - { route: 'admin', roles: ROLE_ADMIN }
+
+
         - { path: ^/api/(post|comment)/\d+$, roles: ROLE_USER }
+
+    role_hierarchy:
+        ROLE_USER:        ROLE_USER
+        ROLE_ADMIN:       [ROLE_USER, ROLE_ADMIN]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
 when@test:
     security:
