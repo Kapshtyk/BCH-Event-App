@@ -96,7 +96,7 @@ export const signup = async (
   password: string
 ): Promise<UserTypePostRepsonse | { message: string }> => {
   //const url = BASE_URL + 'auth'
-  const url = 'http://localhost:8007/api/users'
+  const url = 'http://localhost:8007/register'
   try {
     const response = await processRequest<UserTypePostRepsonse>('POST', url, {
       email,

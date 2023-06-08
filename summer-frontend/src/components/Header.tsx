@@ -19,7 +19,12 @@ const Header = () => {
         <img className={classes.logo} src={BCC} alt="#" />
       </Link>
       <Nav />
-      {currentUser && <button onClick={logout}>Logout</button>}
+      {currentUser && (
+        <div>
+          <h2>Hello, {currentUser.email.split('@')[0].toUpperCase()}</h2>
+          <button onClick={logout}>Logout</button>
+        </div>
+      )}
     </header>
   )
 }

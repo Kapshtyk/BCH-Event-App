@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import classes from './Profile.module.css'
-import LoginForm from '../components/LoginForm'
 import { CurrentUserContext } from '../context/context'
 import { UserEventGet } from '../types/users'
 import { getRegisteredEvents } from '../api/EventsAPI'
@@ -8,14 +7,10 @@ import { Link } from 'react-router-dom'
 
 const Profile = () => {
   const currentUser = useContext(CurrentUserContext).currentUser
-  const [showLoginOverlay, setShowLoginOverlay] = useState(false)
-  const [showRegisterModal, setShowRegisterModal] = useState(false)
-  const [showLoginButton, setShowLoginButton] = useState(true)
   const [events, setEvents] = useState<UserEventGet[]>([])
 
   useEffect(() => {
     if (currentUser && 'user' in currentUser) {
-      setShowLoginButton(false)
       getRegisteredEvents(currentUser.user).then((data) => {
         if (!('message' in data)) {
           setEvents(data)
@@ -23,19 +18,6 @@ const Profile = () => {
       })
     }
   }, [currentUser])
-
-  const handleLoginButtonClick = () => {
-    setShowLoginOverlay(true)
-  }
-
-  // const handleRegisterButtonClick = () => {
-  //   setShowRegisterModal(true)
-  // }
-
-  const handleOverlayClose = () => {
-    setShowLoginOverlay(false)
-    setShowRegisterModal(false)
-  }
 
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -51,13 +33,11 @@ const Profile = () => {
   return (
     <div className={classes.profile}>
       <h2>Your Account</h2>
-      {showLoginButton && (
-        <button onClick={handleLoginButtonClick}>Login</button>
-      )}
+      Your email: {currentUser && 'user' in currentUser && currentUser.email}
       <div>
+        <h3>Your events</h3>
         {events && events.length > 0 && (
           <>
-            <h3>Your events</h3>
             <table>
               <thead>
                 <tr>
@@ -82,24 +62,10 @@ const Profile = () => {
             </table>
           </>
         )}
+        {(!events || events.length === 0) && (
+          <p>You have not registered for any events yet!</p>
+        )}
       </div>
-      {showLoginOverlay && (
-        <div className={classes.overlay}>
-          <div className={classes.modal}>
-            <LoginForm />
-            <button onClick={handleOverlayClose}>Close</button>
-          </div>
-        </div>
-      )}
-      {showRegisterModal && (
-        <div className={classes.overlay}>
-          <div className={classes.modal}>
-            <h3>Register</h3>
-            {/* Register form here */}
-            <button onClick={handleOverlayClose}>Close</button>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

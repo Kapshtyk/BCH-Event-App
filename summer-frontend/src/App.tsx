@@ -5,7 +5,6 @@ import Faq from './pages/Faq'
 import Event from './pages/Event'
 import Profile from './pages/Profile'
 import Layout from './pages/Layout'
-import LoginForm from './components/LoginForm'
 import Helsinki from './components/Helsinki'
 import { CurrentUserContext } from './context/context'
 import { CurrentUserType } from './types/users'
@@ -20,6 +19,7 @@ const App = () => {
     localStorage.removeItem('user')
     localStorage.removeItem('roles')
     localStorage.removeItem('token')
+    localStorage.removeItem('email')
   }
 
   useEffect(() => {
@@ -27,12 +27,15 @@ const App = () => {
       const storedUser = localStorage.getItem('user')
       const storedToken = localStorage.getItem('token')
       const storedRoles = localStorage.getItem('roles')
-      if (storedUser && storedToken && storedRoles) {
+      const storedEmail = localStorage.getItem('email')
+      if (storedUser && storedToken && storedRoles && storedEmail) {
         const userData = {
           user: Number(storedUser),
           token: storedToken,
-          roles: JSON.parse(storedRoles)
+          roles: JSON.parse(storedRoles),
+          email: storedEmail
         }
+        console.log(userData)
         setCurrentUser(userData)
       }
     }
@@ -46,7 +49,6 @@ const App = () => {
       >
         <Layout>
           <Routes>
-            <Route path="faq" element={<Faq />} />
             <Route
               path="/"
               element={
@@ -55,6 +57,7 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
+            <Route path="faq" element={<Faq />} />
             <Route
               path="/events/:event"
               element={
@@ -71,9 +74,15 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
-            <Route path="login" element={<LoginForm />} />
+            <Route
+              path="/login"
+              element={<Authorization hasAccount={true} />}
+            />
+            <Route
+              path="/signup"
+              element={<Authorization hasAccount={false} />}
+            />
             <Route path="helsinki" element={<Helsinki />} />
-            <Route path="auth" element={<Authorization hasAccount={false} />} />
           </Routes>
         </Layout>
       </CurrentUserContext.Provider>

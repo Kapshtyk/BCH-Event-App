@@ -32,7 +32,8 @@ function LoginForm(props: any) {
           setCurrentUser({
             user: response.id,
             token: data.token,
-            roles: response.roles
+            roles: response.roles,
+            email: formData.email
           })
           const redirectPath = localStorage.getItem('redirectPath')
           if (redirectPath) {

@@ -3,7 +3,7 @@ import { AuthorizationType, AuthorizationUserDataType } from '../types/users'
 import cl from './Authorization.module.css'
 import style from './Form.module.css'
 import { useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { CurrentUserContext } from '../context/context'
 import { getUserData, signin, signup } from '../api/EventsAPI'
 
@@ -34,12 +34,13 @@ const Authorization = ({ hasAccount }: AuthorizationType) => {
             localStorage.getItem('token') ?? ''
           )
           if ('roles' in response) {
-            console.log(response)
             localStorage.setItem('user', response.id.toString())
+            localStorage.setItem('email', userData.email)
             localStorage.setItem('roles', JSON.stringify(response.roles))
             setCurrentUser({
               user: response.id,
               token: data.token,
+              email: userData.email,
               roles: response.roles
             })
             const redirectPath = localStorage.getItem('redirectPath')
@@ -64,11 +65,13 @@ const Authorization = ({ hasAccount }: AuthorizationType) => {
           const response = await signin(userData.email, userData.password)
           if ('token' in response) {
             localStorage.setItem('token', response.token)
+            localStorage.setItem('email', userData.email)
             localStorage.setItem('user', data.id.toString())
-            localStorage.setItem('roles', JSON.stringify(response.roles))
+            localStorage.setItem('roles', JSON.stringify(data.roles))
             setCurrentUser({
               user: data.id,
               token: response.token,
+              email: userData.email,
               roles: data.roles
             })
             if (redirectPath) {
@@ -118,10 +121,11 @@ const Authorization = ({ hasAccount }: AuthorizationType) => {
       {error && <span className={cl.authorization_error}>{error}</span>}
       {hasAccount && (
         <div className={cl.authorization_signup}>
-          If you do not have an account, you can{' '}
-          {/*  <Link className={cl.authorization_signup_link} to="/signup">
+          If you do not have an account! <br />
+          You can{' '}
+          <Link className={cl.authorization_signup_link} to="/signup">
             sign up here
-          </Link> */}
+          </Link>
         </div>
       )}
     </div>
