@@ -35,7 +35,7 @@ const Profile = () => {
       <h2>Your Account</h2>
       Your email: {currentUser && 'user' in currentUser && currentUser.email}
       <div>
-        <h3>Your events</h3>
+        <h2>Your events</h2>
         {events && events.length > 0 && (
           <>
             <table>
@@ -49,9 +49,9 @@ const Profile = () => {
                 {events.map((event) => {
                   return (
                     <tr key={event.id}>
-                      <td>
-                        <Link to={`/events/${event.event.id}`}>
-                          {event.event.title}
+                      <td >
+                        <Link className={classes.eventLink} to={`/events/${event.event.id}`}>
+                          <span className={classes.eventLink}>{event.event.title}</span>
                         </Link>
                       </td>
                       <td>{formatDate(event.event.eventDate)}</td>

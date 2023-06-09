@@ -1,10 +1,12 @@
 :root {
   --main: rgba(25, 240, 222, 255);
-  --red: rgb(231, 67, 93);
-  --grey: rgb(55, 62, 67);
-  --white: rgb(239, 243, 240);
-  --black: rgb(22, 28, 31);
-  --lightGrey: rgb(156, 154, 154);
+  /* --red: rgb(231, 67, 93); */
+  --red: rgb(67, 231, 201);
+  --grey: rgb(239, 239, 239);
+  --white: rgb(0, 0, 0);
+  /* --black: rgb(22, 28, 31); */
+  --black: rgb(255, 255, 255);
+  --lightGrey: rgb(105, 107, 233);
 }
 
 

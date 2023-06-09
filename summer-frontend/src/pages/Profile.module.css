@@ -9,7 +9,7 @@
 
 .profile a {
   text-decoration: none;
-  color: white;
+  color: var(--white);
 }
 
 .profile th {
@@ -17,17 +17,17 @@
 }
 
 .profile td {
-  padding: 10px 5px;
+  padding: 10px 5px 10px 0;
 }
 
 .profile button {
   padding: 10px;
   margin-top: 20px;
   width: 163px;
-  background-color: black;
+  background-color: var(--black);
   border-radius: 5px;
-  color: white;
-  border: solid 1px white;
+  color: var(--white);
+  border: solid 1px var(--white);
 }
 
 .profile h3 {
@@ -41,6 +41,11 @@
   width: 100%;
 }
 
+.eventLink {
+  color: var(--white);
+  margin-left: 0;
+}
+
 @media (min-width: 500px) {
   .profile {
     display: flex;
@@ -49,6 +54,7 @@
     padding: 30px;
     padding-top: 0;
   }
+
   .profile td {
     padding: 10px 15px;
   }
@@ -68,7 +74,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--black);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,10 +82,10 @@
 
 .modal {
   width: 400px;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: var(--black);
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px var(--black);
 }
 
 .modal h3 {

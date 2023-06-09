@@ -35,7 +35,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: solid 1px white;
+  border: solid 1px var(--white);
   border-radius: 20px;
   padding: 10px;
   margin: 20px auto;
