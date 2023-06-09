@@ -1,17 +1,22 @@
 .eventspreview {
-  text-align: start;
+  text-align: center;
+
 }
 
 .eventspreview select {
-  text-align: start;
-  margin: 0.5em 0.5em;
-  background: rgba(0, 0, 0, 0.9);
-  color: white;
-  border-radius: 5px;
+  text-align: center;
+  background: var(--grey);
+  color: var(--white);
+  border-radius: 20px;
+  border-style: none;
+  width: 85vw;
+  max-width: 325px;
+  height: 30px;
+  appearance: none;
 }
 
 .eventspreview h2 {
-  margin-top: 20px;
+  margin: 20px 0 25px 5px;
 }
 
 .eventspreview p {

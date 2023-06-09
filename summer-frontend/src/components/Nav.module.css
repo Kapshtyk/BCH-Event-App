@@ -13,18 +13,18 @@
 }
 
 .nav ul li a {
-  color: white;
+  color: var(--white);
   padding: 16px;
   text-decoration: none;
 }
 
 .nav ul li a.active {
-  color: red;
+  color: var(--red);
   text-decoration: none;
 }
 
 .nav ul li a:hover {
-  color: grey;
+  color: var(--red);
   text-decoration: none;
 }
 
@@ -40,11 +40,12 @@
     justify-content: space-around;
     align-items: center;
     backdrop-filter: blur(8px);
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--black);
   }
 
   .nav ul {
     padding: 0;
+    width: 100%;
   }
 
   .nav ul li {

@@ -9,13 +9,14 @@ import { faStarHalfStroke } from '@fortawesome/free-solid-svg-icons'
 import { faCalendarDays } from '@fortawesome/free-solid-svg-icons'
 
 const Nav = () => {
-  const [isMobile, setIsMobile] = useState(true)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 650)
     }
 
+    handleResize();
     // Add event listener to handle window resize
     window.addEventListener('resize', handleResize)
 

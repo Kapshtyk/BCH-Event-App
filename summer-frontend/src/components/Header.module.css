@@ -1,15 +1,14 @@
 .header {
-  /* background-color: #ff5d4c; */
-  background: rgba(0, 0, 0, 0.92);
+  background: var(--black);
   padding: 16px;
-  color: white;
+  color: var(--white);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .header a {
-  color: white;
+  color: var(--white);
   text-decoration: none;
 }
 
@@ -18,20 +17,32 @@
   height: 60px;
   border-radius: 50%;
   border: silver solid;
+  margin: 5px 10px;
 }
-.logoutButton {
-  box-shadow: none;
-  border: none;
+
+.login {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  margin: 10px;
-  padding: 5px 10px;
-  background-color: #f2f7f5;
+  margin-right: 10px;
 }
-/* @media (max-width: 650px) {
-  .header {
-    justify-content: center;
-  }
-} */
+
+.name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.name h3 {
+  margin: 0;
+}
+
+.name p {
+  margin: 0;
+}
+
+.name button {
+  border-radius: 5px;
+  background-color: var(--red);
+  border-style: none;
+  margin-top: 3px;
+  cursor: pointer;
+}

@@ -8,7 +8,7 @@ const Helsinki = () => {
   useEffect(() => {
     axios
       .get(
-        'https://api.hel.fi/linkedevents/v1/event/?format=json&page=1&sort=-start_time&keyword_OR=yso:p11185,yso:p1808,yso:p5121,yso:p2625,yso:p965&division=kamppi,pasila&start=today&end=today',
+        'https://api.hel.fi/linkedevents/v1/event/?format=json&page=1&sort=-start_time&keyword_OR=yso:p11185,yso:p1808,yso:p5121,yso:p2625,yso:p965,yso:p19245,yso:p2771&division=kamppi,pasila&start=today&end=today',
         {}
       )
       .then((response) => {

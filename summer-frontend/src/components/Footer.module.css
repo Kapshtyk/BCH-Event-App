@@ -3,8 +3,8 @@
   bottom: 0;
   height: 40px;
   padding-top: 10px;
-  background: rgba(0, 0, 0, 0.9);
-  color: white;
+  background: var(--black);
+  color: var(--white);
 }
 
 .toTopBtn {
@@ -18,8 +18,8 @@
   outline: none;
   height: 50px;
   width: 50px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.6);
+  color: var(--white);
+  background-color: var(--grey);
 }
 
 @media (max-width: 500px) {

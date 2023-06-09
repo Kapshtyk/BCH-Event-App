@@ -1,7 +1,7 @@
 .card {
   display: flex;
   margin-top: 20px;
-  border: solid 1px white;
+  border: solid 1px var(--white);
   border-radius: 20px;
   min-width: fit-content;
 }
@@ -51,8 +51,8 @@
     top: 20px;
     right: 20px;
     border-radius: 10px;
-    background-color: white;
-    color: black;
+    background-color: var(--white);
+    color: var(--black);
     height: 75px;
     width: 75px;
     margin: 0;

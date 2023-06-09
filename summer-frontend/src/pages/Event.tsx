@@ -171,7 +171,7 @@ const Event: React.FC = () => {
       <div className={classes.description}>
         <p>{singleEvent.description}</p>
       </div>
-      <h3>When and where</h3>
+      <h3>When and where:</h3>
       <div className={classes.date_location}>
         <p>
           <span
@@ -214,14 +214,14 @@ const Event: React.FC = () => {
         </p>
       </div>
       {currentUser && registered && (
-        <div>
+        <div className={classes.cancel}>
           <h2>You are already registered for this event.</h2>
           <button onClick={cancelRegistration}>Cancel registration</button>
         </div>
       )}
       {currentUser && !registered && (
         <div className={classes.register}>
-          <h3>Register for the event</h3>
+          <h3>Do not miss the event</h3>
           <button onClick={registration}>Register now</button>
         </div>
       )}
@@ -265,7 +265,7 @@ const Event: React.FC = () => {
             placeholder="Add a comment"
           />
           <button className={classes.submit} type="submit">
-            Add
+            ADD
           </button>
         </form>
       </div>
