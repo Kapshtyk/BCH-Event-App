@@ -82,7 +82,6 @@ const EventsPreview: React.FC = () => {
         <option value="latest">Latest Date</option>
         <option value="oldest">Oldest Date</option>
       </select>
-      </div>
       <h2>Active Events</h2>
       {activeEvents.length === 0 && <p>There are no currently active events</p>}
       {activeEvents.map((event) => (
