@@ -1,6 +1,7 @@
 .eventspreview {
+  display: flex;
+  flex-direction: column;
   text-align: center;
-
 }
 
 .eventspreview select {
