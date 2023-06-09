@@ -29,18 +29,16 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  margin: 10px;
+  margin: 10px 0;
   padding: 5px 10px;
   background-color: #f2f7f5;
 }
 .user {
   font-family: 'Raleway', sans-serif;
+  display: flex;
+  flex-direction: column;
+  padding-right: 10px;
 }
-/* @media (max-width: 650px) {
-  .header {
-    justify-content: center;
-  }
-} */
 
 .logoutButton {
   background: #5e5df0;
@@ -60,4 +58,12 @@
   width: fit-content;
   word-break: break-word;
   border: 0;
+}
+@media (max-width: 650px) {
+  .user h2 {
+    font-size: 14px;
+  }
+  .logoutButton {
+    font-size: 10px;
+  }
 }
