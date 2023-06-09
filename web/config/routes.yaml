@@ -10,6 +10,11 @@ register:
     controller: App\Controller\AuthController::register
     methods: ['POST']
 
+join:
+    path: /join
+    controller: App\Controller\RegistrationController
+    methods: ['POST']
+
 api:
     path: /api
     controller: App\Controller\AuthController::api
