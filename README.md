@@ -1,6 +1,4 @@
-## Project Name
-
-Helsinki Business College Event App
+## Helsinki Business College Event App
 
 ### Overview
 
@@ -29,39 +27,57 @@ Additionally, an admin panel is provided to enable the admin to manage events, u
 - External APIs: Helsinki City API for city events
 - Tools: phpMyAdmin for database management
 
-### Project Structure
+### Application Setup Instructions
 
-The project follows a client-server architecture, with the frontend and backend components separated. The frontend code can be found in the summer-frontend directory, while the backend code is located in the web directory.
+To set up the application, please follow the steps below:
 
-### Symfony-MAMP
-
-Symfony-MAMP is a set of docker images that include Starter-Kit for a MAMP stack ([Symfony6](https://symfony.com/), [macOS](https://www.apple.com/macos/monterey/), [Apache](https://www.apache.org/), [MySQL](https://www.mysql.com/), [PHP8](https://www.php.net/) and [phpMyAdmin](https://www.phpmyadmin.net/)) all in one handy package.
-
----
-
-### Installation
-
-```shell
-git clone Symfony-MAMP
-cd Symfony-MAMP
-cp .env.example .env && cp web/.env.example web/.env
-docker-compose up --build
+1. Clone the repository and change to the project directory:
+```
+git clone https://github.com/Kapshtak/summer-project.git
+cd summer-project
 ```
 
-- Symfony 6 will run on [http://localhost:8007](http://localhost:8007)
-- phpMyAdmin will run on [http://localhost:9082](http://localhost:9082)
+2. Create a `.env` file in the project root directory and add the following database configuration:
+```
+DATABASE_NAME=eventsdb
+DATABASE_USERNAME=root
+DATABASE_PASSWORD=lionPass
+```
 
-### Optional: Apple M1 Chip
+3. Change the directory to the `web` folder:
+```
+cd web
+```
 
-You may have to Uncomment line 4, remove # from [docker-compose.yml](https://github.com/kalwar/Symfony-MAMP/blob/main/docker-compose.yml#L4) file
+4. Create another `.env` file in the `web` directory and add the following configuration:
+```
+APP_ENV=dev
+APP_SECRET=da9a2f60ac8d562ddb37596018a5192f
+DATABASE_URL="mysql://root:lionPass@db:3306/eventsdb?serverVersion=8"
+CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
+JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
+JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
+JWT_PASSPHRASE=4668b05f7d5c885ead6ec7ec05bbc22c2faf5e8bfae007fcb9e51188487f3be8
+```
 
-### Contributors
+5. Change the directory back to the project root and build the Docker containers:
+```
+cd ..
+docker-compose build
+```
 
-- [Alexsandr Bondarenko](https://github.com/AlexBondFi)
-- [Arseniiy Kapshtak](https://github.com/Kapshtak)
-- [Michael Akerele](https://github.com/stacknatic)
-- [Sahil Thapa](https://github.com/sahilt2)
+6. Once the containers are built, start them using Docker Compose:
+```
+docker-compose up
+```
 
-### Use for reference
+7. Change the directory to the `summer-frontend` folder:
+```
+cd summer-frontend
+```
 
-Use solely for reference material only
+8. Start the frontend application:
+```
+npm start
+```
+Following these steps will set up the application and start both the backend and frontend components. You can access the application by opening your web browser and navigating to `http://localhost:3000`. The admin panel will be allowed at `http://localhost:8007`.
