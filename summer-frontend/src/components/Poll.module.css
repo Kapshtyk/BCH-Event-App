@@ -1,0 +1,106 @@
+.poll_row {
+  width: 80vw;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+}
+
+.poll_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  width: 90%;
+  border: none;
+  margin-top: 1rem;
+}
+
+.poll_container p {
+  text-align: start;
+}
+
+.poll_percentage {
+  width: 60px;
+  text-align: end;
+  margin-top: 10px;
+}
+
+legend {
+  text-align: start;
+  margin-bottom: 10px;
+}
+
+.poll_left_column {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+}
+
+.poll_left_column input {
+  margin-top: 10px;
+  accent-color: var(--red);
+}
+
+.poll_choice {
+  width: 375px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 0.5rem;
+  margin-top: 10px;
+}
+
+.poll_progress_div,
+.poll_progress_bar {
+  width: 100%;
+  transition: all 0.3s;
+  background-color: var(red);
+}
+
+.poll_progress_bar {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: 10px;
+}
+
+.poll_progress_bar::-webkit-progress-bar {
+  background-color: var(--white);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+  border-radius: 20px;
+}
+
+.poll_progress_bar::-webkit-progress-value {
+  background-color: var(--red);
+  border-radius: 20px;
+}
+
+progress::-moz-progress-bar {
+  border: 0;
+  height: 40px;
+  border-radius: 20px;
+}
+
+.total {
+  margin-top: 50px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 445px;
+}
+
+.total button {
+  height: 42px;
+  width: 100px;
+  border-style: none;
+  border-radius: 8px;
+  background-color: var(--red);
+  color: var(--white);
+}
+
+@media (max-width: 500px) {
+  .total {
+    max-width: 80vw;
+  }
+}

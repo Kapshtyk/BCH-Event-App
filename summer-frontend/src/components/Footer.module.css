@@ -1,0 +1,30 @@
+.footer {
+  text-align: center;
+  bottom: 0;
+  height: 40px;
+  padding-top: 10px;
+  background: var(--black);
+  color: var(--white);
+}
+
+.toTopBtn {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  z-index: 99;
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  height: 50px;
+  width: 50px;
+  color: var(--white);
+  background-color: var(--grey);
+}
+
+@media (max-width: 500px) {
+  .footer {
+    height: 96px;
+    padding-top: 10px;
+  }
+}

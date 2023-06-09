@@ -1,0 +1,24 @@
+.eventspreview {
+  text-align: center;
+
+}
+
+.eventspreview select {
+  text-align: center;
+  background: var(--grey);
+  color: var(--white);
+  border-radius: 20px;
+  border-style: none;
+  width: 85vw;
+  max-width: 325px;
+  height: 30px;
+  appearance: none;
+}
+
+.eventspreview h2 {
+  margin: 20px 0 25px 5px;
+}
+
+.eventspreview p {
+  margin-top: 10px;
+}

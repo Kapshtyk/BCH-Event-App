@@ -1,0 +1,84 @@
+.loginForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0 auto;
+  border-radius: 10px;
+  border-radius: 4px;
+  background-color: #fff;
+  color: black;
+  padding: 20px;
+}
+fieldset {
+  border: none;
+  padding: 0;
+  box-sizing: border-box;
+}
+.legend {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 15px 10px;
+  padding: 4px;
+  color: #be264c;
+  text-transform: uppercase;
+}
+.formGroup {
+  margin: 15px 10px;
+  max-width: 100%;
+  padding: 4px;
+  position: relative;
+}
+/* .loginForm label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+} */
+
+.input {
+  border: none;
+  border-bottom: 2px solid #d1d1d4;
+  background: none;
+  width: 100%;
+  border-radius: 5px;
+  padding: 10px;
+  padding-left: 30px;
+  box-sizing: border-box;
+  transition: 0.2s;
+}
+.input:active,
+.input:focus,
+.input:hover {
+  outline: none;
+  border-bottom-color: #6a679e;
+}
+.button {
+  width: 300px;
+  padding: 15px;
+}
+.submitbutton,
+.registerbutton {
+  margin-top: 20px;
+  width: 100%;
+  height: 40px;
+  background: #fff;
+  border: 1px solid #d4d3e8;
+  font-weight: 700;
+  color: #4c489d;
+  box-shadow: 0px 2px 2px #5c5696;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.submitbutton:active,
+.submitbutton:focus,
+.submitbutton:hover {
+  border-color: #6a679e;
+  outline: none;
+}
+
+.registerText {
+  font-size: 14px;
+  color: #be264c;
+}
