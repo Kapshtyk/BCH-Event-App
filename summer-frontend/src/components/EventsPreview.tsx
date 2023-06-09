@@ -78,7 +78,7 @@ const EventsPreview: React.FC = () => {
         value={sortOption}
         onChange={handleSortOptionChange}
       >
-        <option value="" selected>Sort by date</option>
+        <option value="">Sort by date</option>
         <option value="latest">Latest Date</option>
         <option value="oldest">Oldest Date</option>
       </select>

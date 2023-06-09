@@ -39,7 +39,6 @@ const Comment: React.FC<CommentProps> = ({ comment, event, fetch }) => {
     try {
       if (currentUser && event) {
         const response = await hideComment(comment.id)
-        console.log(response)
         if ('message' in response) {
           console.error(response.message)
         } else {
