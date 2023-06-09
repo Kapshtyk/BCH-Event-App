@@ -87,14 +87,20 @@ progress::-moz-progress-bar {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  width: 80vw;
+  width: 445px;
 }
 
 .total button {
   height: 42px;
   width: 100px;
   border-style: none;
-  border-radius: 20px;
+  border-radius: 8px;
   background-color: var(--red);
   color: var(--white);
+}
+
+@media (max-width: 500px) {
+  .total {
+    max-width: 80vw;
+  }
 }

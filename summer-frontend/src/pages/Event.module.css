@@ -122,6 +122,11 @@
   align-self: flex-end;
 }
 
+.comments h3 {
+  text-align: start;
+  padding-left: 0;
+}
+
 @media (max-width: 650px) {
   .submit {
     width: 30vw;
@@ -133,8 +138,5 @@
     width: 30vw;
   }
 
-  .comments h3 {
-    text-align: start;
-    padding-left: 0;
-  }
+
 }

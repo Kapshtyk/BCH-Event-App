@@ -1,6 +1,9 @@
 .helsinki {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .helsinki h2 {
@@ -38,5 +41,4 @@
   margin: 20px auto;
 }
 
-@media (max-width: 650px) {
-}
+@media (max-width: 650px) {}
