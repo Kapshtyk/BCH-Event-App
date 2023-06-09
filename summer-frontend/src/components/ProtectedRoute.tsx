@@ -23,7 +23,6 @@ const ProtectedRoute = ({ children }: ProtectedRouteType) => {
           roles: JSON.parse(storedRoles),
           email: storedEmail
         }
-        console.log(userData)
         setCurrentUser(userData)
       }
     }

@@ -103,7 +103,7 @@ const Authorization = ({ hasAccount }: AuthorizationType) => {
       <input type="password" name="password" onChange={onChangeInput}className={classes.input} placeholder='Password'/>
       </div>
       <div className={classes.button}>
-      <input className={classes.submitbutton} type="submit" value="SIGN IN" />
+      <input className={classes.submitbutton} type="submit" value={hasAccount ? 'Sign in' : 'Sign up'}/>
       {hasAccount && <p className={classes.registerText}>If you do not have an account you can{' '}
           <Link className={cl.authorization_signup_link} to="/signup">
             sign up here

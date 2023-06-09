@@ -26,7 +26,6 @@ function LoginForm(props: any) {
         localStorage.setItem('token', data.token)
         const response = await getUserData(localStorage.getItem('token') ?? '') // Ожидание завершения промиса
         if ('roles' in response) {
-          console.log(response)
           localStorage.setItem('user', response.id.toString())
           localStorage.setItem('roles', JSON.stringify(response.roles))
           setCurrentUser({

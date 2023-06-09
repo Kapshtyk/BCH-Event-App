@@ -19,7 +19,6 @@ const Helsinki = () => {
         console.error('Error fetching data:', error)
       })
   }, [])
-  console.log(data)
 
   const getFinnishEventNameSpan = (event: Event) => {
     if (!event.name) {

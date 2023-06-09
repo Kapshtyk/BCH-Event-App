@@ -35,7 +35,6 @@ const App = () => {
           roles: JSON.parse(storedRoles),
           email: storedEmail
         }
-        console.log(userData)
         setCurrentUser(userData)
       }
     }
