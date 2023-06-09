@@ -62,7 +62,7 @@ const Comment: React.FC<CommentProps> = ({ comment, event, fetch }) => {
   }
 
   return (
-    <div>
+    <div className={cl.comment_section}>
       {isEdit && (
         <div className={cl.comment_container}>
           <h3 className={cl.comment_author}>
@@ -70,24 +70,20 @@ const Comment: React.FC<CommentProps> = ({ comment, event, fetch }) => {
             {comment.author.roles.includes('ROLE_ADMIN') ? '👑' : ''}
           </h3>
           <p className={cl.comment_text}>{comment.text}</p>
-          {currentUser && comment.author.id === currentUser.user && (
-            <button className={cl.comment_button} onClick={toggle}>
-              <span
-                className="material-symbols-outlined"
-                style={{ verticalAlign: 'middle',fontSize:'18px' }}
-              >
-                edit
-              </span>
-            </button>
-          )}
-          {currentUser && currentUser.roles.includes('ROLE_ADMIN') && (
-            <button className={cl.comment_button_hide} onClick={handleHide}>
-              Hide
-            </button>
-          )}
+          <div className={cl.comment_buttons}>
+            {currentUser && comment.author.id === currentUser.user && (
+              <button className={cl.comment_button} onClick={toggle}>
+                EDIT
+              </button>
+            )}
+            {currentUser && currentUser.roles.includes('ROLE_ADMIN') && (
+              <button className={cl.comment_button_hide} onClick={handleHide}>
+                HIDE
+              </button>
+            )}
+          </div>
         </div>
       )}
-
       {!isEdit && (
         <div className={cl.comment_container}>
           <h3 className={cl.comment_author}>
@@ -103,6 +99,21 @@ const Comment: React.FC<CommentProps> = ({ comment, event, fetch }) => {
           <button className={cl.comment_button} onClick={handleUpdate}>
             Save
           </button>
+          
+          {/* <button className={cl.comment_button} onClick={toggle}>
+              <span
+                className="material-symbols-outlined"
+                style={{ verticalAlign: 'middle',fontSize:'18px' }}
+              >
+                edit
+              </span>
+            </button>
+          )}
+          {currentUser && currentUser.roles.includes('ROLE_ADMIN') && (
+            <button className={cl.comment_button_hide} onClick={handleHide}>
+              Hide
+            </button> */}
+
         </div>
       )}
     </div>

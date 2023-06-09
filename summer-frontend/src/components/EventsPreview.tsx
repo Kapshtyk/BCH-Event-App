@@ -72,13 +72,13 @@ const EventsPreview: React.FC = () => {
 
   return (
     <div className={classes.eventspreview}>
-      <div className={classes.sortField}>
+      {/* <label htmlFor="sortOption">Sort by Date:</label> */}
       <select
         id="sortOption"
         value={sortOption}
         onChange={handleSortOptionChange}
       >
-        <option value="">Sort by date</option>
+        <option value="">Sort Events by Date</option>
         <option value="latest">Latest Date</option>
         <option value="oldest">Oldest Date</option>
       </select>

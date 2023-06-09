@@ -9,22 +9,30 @@
 .event h3,
 .event h4 {
   align-items: start;
-  padding: 20px;
+  padding: 10px;
 }
+
+.event h3 {
+  margin-bottom: 0;
+}
+
 .description,
 .date_location {
   padding: 20px;
 }
+
 .lightfont {
   font-weight: lighter;
   line-height: 0.5;
   margin-left: 30px;
   padding: 10px;
 }
+
 .event img {
-  width: 350px;
+  width: 325px;
   border-radius: 20px;
 }
+
 .time,
 .location {
   display: inline-block;
@@ -32,17 +40,19 @@
   padding-left: 10px;
 }
 
-.event textarea {
-  border-radius: 8px;
-  height: 50px;
-  margin-right: 20px;
-}
-
 .formcontainer {
   margin-top: 20px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   position: relative;
+  background-color: var(--grey);
+  border-radius: 20px;
+  min-height: 100px;
+}
+
+.formcontainer textarea {
+  color: var(--white);
 }
 
 .comments {
@@ -54,15 +64,16 @@
 
 .comments li {
   list-style: none;
-  border: solid 1px white;
+  border: solid 1px var(--white);
   border-radius: 15px;
   margin-bottom: 5px;
   padding: 0 10px;
 }
 
 .author {
-  border-bottom: solid 1px white;
+  border-bottom: solid 1px var(--white);
 }
+
 .navigation button {
   background: none;
   box-shadow: none;
@@ -71,96 +82,61 @@
 }
 
 .textarea {
-  text-align: start;
+  text-align: center;
   border: none;
-  width: calc(100% - 70px);
-  font-size: 0.8rem;
-  font-weight: 300;
+  width: 90%;
   margin: 0;
-  margin-top: 0.5rem;
-  margin-left: calc(2rem + 10px);
-  font-family: Arial, Helvetica, sans-serif;
-  color: #393d3f;
+  margin-top: 20px;
+  color: var(--white);
   background-color: inherit;
-  padding: 2.4rem;
-  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-.submit {
-  background: none;
-  border: none;
-  cursor: pointer;
-  height: 20px;
-  width: 40px;
-  border-radius: 5px;
-  position: absolute;
-  top: 2.5rem;
-  right: calc(0.5rem + 20px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #4a89f3;
+.textarea:hover {
+  background-color: var(--black);
 }
+
 .register button,
-.cancelButton button {
-  margin-left: 20px;
+.cancel button {
+  margin-left: 10px;
+  margin-top: 20px;
   padding: 10px 20px;
   box-shadow: none;
   border: none;
-  color: #fff;
-  background-color: #4a89f3;
+  color: var(--white);
+  background-color: var(--red);
   border-radius: 4px;
   cursor: pointer;
-}
-.register button:hover {
-  background-color: #ff3d00;
-}
-.cancelButton button {
-  background-color: #ff3d00;
-}
-.cancelButton h3 {
-  color: #37bc8b;
-}
-.wave {
-  display: flex;
-  justify-content: center;
+  height: 60px;
+  width: 150px;
   align-items: center;
-  height: 100vh;
 }
 
-.ball {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  margin: 0 10px;
-  background-color: #6c5ce7;
-  animation: wave 1s ease-in-out infinite;
+.submit {
+  background-color: var(--red);
+  color: var(--w);
+  border: none;
+  cursor: pointer;
+  height: 42px;
+  width: 100px;
+  border-radius: 5px;
+  margin: 20px;
+  align-self: flex-end;
 }
 
-@keyframes wave {
-  0% {
-    transform: translateY(0);
+@media (max-width: 650px) {
+  .submit {
+    width: 30vw;
+    align-self: center;
   }
-  50% {
-    transform: translateY(-15px);
+
+  .register button,
+  .cancel button {
+    width: 30vw;
   }
-  100% {
-    transform: translateY(0);
+
+  .comments h3 {
+    text-align: start;
+    padding-left: 0;
   }
-}
-
-.ball:nth-child(2) {
-  animation-delay: -0.2s;
-}
-
-.ball:nth-child(3) {
-  animation-delay: -0.4s;
-}
-
-.ball:nth-child(4) {
-  animation-delay: -0.6s;
-}
-
-.ball:nth-child(5) {
-  animation-delay: -0.8s;
 }

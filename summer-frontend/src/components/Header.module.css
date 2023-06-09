@@ -1,18 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 
 .header {
-  /* background-color: #ff5d4c; */
-  /* background: rgba(0, 0, 0, 0.92); */
-  background-color: #69013b;
+  background: var(--black);
   padding: 16px;
-  color: white;
+  color: var(--white);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .header a {
-  color: white;
+  color: var(--white);
   text-decoration: none;
 }
 
@@ -21,43 +19,32 @@
   height: 60px;
   border-radius: 50%;
   border: silver solid;
+  margin: 5px 10px;
 }
-.logoutButton {
-  box-shadow: none;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  margin: 10px;
-  padding: 5px 10px;
-  background-color: #f2f7f5;
-}
-.user {
-  font-family: 'Raleway', sans-serif;
-}
-/* @media (max-width: 650px) {
-  .header {
-    justify-content: center;
-  }
-} */
 
-.logoutButton {
-  background: #5e5df0;
-  border-radius: 999px;
-  box-shadow: #5e5df0 0 10px 20px -10px;
-  box-sizing: border-box;
-  color: #ffffff;
+.login {
+  display: flex;
+  margin-right: 10px;
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.name h3 {
+  margin: 0;
+}
+
+.name p {
+  margin: 0;
+}
+
+.name button {
+  border-radius: 5px;
+  background-color: var(--red);
+  border-style: none;
+  margin-top: 3px;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 700;
-  opacity: 1;
-  outline: 0 solid transparent;
-  padding: 8px 18px;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: fit-content;
-  word-break: break-word;
-  border: 0;
 }

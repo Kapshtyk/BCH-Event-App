@@ -51,7 +51,7 @@ final class EventsFactory extends ModelFactory
             'description' => self::faker()->text(),
             'eventDate' => self::faker()->dateTimeBetween('-1 month', '+2 month'),
             'isPublished' => self::faker()->boolean(),
-            'location' => self::faker()->text(50),
+            'location' => self::faker()->text(35),
             'title' => self::faker()->text(20),
         ];
     }

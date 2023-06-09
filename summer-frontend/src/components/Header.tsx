@@ -18,11 +18,14 @@ const Header = () => {
       <Link to="/" onClick={handleClick}>
         <img className={classes.logo} src={BCC} alt="#" />
       </Link>
-      <Nav />
       {currentUser && (
-        <div className={classes.user}>
-          <h2>Hello, {currentUser.email.split('@')[0].toUpperCase()}</h2>
-          <button onClick={logout} className={classes.logoutButton}>Logout</button>
+        <div className={classes.login}>
+          <Nav />
+          <div className={classes.name}>
+            <p>Welcome:</p>
+            <h3>{currentUser.email.split('@')[0].toUpperCase()}</h3>
+            <button onClick={logout}>Logout</button>
+          </div>
         </div>
       )}
     </header>

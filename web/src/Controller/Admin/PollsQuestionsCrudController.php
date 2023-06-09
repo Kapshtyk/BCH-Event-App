@@ -2,18 +2,15 @@
 
 namespace App\Controller\Admin;
 
-use ApiPlatform\Api\QueryParameterValidator\Validator\ArrayItems;
-use App\Entity\PollsQuestions;
-use ArrayIterator;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
+use App\Entity\PollsQuestions;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
-
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
@@ -30,8 +27,8 @@ class PollsQuestionsCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            // ->setEntityLabelInSingular('Event Comment')
-            // ->setEntityLabelInPlural('Event Comments')
+            ->setEntityLabelInSingular('poll')
+            ->setEntityLabelInPlural('Polls')
             // ->setSearchFields(['author', 'text', 'email'])
             ->setDefaultSort(['createdAt' => 'DESC']);
     }

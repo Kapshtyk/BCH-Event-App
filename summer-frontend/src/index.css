@@ -1,9 +1,23 @@
+:root {
+  --main: rgba(25, 240, 222, 255);
+  --select: rgba(56, 49, 77, 255);
+  --text: rgba(56, 49, 77, 255);
+  --back: rgba(30, 27, 48, 255);
+  --red: rgb(231, 67, 93);
+  --grey: rgb(55, 62, 67);
+  --white: rgb(239, 243, 240);
+  --black2: rgb(22, 28, 31);
+  --black: black;
+  --lightGrey: lightgrey;
+}
+
+
+
 * {
   overscroll-behavior: none;
 }
 
 body {
-  /* font-family: 'Poppins', sans-serif; */
   margin: 0;
   font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
