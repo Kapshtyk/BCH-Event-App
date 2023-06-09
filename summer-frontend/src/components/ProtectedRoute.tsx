@@ -3,6 +3,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { CurrentUserContext } from '../context/context';
 import { ProtectedRouteType } from '../types/protecredRoute';
 import { set } from 'date-fns';
+import { Dna } from 'react-loader-spinner';
 
 const ProtectedRoute = ({ children }: ProtectedRouteType) => {
   const location = useLocation();
@@ -31,7 +32,14 @@ const ProtectedRoute = ({ children }: ProtectedRouteType) => {
   }, [setCurrentUser]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Dna
+      visible={true}
+      height="80"
+      width="80"
+      ariaLabel="dna-loading"
+      wrapperStyle={{}}
+      wrapperClass="dna-wrapper"
+    />;
   }
 
   if (!currentUser) {

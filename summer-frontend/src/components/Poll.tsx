@@ -3,6 +3,7 @@ import { PollsQuiestion, PollsChoice, PollsVote } from '../types/polls'
 import { checkPoll, postVote } from '../api/EventsAPI'
 import { CurrentUserContext } from '../context/context'
 import cl from './Poll.module.css'
+import { Dna } from 'react-loader-spinner'
 
 interface PollProps {
   data: PollsQuiestion
@@ -61,7 +62,14 @@ const Poll: React.FC<PollProps> = ({ data, fetch }) => {
   }
 
   if (!data) {
-    return <div>Loading</div>
+    return <Dna
+      visible={true}
+      height="80"
+      width="80"
+      ariaLabel="dna-loading"
+      wrapperStyle={{}}
+      wrapperClass="dna-wrapper"
+    />
   }
 
   const checkVoteExists = () => {

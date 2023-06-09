@@ -2,29 +2,20 @@
 
 namespace App\Controller\Admin;
 
-use ApiPlatform\Api\QueryParameterValidator\Validator\ArrayItems;
-use App\Entity\PollsQuestions;
-use ArrayIterator;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
+use App\Entity\PollsQuestions;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
-
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
-use Symfony\Component\Form\ChoiceList\ChoiceList;
+
 
 class PollsQuestionsCrudController extends AbstractCrudController
 {
@@ -33,13 +24,11 @@ class PollsQuestionsCrudController extends AbstractCrudController
         return PollsQuestions::class;
     }
 
-
-
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            // ->setEntityLabelInSingular('Event Comment')
-            // ->setEntityLabelInPlural('Event Comments')
+            ->setEntityLabelInSingular('poll')
+            ->setEntityLabelInPlural('Polls')
             // ->setSearchFields(['author', 'text', 'email'])
             ->setDefaultSort(['createdAt' => 'DESC']);
     }

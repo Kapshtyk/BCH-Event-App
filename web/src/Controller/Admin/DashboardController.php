@@ -4,10 +4,9 @@ namespace App\Controller\Admin;
 
 use App\Entity\Events;
 use App\Entity\Comments;
+use App\Entity\EventsUsers;
 use App\Entity\PollsChoices;
 use App\Entity\PollsQuestions;
-use App\Entity\PollsVotes;
-use App\Entity\Questions;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -60,9 +59,10 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Comments', 'fas fa-comments', Comments::class);
         yield MenuItem::linkToCrud('Events', 'fas fa-map-marker-alt', Events::class);
         // yield MenuItem::linkToCrud('Questions', 'fas fa-question', Questions::class);
-        yield MenuItem::linkToCrud('Polls questions', 'fas fa-question-circle', PollsQuestions::class);
+        yield MenuItem::linkToCrud('Polls', 'fas fa-question-circle', PollsQuestions::class);
         // yield MenuItem::linkToCrud('Polls votes', 'fas fa-vote-yea', PollsVotes::class);
-        yield MenuItem::linkToCrud('Polls choices', 'fas fa-check-square', PollsChoices::class);
+        yield MenuItem::linkToCrud('Polls\' responce options', 'fas fa-check-square', PollsChoices::class);
+        yield MenuItem::linkToCrud('Participants of the events', 'fas fa-registered', EventsUsers::class);
 
     }
 }

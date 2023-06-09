@@ -25,8 +25,8 @@ class CommentCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Event Comment')
-            ->setEntityLabelInPlural('Event Comments')
+            ->setEntityLabelInSingular('comment')
+            ->setEntityLabelInPlural('Comments on the events')
             ->setSearchFields(['author', 'text', 'email'])
             ->setDefaultSort(['createdAt' => 'DESC']);
     }
@@ -48,4 +48,3 @@ class CommentCrudController extends AbstractCrudController
     }
 }
     
-

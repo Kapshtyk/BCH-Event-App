@@ -4,6 +4,7 @@ import { Events } from '../types/events'
 import Card from './Card'
 import { getEvents } from '../api/EventsAPI'
 import classes from './EventsPreview.module.css'
+import { Dna } from 'react-loader-spinner'
 
 const EventsPreview: React.FC = () => {
   const [activeEvents, setActiveEvents] = useState<Events>([])
@@ -33,7 +34,14 @@ const EventsPreview: React.FC = () => {
   }, [])
 
   if (isLoading) {
-    return <p>Loading...</p>
+    return <Dna
+      visible={true}
+      height="80"
+      width="80"
+      ariaLabel="dna-loading"
+      wrapperStyle={{}}
+      wrapperClass="dna-wrapper"
+    />
   }
   if (activeEvents.length === 0 && endedEvents.length === 0) {
     return <p> Events not found</p>

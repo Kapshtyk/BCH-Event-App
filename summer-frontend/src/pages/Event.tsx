@@ -18,6 +18,7 @@ import Poll from '../components/Poll'
 import ImageComponent from './ImageComponent'
 import { PollsQuiestion } from '../types/polls'
 import Comment from '../components/Comment'
+import { Dna } from 'react-loader-spinner'
 
 const Event: React.FC = () => {
   const [singleEvent, setEvent] = useState<EventType | null>(null)
@@ -149,7 +150,14 @@ const Event: React.FC = () => {
   }
 
   if (isLoading) {
-    return <p>Loading...</p>
+    return <Dna
+      visible={true}
+      height="80"
+      width="80"
+      ariaLabel="dna-loading"
+      wrapperStyle={{}}
+      wrapperClass="dna-wrapper"
+    />
   }
   if (singleEvent === null) {
     return <p>Event not found</p>

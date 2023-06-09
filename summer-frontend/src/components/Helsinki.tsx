@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import classes from './Helsinki.module.css'
 import Event from '../models/Event'
+import { Dna } from 'react-loader-spinner'
 
 const Helsinki = () => {
   const [data, setData] = useState<Event[]>([])
@@ -67,7 +68,14 @@ const Helsinki = () => {
           ))}
         </ul>
       ) : (
-        <p>Loading...</p>
+        <Dna
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="dna-loading"
+          wrapperStyle={{}}
+          wrapperClass="dna-wrapper"
+        />
       )}
     </div>
   )
