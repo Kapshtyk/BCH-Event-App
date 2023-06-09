@@ -48,3 +48,11 @@
   margin-top: 3px;
   cursor: pointer;
 }
+@media (max-width: 650px) {
+  .user h2 {
+    font-size: 14px;
+  }
+  .logoutButton {
+    font-size: 10px;
+  }
+}

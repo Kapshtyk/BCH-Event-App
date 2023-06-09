@@ -35,11 +35,12 @@
 .datearea {
   display: flex;
   align-items: baseline;
+  margin-left: 20px;
 }
 
 .datearea p {
   color: #ff3d00;
-  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .textarea h3 {
@@ -47,8 +48,9 @@
   padding: 10px;
 }
 .locationArea {
-  margin-left: 10px;
+  margin-left: 20px;
   margin-bottom: 10px;
+  margin-top: 10px;
 }
 @media (max-width: 650px) {
   .cards {
@@ -75,10 +77,11 @@
   .datearea {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 30px;
+    right: 25px;
     border-radius: 10px;
     background-color: var(--white);
     color: var(--black);
@@ -89,7 +92,8 @@
 
   .datearea p {
     color: black;
-    margin: 5px 0;
+    padding: 0;
+    margin: 0;
   }
 
   .textarea {
@@ -102,6 +106,9 @@
     left: 10px;
     margin: 0;
     color: #ffffff;
+  }
+  .textarea h3 {
+    padding: 0;
   }
 
   .locationArea {

@@ -10,6 +10,7 @@
   background-color: #fff;
   color: black;
   padding: 20px;
+  margin-top: 20px;
 }
 fieldset {
   border: none;
@@ -81,4 +82,5 @@ fieldset {
 .registerText {
   font-size: 14px;
   color: #69013b;
+  margin-top: 10px;
 }
